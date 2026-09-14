@@ -1,0 +1,4899 @@
+{
+  "engineVersion": "NetHack-5.0.0_Release",
+  "entries": [
+    {
+      "kind": "catalog",
+      "catalog": {
+        "version": "NetHack-5.0.0_Release",
+        "constants": {
+          "WIN_TYPE": {
+            "1": "NHW_MESSAGE",
+            "2": "NHW_STATUS",
+            "3": "NHW_MAP",
+            "4": "NHW_MENU",
+            "5": "NHW_TEXT",
+            "NHW_MESSAGE": 1,
+            "NHW_STATUS": 2,
+            "NHW_MAP": 3,
+            "NHW_MENU": 4,
+            "NHW_TEXT": 5
+          },
+          "STATUS_FIELD": {
+            "0": "BL_TITLE",
+            "1": "BL_STR",
+            "2": "BL_DX",
+            "3": "BL_CO",
+            "4": "BL_IN",
+            "5": "BL_WI",
+            "6": "BL_CH",
+            "7": "BL_ALIGN",
+            "8": "BL_SCORE",
+            "9": "BL_CAP",
+            "10": "BL_GOLD",
+            "11": "BL_ENE",
+            "12": "BL_ENEMAX",
+            "13": "BL_XP",
+            "14": "BL_AC",
+            "15": "BL_HD",
+            "16": "BL_TIME",
+            "17": "BL_HUNGER",
+            "18": "BL_HP",
+            "19": "BL_HPMAX",
+            "20": "BL_LEVELDESC",
+            "21": "BL_EXP",
+            "22": "BL_CONDITION",
+            "27": "MAXBLSTATS",
+            "BL_CHARACTERISTICS": -3,
+            "-3": "BL_CHARACTERISTICS",
+            "BL_RESET": -2,
+            "-2": "BL_RESET",
+            "BL_FLUSH": -1,
+            "-1": "BL_FLUSH",
+            "BL_TITLE": 0,
+            "BL_STR": 1,
+            "BL_DX": 2,
+            "BL_CO": 3,
+            "BL_IN": 4,
+            "BL_WI": 5,
+            "BL_CH": 6,
+            "BL_ALIGN": 7,
+            "BL_SCORE": 8,
+            "BL_CAP": 9,
+            "BL_GOLD": 10,
+            "BL_ENE": 11,
+            "BL_ENEMAX": 12,
+            "BL_XP": 13,
+            "BL_AC": 14,
+            "BL_HD": 15,
+            "BL_TIME": 16,
+            "BL_HUNGER": 17,
+            "BL_HP": 18,
+            "BL_HPMAX": 19,
+            "BL_LEVELDESC": 20,
+            "BL_EXP": 21,
+            "BL_CONDITION": 22,
+            "MAXBLSTATS": 27
+          },
+          "ATTR": {
+            "0": "ATR_NONE",
+            "1": "ATR_BOLD",
+            "2": "ATR_DIM",
+            "4": "ATR_ULINE",
+            "5": "ATR_BLINK",
+            "7": "ATR_INVERSE",
+            "16": "ATR_URGENT",
+            "32": "ATR_NOHISTORY",
+            "ATR_NONE": 0,
+            "ATR_BOLD": 1,
+            "ATR_DIM": 2,
+            "ATR_ULINE": 4,
+            "ATR_BLINK": 5,
+            "ATR_INVERSE": 7,
+            "ATR_URGENT": 16,
+            "ATR_NOHISTORY": 32
+          },
+          "CONDITION": {
+            "1": "BL_MASK_BAREH",
+            "2": "BL_MASK_BLIND",
+            "4": "BL_MASK_BUSY",
+            "8": "BL_MASK_CONF",
+            "16": "BL_MASK_DEAF",
+            "32": "BL_MASK_ELF_IRON",
+            "64": "BL_MASK_FLY",
+            "128": "BL_MASK_FOODPOIS",
+            "256": "BL_MASK_GLOWHANDS",
+            "512": "BL_MASK_GRAB",
+            "1024": "BL_MASK_HALLU",
+            "2048": "BL_MASK_HELD",
+            "4096": "BL_MASK_ICY",
+            "8192": "BL_MASK_INLAVA",
+            "16384": "BL_MASK_LEV",
+            "32768": "BL_MASK_PARLYZ",
+            "65536": "BL_MASK_RIDE",
+            "131072": "BL_MASK_SLEEPING",
+            "262144": "BL_MASK_SLIME",
+            "524288": "BL_MASK_SLIPPERY",
+            "1048576": "BL_MASK_STONE",
+            "2097152": "BL_MASK_STRNGL",
+            "4194304": "BL_MASK_STUN",
+            "8388608": "BL_MASK_SUBMERGED",
+            "16777216": "BL_MASK_TERMILL",
+            "33554432": "BL_MASK_TETHERED",
+            "67108864": "BL_MASK_TRAPPED",
+            "134217728": "BL_MASK_UNCONSC",
+            "268435456": "BL_MASK_WOUNDEDL",
+            "536870912": "BL_MASK_HOLDING",
+            "BL_MASK_BAREH": 1,
+            "BL_MASK_BLIND": 2,
+            "BL_MASK_BUSY": 4,
+            "BL_MASK_CONF": 8,
+            "BL_MASK_DEAF": 16,
+            "BL_MASK_ELF_IRON": 32,
+            "BL_MASK_FLY": 64,
+            "BL_MASK_FOODPOIS": 128,
+            "BL_MASK_GLOWHANDS": 256,
+            "BL_MASK_GRAB": 512,
+            "BL_MASK_HALLU": 1024,
+            "BL_MASK_HELD": 2048,
+            "BL_MASK_ICY": 4096,
+            "BL_MASK_INLAVA": 8192,
+            "BL_MASK_LEV": 16384,
+            "BL_MASK_PARLYZ": 32768,
+            "BL_MASK_RIDE": 65536,
+            "BL_MASK_SLEEPING": 131072,
+            "BL_MASK_SLIME": 262144,
+            "BL_MASK_SLIPPERY": 524288,
+            "BL_MASK_STONE": 1048576,
+            "BL_MASK_STRNGL": 2097152,
+            "BL_MASK_STUN": 4194304,
+            "BL_MASK_SUBMERGED": 8388608,
+            "BL_MASK_TERMILL": 16777216,
+            "BL_MASK_TETHERED": 33554432,
+            "BL_MASK_TRAPPED": 67108864,
+            "BL_MASK_UNCONSC": 134217728,
+            "BL_MASK_WOUNDEDL": 268435456,
+            "BL_MASK_HOLDING": 536870912
+          },
+          "MENU_SELECT": {
+            "0": "PICK_NONE",
+            "1": "PICK_ONE",
+            "2": "PICK_ANY",
+            "PICK_NONE": 0,
+            "PICK_ONE": 1,
+            "PICK_ANY": 2
+          },
+          "COPYRIGHT": {
+            "COPYRIGHT_BANNER_A": "NetHack, Copyright 1985-2026",
+            "COPYRIGHT_BANNER_B": "         By Stichting Mathematisch Centrum and M. Stephenson.",
+            "COPYRIGHT_BANNER_C": "         Version 5.0.0 Unix, built Sep 14 2026 23:03:12.",
+            "COPYRIGHT_BANNER_D": "         See license for details."
+          },
+          "GLYPH": {
+            "0": "GLYPH_MON_OFF",
+            "766": "GLYPH_PET_OFF",
+            "1532": "GLYPH_INVISIBLE",
+            "1533": "GLYPH_DETECT_OFF",
+            "2299": "GLYPH_BODY_OFF",
+            "2682": "GLYPH_RIDDEN_OFF",
+            "3448": "GLYPH_OBJ_OFF",
+            "3929": "GLYPH_CMAP_OFF",
+            "4051": "GLYPH_ZAP_OFF",
+            "4093": "GLYPH_SWALLOW_OFF",
+            "7157": "GLYPH_EXPLODE_OFF",
+            "7220": "GLYPH_WARNING_OFF",
+            "7226": "GLYPH_STATUE_OFF",
+            "9622": "GLYPH_UNEXPLORED",
+            "9623": "GLYPH_NOTHING",
+            "9624": "NO_GLYPH",
+            "GLYPH_MON_OFF": 0,
+            "GLYPH_PET_OFF": 766,
+            "GLYPH_INVIS_OFF": 1532,
+            "GLYPH_DETECT_OFF": 1533,
+            "GLYPH_BODY_OFF": 2299,
+            "GLYPH_RIDDEN_OFF": 2682,
+            "GLYPH_OBJ_OFF": 3448,
+            "GLYPH_CMAP_OFF": 3929,
+            "GLYPH_EXPLODE_OFF": 7157,
+            "GLYPH_ZAP_OFF": 4051,
+            "GLYPH_SWALLOW_OFF": 4093,
+            "GLYPH_WARNING_OFF": 7220,
+            "GLYPH_STATUE_OFF": 7226,
+            "GLYPH_UNEXPLORED_OFF": 9622,
+            "GLYPH_NOTHING_OFF": 9623,
+            "MAX_GLYPH": 9624,
+            "NO_GLYPH": 9624,
+            "GLYPH_INVISIBLE": 1532,
+            "GLYPH_UNEXPLORED": 9622,
+            "GLYPH_NOTHING": 9623
+          },
+          "COLORS": {
+            "0": "CLR_BLACK",
+            "1": "CLR_RED",
+            "2": "CLR_GREEN",
+            "3": "CLR_BROWN",
+            "4": "CLR_BLUE",
+            "5": "CLR_MAGENTA",
+            "6": "CLR_CYAN",
+            "7": "CLR_GRAY",
+            "8": "NO_COLOR",
+            "9": "CLR_ORANGE",
+            "10": "CLR_BRIGHT_GREEN",
+            "11": "CLR_YELLOW",
+            "12": "CLR_BRIGHT_BLUE",
+            "13": "CLR_BRIGHT_MAGENTA",
+            "14": "CLR_BRIGHT_CYAN",
+            "15": "CLR_WHITE",
+            "16": "CLR_MAX",
+            "CLR_BLACK": 0,
+            "CLR_RED": 1,
+            "CLR_GREEN": 2,
+            "CLR_BROWN": 3,
+            "CLR_BLUE": 4,
+            "CLR_MAGENTA": 5,
+            "CLR_CYAN": 6,
+            "CLR_GRAY": 7,
+            "NO_COLOR": 8,
+            "CLR_ORANGE": 9,
+            "CLR_BRIGHT_GREEN": 10,
+            "CLR_YELLOW": 11,
+            "CLR_BRIGHT_BLUE": 12,
+            "CLR_BRIGHT_MAGENTA": 13,
+            "CLR_BRIGHT_CYAN": 14,
+            "CLR_WHITE": 15,
+            "CLR_MAX": 16
+          },
+          "COLOR_ATTR": {
+            "18": "HL_ATTCLR_BOLD",
+            "19": "HL_ATTCLR_DIM",
+            "20": "HL_ATTCLR_ITALIC",
+            "21": "HL_ATTCLR_ULINE",
+            "22": "HL_ATTCLR_BLINK",
+            "23": "HL_ATTCLR_INVERSE",
+            "24": "BL_ATTCLR_MAX",
+            "HL_ATTCLR_BOLD": 18,
+            "HL_ATTCLR_DIM": 19,
+            "HL_ATTCLR_ITALIC": 20,
+            "HL_ATTCLR_ULINE": 21,
+            "HL_ATTCLR_BLINK": 22,
+            "HL_ATTCLR_INVERSE": 23,
+            "BL_ATTCLR_MAX": 24
+          },
+          "BL_MASK": {
+            "1": "BL_MASK_BAREH",
+            "2": "BL_MASK_BLIND",
+            "4": "BL_MASK_BUSY",
+            "8": "BL_MASK_CONF",
+            "16": "BL_MASK_DEAF",
+            "32": "BL_MASK_ELF_IRON",
+            "64": "BL_MASK_FLY",
+            "128": "BL_MASK_FOODPOIS",
+            "256": "BL_MASK_GLOWHANDS",
+            "512": "BL_MASK_GRAB",
+            "1024": "BL_MASK_HALLU",
+            "2048": "BL_MASK_HELD",
+            "4096": "BL_MASK_ICY",
+            "8192": "BL_MASK_INLAVA",
+            "16384": "BL_MASK_LEV",
+            "32768": "BL_MASK_PARLYZ",
+            "65536": "BL_MASK_RIDE",
+            "131072": "BL_MASK_SLEEPING",
+            "262144": "BL_MASK_SLIME",
+            "524288": "BL_MASK_SLIPPERY",
+            "1048576": "BL_MASK_STONE",
+            "2097152": "BL_MASK_STRNGL",
+            "4194304": "BL_MASK_STUN",
+            "8388608": "BL_MASK_SUBMERGED",
+            "16777216": "BL_MASK_TERMILL",
+            "33554432": "BL_MASK_TETHERED",
+            "67108864": "BL_MASK_TRAPPED",
+            "134217728": "BL_MASK_UNCONSC",
+            "268435456": "BL_MASK_WOUNDEDL",
+            "536870912": "BL_MASK_HOLDING",
+            "BL_MASK_BAREH": 1,
+            "BL_MASK_BLIND": 2,
+            "BL_MASK_BUSY": 4,
+            "BL_MASK_CONF": 8,
+            "BL_MASK_DEAF": 16,
+            "BL_MASK_ELF_IRON": 32,
+            "BL_MASK_FLY": 64,
+            "BL_MASK_FOODPOIS": 128,
+            "BL_MASK_GLOWHANDS": 256,
+            "BL_MASK_GRAB": 512,
+            "BL_MASK_HALLU": 1024,
+            "BL_MASK_HELD": 2048,
+            "BL_MASK_ICY": 4096,
+            "BL_MASK_INLAVA": 8192,
+            "BL_MASK_LEV": 16384,
+            "BL_MASK_PARLYZ": 32768,
+            "BL_MASK_RIDE": 65536,
+            "BL_MASK_SLEEPING": 131072,
+            "BL_MASK_SLIME": 262144,
+            "BL_MASK_SLIPPERY": 524288,
+            "BL_MASK_STONE": 1048576,
+            "BL_MASK_STRNGL": 2097152,
+            "BL_MASK_STUN": 4194304,
+            "BL_MASK_SUBMERGED": 8388608,
+            "BL_MASK_TERMILL": 16777216,
+            "BL_MASK_TETHERED": 33554432,
+            "BL_MASK_TRAPPED": 67108864,
+            "BL_MASK_UNCONSC": 134217728,
+            "BL_MASK_WOUNDEDL": 268435456,
+            "BL_MASK_HOLDING": 536870912
+          },
+          "ROLE_RACEMASK": {
+            "8": "MH_HUMAN",
+            "16": "MH_ELF",
+            "32": "MH_DWARF",
+            "64": "MH_GNOME",
+            "128": "MH_ORC",
+            "MH_HUMAN": 8,
+            "MH_ELF": 16,
+            "MH_DWARF": 32,
+            "MH_GNOME": 64,
+            "MH_ORC": 128
+          },
+          "ROLE_GENDMASK": {
+            "4096": "ROLE_MALE",
+            "8192": "ROLE_FEMALE",
+            "16384": "ROLE_NEUTER",
+            "ROLE_MALE": 4096,
+            "ROLE_FEMALE": 8192,
+            "ROLE_NEUTER": 16384
+          },
+          "ROLE_ALIGNMASK": {
+            "1": "ROLE_CHAOTIC",
+            "2": "ROLE_NEUTRAL",
+            "4": "ROLE_LAWFUL",
+            "ROLE_LAWFUL": 4,
+            "ROLE_NEUTRAL": 2,
+            "ROLE_CHAOTIC": 1
+          },
+          "blconditions": {
+            "0": "bl_bareh",
+            "1": "bl_blind",
+            "2": "bl_busy",
+            "3": "bl_conf",
+            "4": "bl_deaf",
+            "5": "bl_elf_iron",
+            "6": "bl_fly",
+            "7": "bl_foodpois",
+            "8": "bl_glowhands",
+            "9": "bl_grab",
+            "10": "bl_hallu",
+            "11": "bl_held",
+            "12": "bl_icy",
+            "13": "bl_inlava",
+            "14": "bl_lev",
+            "15": "bl_parlyz",
+            "16": "bl_ride",
+            "17": "bl_sleeping",
+            "18": "bl_slime",
+            "19": "bl_slippery",
+            "20": "bl_stone",
+            "21": "bl_strngl",
+            "22": "bl_stun",
+            "23": "bl_submerged",
+            "24": "bl_termill",
+            "25": "bl_tethered",
+            "26": "bl_trapped",
+            "27": "bl_unconsc",
+            "28": "bl_woundedl",
+            "29": "bl_holding",
+            "30": "CONDITION_COUNT",
+            "bl_bareh": 0,
+            "bl_blind": 1,
+            "bl_busy": 2,
+            "bl_conf": 3,
+            "bl_deaf": 4,
+            "bl_elf_iron": 5,
+            "bl_fly": 6,
+            "bl_foodpois": 7,
+            "bl_glowhands": 8,
+            "bl_grab": 9,
+            "bl_hallu": 10,
+            "bl_held": 11,
+            "bl_icy": 12,
+            "bl_inlava": 13,
+            "bl_lev": 14,
+            "bl_parlyz": 15,
+            "bl_ride": 16,
+            "bl_sleeping": 17,
+            "bl_slime": 18,
+            "bl_slippery": 19,
+            "bl_stone": 20,
+            "bl_strngl": 21,
+            "bl_stun": 22,
+            "bl_submerged": 23,
+            "bl_termill": 24,
+            "bl_tethered": 25,
+            "bl_trapped": 26,
+            "bl_unconsc": 27,
+            "bl_woundedl": 28,
+            "bl_holding": 29,
+            "CONDITION_COUNT": 30
+          },
+          "HL": {
+            "0": "HL_UNDEF",
+            "1": "HL_NONE",
+            "2": "HL_BOLD",
+            "4": "HL_DIM",
+            "8": "HL_ITALIC",
+            "16": "HL_ULINE",
+            "32": "HL_BLINK",
+            "64": "HL_INVERSE",
+            "HL_UNDEF": 0,
+            "HL_NONE": 1,
+            "HL_BOLD": 2,
+            "HL_DIM": 4,
+            "HL_ITALIC": 8,
+            "HL_ULINE": 16,
+            "HL_BLINK": 32,
+            "HL_INVERSE": 64
+          },
+          "MG": {
+            "1": "MG_HERO",
+            "2": "MG_CORPSE",
+            "4": "MG_INVIS",
+            "8": "MG_DETECT",
+            "16": "MG_PET",
+            "32": "MG_RIDDEN",
+            "64": "MG_STATUE",
+            "128": "MG_OBJPILE",
+            "256": "MG_BW_LAVA",
+            "512": "MG_BW_ENGR",
+            "1024": "MG_NOTHING",
+            "2048": "MG_UNEXPL",
+            "4096": "MG_MALE",
+            "8192": "MG_FEMALE",
+            "MG_HERO": 1,
+            "MG_CORPSE": 2,
+            "MG_INVIS": 4,
+            "MG_DETECT": 8,
+            "MG_PET": 16,
+            "MG_RIDDEN": 32,
+            "MG_STATUE": 64,
+            "MG_OBJPILE": 128,
+            "MG_BW_LAVA": 256,
+            "MG_BW_ICE": 512,
+            "MG_BW_SINK": 512,
+            "MG_BW_ENGR": 512,
+            "MG_NOTHING": 1024,
+            "MG_UNEXPL": 2048,
+            "MG_MALE": 4096,
+            "MG_FEMALE": 8192
+          }
+        },
+        "extendedCommands": [
+          {
+            "index": 0,
+            "key": 35,
+            "name": "#",
+            "description": "enter and perform an extended command",
+            "flags": 137
+          },
+          {
+            "index": 1,
+            "key": 191,
+            "name": "?",
+            "description": "list all extended commands",
+            "flags": 139
+          },
+          {
+            "index": 2,
+            "key": 225,
+            "name": "adjust",
+            "description": "adjust inventory letters",
+            "flags": 11
+          },
+          {
+            "index": 3,
+            "key": 193,
+            "name": "annotate",
+            "description": "name current level",
+            "flags": 139
+          },
+          {
+            "index": 4,
+            "key": 97,
+            "name": "apply",
+            "description": "apply (use) a tool (pick-axe, key, lamp...)",
+            "flags": 128
+          },
+          {
+            "index": 5,
+            "key": 24,
+            "name": "attributes",
+            "description": "show your attributes",
+            "flags": 9
+          },
+          {
+            "index": 6,
+            "key": 64,
+            "name": "autopickup",
+            "description": "toggle the 'autopickup' option on/off",
+            "flags": 9
+          },
+          {
+            "index": 7,
+            "key": 67,
+            "name": "call",
+            "description": "name a monster, specific object, or type of object",
+            "flags": 9
+          },
+          {
+            "index": 8,
+            "key": 90,
+            "name": "cast",
+            "description": "zap (cast) a spell",
+            "flags": 1
+          },
+          { "index": 9, "key": 227, "name": "chat", "description": "talk to someone", "flags": 3 },
+          {
+            "index": 10,
+            "key": 118,
+            "name": "chronicle",
+            "description": "show journal of major events",
+            "flags": 11
+          },
+          { "index": 11, "key": 99, "name": "close", "description": "close a door", "flags": 0 },
+          {
+            "index": 12,
+            "key": 195,
+            "name": "conduct",
+            "description": "list voluntary challenges you have maintained",
+            "flags": 11
+          },
+          {
+            "index": 13,
+            "key": 0,
+            "name": "debugfuzzer",
+            "description": "start the fuzz tester",
+            "flags": 37
+          },
+          {
+            "index": 14,
+            "key": 228,
+            "name": "dip",
+            "description": "dip an object into something",
+            "flags": 130
+          },
+          {
+            "index": 15,
+            "key": 62,
+            "name": "down",
+            "description": "go down a staircase",
+            "flags": 128
+          },
+          { "index": 16, "key": 100, "name": "drop", "description": "drop an item", "flags": 0 },
+          {
+            "index": 17,
+            "key": 68,
+            "name": "droptype",
+            "description": "drop specific item types",
+            "flags": 0
+          },
+          { "index": 18, "key": 101, "name": "eat", "description": "eat something", "flags": 128 },
+          {
+            "index": 19,
+            "key": 69,
+            "name": "engrave",
+            "description": "engrave writing on the floor",
+            "flags": 0
+          },
+          {
+            "index": 20,
+            "key": 229,
+            "name": "enhance",
+            "description": "advance or check weapon and spell skills",
+            "flags": 11
+          },
+          {
+            "index": 21,
+            "key": 216,
+            "name": "exploremode",
+            "description": "enter explore (discovery) mode",
+            "flags": 41
+          },
+          {
+            "index": 22,
+            "key": 70,
+            "name": "fight",
+            "description": "prefix: force fight even if you don't see a monster",
+            "flags": 512
+          },
+          {
+            "index": 23,
+            "key": 102,
+            "name": "fire",
+            "description": "fire ammunition from quiver",
+            "flags": 0
+          },
+          { "index": 24, "key": 230, "name": "force", "description": "force a lock", "flags": 2 },
+          {
+            "index": 25,
+            "key": 231,
+            "name": "genocided",
+            "description": "list monsters that have been genocided or become extinct",
+            "flags": 139
+          },
+          {
+            "index": 26,
+            "key": 59,
+            "name": "glance",
+            "description": "show what type of thing a map symbol corresponds to",
+            "flags": 9
+          },
+          {
+            "index": 27,
+            "key": 63,
+            "name": "help",
+            "description": "give a help message",
+            "flags": 9
+          },
+          {
+            "index": 28,
+            "key": 0,
+            "name": "herecmdmenu",
+            "description": "show menu of commands you can do here",
+            "flags": 11
+          },
+          {
+            "index": 29,
+            "key": 0,
+            "name": "history",
+            "description": "show a summary of the game's development",
+            "flags": 11
+          },
+          {
+            "index": 30,
+            "key": 105,
+            "name": "inventory",
+            "description": "show your inventory",
+            "flags": 9
+          },
+          {
+            "index": 31,
+            "key": 73,
+            "name": "inventtype",
+            "description": "show inventory of one specific item class",
+            "flags": 9
+          },
+          {
+            "index": 32,
+            "key": 233,
+            "name": "invoke",
+            "description": "invoke an object's special powers",
+            "flags": 3
+          },
+          {
+            "index": 33,
+            "key": 234,
+            "name": "jump",
+            "description": "jump to another location",
+            "flags": 2
+          },
+          { "index": 34, "key": 4, "name": "kick", "description": "kick something", "flags": 0 },
+          {
+            "index": 35,
+            "key": 92,
+            "name": "known",
+            "description": "show what object types have been discovered",
+            "flags": 137
+          },
+          {
+            "index": 36,
+            "key": 96,
+            "name": "knownclass",
+            "description": "show discovered types for one class of objects",
+            "flags": 137
+          },
+          {
+            "index": 37,
+            "key": 0,
+            "name": "levelchange",
+            "description": "change experience level",
+            "flags": 7
+          },
+          {
+            "index": 38,
+            "key": 0,
+            "name": "lightsources",
+            "description": "show mobile light sources",
+            "flags": 7
+          },
+          {
+            "index": 39,
+            "key": 58,
+            "name": "look",
+            "description": "look at what is here",
+            "flags": 1
+          },
+          {
+            "index": 40,
+            "key": 0,
+            "name": "lookaround",
+            "description": "describe what you can see",
+            "flags": 9
+          },
+          {
+            "index": 41,
+            "key": 236,
+            "name": "loot",
+            "description": "loot a box on the floor",
+            "flags": 130
+          },
+          {
+            "index": 42,
+            "key": 0,
+            "name": "migratemons",
+            "description": "show migrating monsters and migrate N random ones",
+            "flags": 7
+          },
+          {
+            "index": 43,
+            "key": 237,
+            "name": "monster",
+            "description": "use monster's special ability",
+            "flags": 3
+          },
+          {
+            "index": 44,
+            "key": 238,
+            "name": "name",
+            "description": "same as call; name a monster or object or object type",
+            "flags": 11
+          },
+          {
+            "index": 45,
+            "key": 239,
+            "name": "offer",
+            "description": "offer a sacrifice to the gods",
+            "flags": 130
+          },
+          { "index": 46, "key": 111, "name": "open", "description": "open a door", "flags": 0 },
+          {
+            "index": 47,
+            "key": 79,
+            "name": "options",
+            "description": "show option settings",
+            "flags": 137
+          },
+          {
+            "index": 48,
+            "key": 0,
+            "name": "optionsfull",
+            "description": "show all option settings, possibly change them",
+            "flags": 137
+          },
+          {
+            "index": 49,
+            "key": 15,
+            "name": "overview",
+            "description": "show a summary of the explored dungeon",
+            "flags": 139
+          },
+          {
+            "index": 50,
+            "key": 0,
+            "name": "panic",
+            "description": "test panic routine (fatal to game)",
+            "flags": 7
+          },
+          {
+            "index": 51,
+            "key": 112,
+            "name": "pay",
+            "description": "pay your shopping bill",
+            "flags": 128
+          },
+          {
+            "index": 52,
+            "key": 124,
+            "name": "perminv",
+            "description": "scroll persistent inventory display",
+            "flags": 41
+          },
+          {
+            "index": 53,
+            "key": 44,
+            "name": "pickup",
+            "description": "pick up things at the current location",
+            "flags": 128
+          },
+          {
+            "index": 54,
+            "key": 0,
+            "name": "polyself",
+            "description": "polymorph self",
+            "flags": 7
+          },
+          {
+            "index": 55,
+            "key": 240,
+            "name": "pray",
+            "description": "pray to the gods for help",
+            "flags": 3
+          },
+          {
+            "index": 56,
+            "key": 16,
+            "name": "prevmsg",
+            "description": "view recent game messages",
+            "flags": 4105
+          },
+          {
+            "index": 57,
+            "key": 80,
+            "name": "puton",
+            "description": "put on an accessory (ring, amulet, etc)",
+            "flags": 0
+          },
+          {
+            "index": 58,
+            "key": 113,
+            "name": "quaff",
+            "description": "quaff (drink) something",
+            "flags": 128
+          },
+          {
+            "index": 59,
+            "key": 0,
+            "name": "quit",
+            "description": "exit without saving current game",
+            "flags": 43
+          },
+          {
+            "index": 60,
+            "key": 81,
+            "name": "quiver",
+            "description": "select ammunition for quiver",
+            "flags": 0
+          },
+          {
+            "index": 61,
+            "key": 114,
+            "name": "read",
+            "description": "read a scroll or spellbook",
+            "flags": 0
+          },
+          {
+            "index": 62,
+            "key": 18,
+            "name": "redraw",
+            "description": "redraw screen",
+            "flags": 4105
+          },
+          {
+            "index": 63,
+            "key": 82,
+            "name": "remove",
+            "description": "remove an accessory (ring, amulet, etc)",
+            "flags": 0
+          },
+          {
+            "index": 64,
+            "key": 1,
+            "name": "repeat",
+            "description": "repeat a previous command",
+            "flags": 9
+          },
+          {
+            "index": 65,
+            "key": 109,
+            "name": "reqmenu",
+            "description": "prefix: request menu or modify command",
+            "flags": 512
+          },
+          {
+            "index": 66,
+            "key": 31,
+            "name": "retravel",
+            "description": "travel to previously selected travel location",
+            "flags": 0
+          },
+          {
+            "index": 67,
+            "key": 210,
+            "name": "ride",
+            "description": "mount or dismount a saddled steed",
+            "flags": 2
+          },
+          {
+            "index": 68,
+            "key": 242,
+            "name": "rub",
+            "description": "rub a lamp or a stone",
+            "flags": 2
+          },
+          {
+            "index": 69,
+            "key": 71,
+            "name": "run",
+            "description": "prefix: run until something interesting is seen",
+            "flags": 512
+          },
+          {
+            "index": 70,
+            "key": 103,
+            "name": "rush",
+            "description": "prefix: rush until something interesting is seen",
+            "flags": 512
+          },
+          {
+            "index": 71,
+            "key": 83,
+            "name": "save",
+            "description": "save the game and exit",
+            "flags": 41
+          },
+          {
+            "index": 72,
+            "key": 0,
+            "name": "saveoptions",
+            "description": "save the game configuration",
+            "flags": 41
+          },
+          {
+            "index": 73,
+            "key": 115,
+            "name": "search",
+            "description": "search for traps and secret doors",
+            "flags": 129
+          },
+          {
+            "index": 74,
+            "key": 42,
+            "name": "seeall",
+            "description": "show all equipment in use",
+            "flags": 137
+          },
+          {
+            "index": 75,
+            "key": 34,
+            "name": "seeamulet",
+            "description": "show the amulet currently worn",
+            "flags": 137
+          },
+          {
+            "index": 76,
+            "key": 91,
+            "name": "seearmor",
+            "description": "show the armor currently worn",
+            "flags": 137
+          },
+          {
+            "index": 77,
+            "key": 61,
+            "name": "seerings",
+            "description": "show the ring(s) currently worn",
+            "flags": 137
+          },
+          {
+            "index": 78,
+            "key": 40,
+            "name": "seetools",
+            "description": "show the tools currently in use",
+            "flags": 137
+          },
+          {
+            "index": 79,
+            "key": 41,
+            "name": "seeweapon",
+            "description": "show the weapon currently wielded",
+            "flags": 137
+          },
+          {
+            "index": 80,
+            "key": 33,
+            "name": "shell",
+            "description": "leave game to enter a sub-shell ('exit' to come back)",
+            "flags": 41
+          },
+          {
+            "index": 81,
+            "key": 36,
+            "name": "showgold",
+            "description": "show gold, possibly shop credit or debt",
+            "flags": 137
+          },
+          {
+            "index": 82,
+            "key": 43,
+            "name": "showspells",
+            "description": "list and reorder known spells",
+            "flags": 9
+          },
+          {
+            "index": 83,
+            "key": 94,
+            "name": "showtrap",
+            "description": "describe an adjacent, discovered trap",
+            "flags": 9
+          },
+          { "index": 84, "key": 243, "name": "sit", "description": "sit down", "flags": 2 },
+          {
+            "index": 85,
+            "key": 0,
+            "name": "stats",
+            "description": "show memory statistics",
+            "flags": 7
+          },
+          {
+            "index": 86,
+            "key": 26,
+            "name": "suspend",
+            "description": "push game to background ('fg' to come back)",
+            "flags": 41
+          },
+          {
+            "index": 87,
+            "key": 120,
+            "name": "swap",
+            "description": "swap wielded and secondary weapons",
+            "flags": 0
+          },
+          {
+            "index": 88,
+            "key": 84,
+            "name": "takeoff",
+            "description": "take off one piece of armor",
+            "flags": 0
+          },
+          {
+            "index": 89,
+            "key": 65,
+            "name": "takeoffall",
+            "description": "remove all armor",
+            "flags": 0
+          },
+          {
+            "index": 90,
+            "key": 20,
+            "name": "teleport",
+            "description": "teleport around the level",
+            "flags": 129
+          },
+          {
+            "index": 91,
+            "key": 127,
+            "name": "terrain",
+            "description": "view map without monsters or objects obstructing it",
+            "flags": 11
+          },
+          {
+            "index": 92,
+            "key": 0,
+            "name": "therecmdmenu",
+            "description": "menu of commands you can do from here to adjacent spot",
+            "flags": 2058
+          },
+          {
+            "index": 93,
+            "key": 116,
+            "name": "throw",
+            "description": "throw something",
+            "flags": 0
+          },
+          {
+            "index": 94,
+            "key": 0,
+            "name": "timeout",
+            "description": "look at timeout queue and hero's timed intrinsics",
+            "flags": 7
+          },
+          {
+            "index": 95,
+            "key": 212,
+            "name": "tip",
+            "description": "empty a container",
+            "flags": 130
+          },
+          {
+            "index": 96,
+            "key": 0,
+            "name": "toggle",
+            "description": "toggle boolean option",
+            "flags": 16393
+          },
+          {
+            "index": 97,
+            "key": 95,
+            "name": "travel",
+            "description": "travel to a specific location on the map",
+            "flags": 128
+          },
+          {
+            "index": 98,
+            "key": 244,
+            "name": "turn",
+            "description": "turn undead away",
+            "flags": 3
+          },
+          {
+            "index": 99,
+            "key": 88,
+            "name": "twoweapon",
+            "description": "toggle two-weapon combat",
+            "flags": 0
+          },
+          {
+            "index": 100,
+            "key": 245,
+            "name": "untrap",
+            "description": "untrap something",
+            "flags": 2
+          },
+          {
+            "index": 101,
+            "key": 60,
+            "name": "up",
+            "description": "go up a staircase",
+            "flags": 128
+          },
+          {
+            "index": 102,
+            "key": 214,
+            "name": "vanquished",
+            "description": "list vanquished monsters",
+            "flags": 139
+          },
+          {
+            "index": 103,
+            "key": 246,
+            "name": "version",
+            "description": "list compile time options for this version of NetHack",
+            "flags": 11
+          },
+          {
+            "index": 104,
+            "key": 86,
+            "name": "versionshort",
+            "description": "show version and date+time program was built",
+            "flags": 137
+          },
+          {
+            "index": 105,
+            "key": 0,
+            "name": "vision",
+            "description": "show vision array",
+            "flags": 7
+          },
+          {
+            "index": 106,
+            "key": 46,
+            "name": "wait",
+            "description": "rest one move while doing nothing",
+            "flags": 129
+          },
+          {
+            "index": 107,
+            "key": 87,
+            "name": "wear",
+            "description": "wear a piece of armor",
+            "flags": 0
+          },
+          {
+            "index": 108,
+            "key": 38,
+            "name": "whatdoes",
+            "description": "tell what a command does",
+            "flags": 9
+          },
+          {
+            "index": 109,
+            "key": 47,
+            "name": "whatis",
+            "description": "show what type of thing a symbol corresponds to",
+            "flags": 9
+          },
+          {
+            "index": 110,
+            "key": 119,
+            "name": "wield",
+            "description": "wield (put in use) a weapon",
+            "flags": 0
+          },
+          {
+            "index": 111,
+            "key": 247,
+            "name": "wipe",
+            "description": "wipe off your face",
+            "flags": 2
+          },
+          {
+            "index": 112,
+            "key": 0,
+            "name": "wizborn",
+            "description": "show stats of monsters created",
+            "flags": 5
+          },
+          {
+            "index": 113,
+            "key": 0,
+            "name": "wizbury",
+            "description": "bury objs under and around you",
+            "flags": 7
+          },
+          {
+            "index": 114,
+            "key": 0,
+            "name": "wizcast",
+            "description": "cast any spell",
+            "flags": 5
+          },
+          {
+            "index": 115,
+            "key": 0,
+            "name": "wizcustom",
+            "description": "show customized glyphs",
+            "flags": 37
+          },
+          {
+            "index": 116,
+            "key": 5,
+            "name": "wizdetect",
+            "description": "reveal hidden things within a small radius",
+            "flags": 5
+          },
+          {
+            "index": 117,
+            "key": 0,
+            "name": "wizdispmacros",
+            "description": "validate the display macro ranges",
+            "flags": 7
+          },
+          {
+            "index": 118,
+            "key": 0,
+            "name": "wizfliplevel",
+            "description": "flip the level",
+            "flags": 5
+          },
+          {
+            "index": 119,
+            "key": 7,
+            "name": "wizgenesis",
+            "description": "create a monster",
+            "flags": 5
+          },
+          {
+            "index": 120,
+            "key": 9,
+            "name": "wizidentify",
+            "description": "identify all items in inventory",
+            "flags": 5
+          },
+          {
+            "index": 121,
+            "key": 0,
+            "name": "wizintrinsic",
+            "description": "set an intrinsic",
+            "flags": 7
+          },
+          {
+            "index": 122,
+            "key": 0,
+            "name": "wizkill",
+            "description": "slay a monster",
+            "flags": 167
+          },
+          {
+            "index": 123,
+            "key": 22,
+            "name": "wizlevelport",
+            "description": "teleport to another level",
+            "flags": 133
+          },
+          {
+            "index": 124,
+            "key": 0,
+            "name": "wizloaddes",
+            "description": "load and execute a des-file lua script",
+            "flags": 37
+          },
+          {
+            "index": 125,
+            "key": 0,
+            "name": "wizloadlua",
+            "description": "load and execute a lua script",
+            "flags": 37
+          },
+          {
+            "index": 126,
+            "key": 0,
+            "name": "wizobjprobs",
+            "description": "list object generation probabilities",
+            "flags": 5
+          },
+          {
+            "index": 127,
+            "key": 0,
+            "name": "wizmakemap",
+            "description": "recreate the current level",
+            "flags": 5
+          },
+          { "index": 128, "key": 6, "name": "wizmap", "description": "map the level", "flags": 5 },
+          {
+            "index": 129,
+            "key": 0,
+            "name": "wizmondiff",
+            "description": "validate the difficulty ratings of monsters",
+            "flags": 7
+          },
+          {
+            "index": 130,
+            "key": 0,
+            "name": "wizrumorcheck",
+            "description": "verify rumor boundaries",
+            "flags": 7
+          },
+          {
+            "index": 131,
+            "key": 0,
+            "name": "wizseenv",
+            "description": "show map locations' seen vectors",
+            "flags": 7
+          },
+          {
+            "index": 132,
+            "key": 0,
+            "name": "wizshownhuuid",
+            "description": "show NHUUID for this game",
+            "flags": 6
+          },
+          {
+            "index": 133,
+            "key": 0,
+            "name": "wizsmell",
+            "description": "smell monster",
+            "flags": 7
+          },
+          {
+            "index": 134,
+            "key": 0,
+            "name": "wiztelekinesis",
+            "description": "telekinesis",
+            "flags": 7
+          },
+          {
+            "index": 135,
+            "key": 0,
+            "name": "wizwhere",
+            "description": "show locations of special levels",
+            "flags": 7
+          },
+          {
+            "index": 136,
+            "key": 23,
+            "name": "wizwish",
+            "description": "wish for something",
+            "flags": 133
+          },
+          { "index": 137, "key": 0, "name": "wmode", "description": "show wall modes", "flags": 7 },
+          { "index": 138, "key": 122, "name": "zap", "description": "zap a wand", "flags": 0 },
+          {
+            "index": 139,
+            "key": 0,
+            "name": "movewest",
+            "description": "move west (screen left)",
+            "flags": 1408
+          },
+          {
+            "index": 140,
+            "key": 0,
+            "name": "movenorthwest",
+            "description": "move northwest (screen upper left)",
+            "flags": 1408
+          },
+          {
+            "index": 141,
+            "key": 0,
+            "name": "movenorth",
+            "description": "move north (screen up)",
+            "flags": 1408
+          },
+          {
+            "index": 142,
+            "key": 0,
+            "name": "movenortheast",
+            "description": "move northeast (screen upper right)",
+            "flags": 1408
+          },
+          {
+            "index": 143,
+            "key": 0,
+            "name": "moveeast",
+            "description": "move east (screen right)",
+            "flags": 1408
+          },
+          {
+            "index": 144,
+            "key": 0,
+            "name": "movesoutheast",
+            "description": "move southeast (screen lower right)",
+            "flags": 1408
+          },
+          {
+            "index": 145,
+            "key": 0,
+            "name": "movesouth",
+            "description": "move south (screen down)",
+            "flags": 1408
+          },
+          {
+            "index": 146,
+            "key": 0,
+            "name": "movesouthwest",
+            "description": "move southwest (screen lower left)",
+            "flags": 1408
+          },
+          {
+            "index": 147,
+            "key": 0,
+            "name": "rushwest",
+            "description": "rush west (screen left)",
+            "flags": 1152
+          },
+          {
+            "index": 148,
+            "key": 0,
+            "name": "rushnorthwest",
+            "description": "rush northwest (screen upper left)",
+            "flags": 1152
+          },
+          {
+            "index": 149,
+            "key": 0,
+            "name": "rushnorth",
+            "description": "rush north (screen up)",
+            "flags": 1152
+          },
+          {
+            "index": 150,
+            "key": 0,
+            "name": "rushnortheast",
+            "description": "rush northeast (screen upper right)",
+            "flags": 1152
+          },
+          {
+            "index": 151,
+            "key": 0,
+            "name": "rusheast",
+            "description": "rush east (screen right)",
+            "flags": 1152
+          },
+          {
+            "index": 152,
+            "key": 0,
+            "name": "rushsoutheast",
+            "description": "rush southeast (screen lower right)",
+            "flags": 1152
+          },
+          {
+            "index": 153,
+            "key": 0,
+            "name": "rushsouth",
+            "description": "rush south (screen down)",
+            "flags": 1152
+          },
+          {
+            "index": 154,
+            "key": 0,
+            "name": "rushsouthwest",
+            "description": "rush southwest (screen lower left)",
+            "flags": 1152
+          },
+          {
+            "index": 155,
+            "key": 0,
+            "name": "runwest",
+            "description": "run west (screen left)",
+            "flags": 1152
+          },
+          {
+            "index": 156,
+            "key": 0,
+            "name": "runnorthwest",
+            "description": "run northwest (screen upper left)",
+            "flags": 1152
+          },
+          {
+            "index": 157,
+            "key": 0,
+            "name": "runnorth",
+            "description": "run north (screen up)",
+            "flags": 1152
+          },
+          {
+            "index": 158,
+            "key": 0,
+            "name": "runnortheast",
+            "description": "run northeast (screen upper right)",
+            "flags": 1152
+          },
+          {
+            "index": 159,
+            "key": 0,
+            "name": "runeast",
+            "description": "run east (screen right)",
+            "flags": 1152
+          },
+          {
+            "index": 160,
+            "key": 0,
+            "name": "runsoutheast",
+            "description": "run southeast (screen lower right)",
+            "flags": 1152
+          },
+          {
+            "index": 161,
+            "key": 0,
+            "name": "runsouth",
+            "description": "run south (screen down)",
+            "flags": 1152
+          },
+          {
+            "index": 162,
+            "key": 0,
+            "name": "runsouthwest",
+            "description": "run southwest (screen lower left)",
+            "flags": 1152
+          },
+          { "index": 163, "key": 0, "name": "clicklook", "description": "", "flags": 2112 },
+          { "index": 164, "key": 0, "name": "mouseaction", "description": "", "flags": 2112 },
+          { "index": 165, "key": 0, "name": "altadjust", "description": "", "flags": 64 },
+          { "index": 166, "key": 0, "name": "altdip", "description": "", "flags": 64 },
+          { "index": 167, "key": 0, "name": "alttakeoff", "description": "", "flags": 64 },
+          { "index": 168, "key": 0, "name": "altunwield", "description": "", "flags": 64 }
+        ]
+      }
+    },
+    {
+      "kind": "events",
+      "events": [
+        { "type": "initWindows" },
+        { "type": "createWindow", "window": 1, "kind": "message" },
+        { "type": "statusInit" },
+        { "type": "createWindow", "window": 2, "kind": "map" },
+        { "type": "createWindow", "window": 3, "kind": "menu" },
+        { "type": "startMenu", "window": 3, "permanentInventory": true },
+        { "type": "endMenu", "window": 3, "prompt": null },
+        { "type": "displayWindow", "window": 1 },
+        { "type": "displayWindow", "window": 2 }
+      ]
+    },
+    { "kind": "request", "request": { "type": "playerSelection" } },
+    { "kind": "reply", "reply": { "useEngineMenus": true } },
+    {
+      "kind": "request",
+      "request": {
+        "type": "yesNo",
+        "question": "Shall I pick character's race, role, gender and alignment for you? [ynaq]",
+        "choices": null,
+        "defaultChoice": ""
+      }
+    },
+    { "kind": "reply", "reply": { "answer": "y" } },
+    {
+      "kind": "events",
+      "events": [
+        { "type": "createWindow", "window": 4, "kind": "menu" },
+        { "type": "startMenu", "window": 4, "permanentInventory": false },
+        {
+          "type": "addMenuEntry",
+          "window": 4,
+          "entry": {
+            "identifier": null,
+            "accelerator": "\u0000",
+            "groupAccelerator": "\u0000",
+            "attributes": { "style": "none", "urgent": false, "noHistory": false },
+            "color": 8,
+            "text": "wizard the neutral male human Tourist",
+            "glyph": null,
+            "preselected": false
+          }
+        },
+        {
+          "type": "addMenuEntry",
+          "window": 4,
+          "entry": {
+            "identifier": null,
+            "accelerator": "\u0000",
+            "groupAccelerator": "\u0000",
+            "attributes": { "style": "none", "urgent": false, "noHistory": false },
+            "color": 8,
+            "text": "",
+            "glyph": null,
+            "preselected": false
+          }
+        },
+        {
+          "type": "addMenuEntry",
+          "window": 4,
+          "entry": {
+            "identifier": 1,
+            "accelerator": "y",
+            "groupAccelerator": "\u0000",
+            "attributes": { "style": "none", "urgent": false, "noHistory": false },
+            "color": 8,
+            "text": "Yes; start game",
+            "glyph": null,
+            "preselected": true
+          }
+        },
+        {
+          "type": "addMenuEntry",
+          "window": 4,
+          "entry": {
+            "identifier": 2,
+            "accelerator": "n",
+            "groupAccelerator": "\u0000",
+            "attributes": { "style": "none", "urgent": false, "noHistory": false },
+            "color": 8,
+            "text": "No; choose role again",
+            "glyph": null,
+            "preselected": false
+          }
+        },
+        {
+          "type": "addMenuEntry",
+          "window": 4,
+          "entry": {
+            "identifier": -1,
+            "accelerator": "q",
+            "groupAccelerator": "\u0000",
+            "attributes": { "style": "none", "urgent": false, "noHistory": false },
+            "color": 8,
+            "text": "Quit",
+            "glyph": null,
+            "preselected": false
+          }
+        },
+        { "type": "endMenu", "window": 4, "prompt": "Is this ok? [ynq]" }
+      ]
+    },
+    { "kind": "request", "request": { "type": "selectMenu", "window": 4, "mode": "one" } },
+    { "kind": "reply", "reply": { "selections": [{ "identifier": 1, "count": null }] } },
+    {
+      "kind": "events",
+      "events": [
+        { "type": "destroyWindow", "window": 4 },
+        { "type": "clipAround", "x": 70, "y": 7 },
+        { "type": "displayWindow", "window": 1 },
+        { "type": "clearWindow", "window": 2 },
+        {
+          "type": "statusUpdate",
+          "field": "TITLE",
+          "text": "Wizard the Rambler            ",
+          "glyph": null,
+          "change": 0,
+          "percent": 0,
+          "highlight": { "color": 8, "attribute": 0 }
+        },
+        {
+          "type": "statusUpdate",
+          "field": "STR",
+          "text": "12",
+          "glyph": null,
+          "change": 0,
+          "percent": 0,
+          "highlight": { "color": 8, "attribute": 0 }
+        },
+        {
+          "type": "statusUpdate",
+          "field": "DX",
+          "text": "10",
+          "glyph": null,
+          "change": 0,
+          "percent": 0,
+          "highlight": { "color": 8, "attribute": 0 }
+        },
+        {
+          "type": "statusUpdate",
+          "field": "CO",
+          "text": "12",
+          "glyph": null,
+          "change": 0,
+          "percent": 0,
+          "highlight": { "color": 8, "attribute": 0 }
+        },
+        {
+          "type": "statusUpdate",
+          "field": "IN",
+          "text": "16",
+          "glyph": null,
+          "change": 0,
+          "percent": 0,
+          "highlight": { "color": 8, "attribute": 0 }
+        },
+        {
+          "type": "statusUpdate",
+          "field": "WI",
+          "text": "11",
+          "glyph": null,
+          "change": 0,
+          "percent": 0,
+          "highlight": { "color": 8, "attribute": 0 }
+        },
+        {
+          "type": "statusUpdate",
+          "field": "CH",
+          "text": "14",
+          "glyph": null,
+          "change": 0,
+          "percent": 0,
+          "highlight": { "color": 8, "attribute": 0 }
+        },
+        {
+          "type": "statusUpdate",
+          "field": "ALIGN",
+          "text": "Neutral",
+          "glyph": null,
+          "change": 0,
+          "percent": 0,
+          "highlight": { "color": 8, "attribute": 0 }
+        },
+        {
+          "type": "statusUpdate",
+          "field": "CAP",
+          "text": "",
+          "glyph": null,
+          "change": 0,
+          "percent": 0,
+          "highlight": { "color": 8, "attribute": 0 }
+        },
+        {
+          "type": "statusUpdate",
+          "field": "GOLD",
+          "text": ":638",
+          "glyph": 3886,
+          "change": 0,
+          "percent": 0,
+          "highlight": { "color": 8, "attribute": 0 }
+        },
+        {
+          "type": "statusUpdate",
+          "field": "ENE",
+          "text": "2",
+          "glyph": null,
+          "change": 0,
+          "percent": 0,
+          "highlight": { "color": 8, "attribute": 0 }
+        },
+        {
+          "type": "statusUpdate",
+          "field": "ENEMAX",
+          "text": "2",
+          "glyph": null,
+          "change": 0,
+          "percent": 0,
+          "highlight": { "color": 8, "attribute": 0 }
+        },
+        {
+          "type": "statusUpdate",
+          "field": "XP",
+          "text": "1",
+          "glyph": null,
+          "change": 0,
+          "percent": 0,
+          "highlight": { "color": 8, "attribute": 0 }
+        },
+        {
+          "type": "statusUpdate",
+          "field": "AC",
+          "text": "0",
+          "glyph": null,
+          "change": 0,
+          "percent": 0,
+          "highlight": { "color": 8, "attribute": 0 }
+        },
+        {
+          "type": "statusUpdate",
+          "field": "TIME",
+          "text": "1",
+          "glyph": null,
+          "change": 0,
+          "percent": 0,
+          "highlight": { "color": 8, "attribute": 0 }
+        },
+        {
+          "type": "statusUpdate",
+          "field": "HUNGER",
+          "text": "",
+          "glyph": null,
+          "change": 0,
+          "percent": 0,
+          "highlight": { "color": 8, "attribute": 0 }
+        },
+        {
+          "type": "statusUpdate",
+          "field": "HP",
+          "text": "10",
+          "glyph": null,
+          "change": 0,
+          "percent": 0,
+          "highlight": { "color": 8, "attribute": 0 }
+        },
+        {
+          "type": "statusUpdate",
+          "field": "HPMAX",
+          "text": "10",
+          "glyph": null,
+          "change": 0,
+          "percent": 0,
+          "highlight": { "color": 8, "attribute": 0 }
+        },
+        {
+          "type": "statusUpdate",
+          "field": "LEVELDESC",
+          "text": "Dlvl:1  ",
+          "glyph": null,
+          "change": 0,
+          "percent": 0,
+          "highlight": { "color": 8, "attribute": 0 }
+        },
+        {
+          "type": "statusUpdate",
+          "field": "EXP",
+          "text": "0",
+          "glyph": null,
+          "change": 0,
+          "percent": 0,
+          "highlight": { "color": 8, "attribute": 0 }
+        },
+        {
+          "type": "statusConditions",
+          "conditions": 0,
+          "colorMasks": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        },
+        { "type": "statusReset" },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 67,
+          "y": 4,
+          "glyph": {
+            "glyph": 3932,
+            "symbol": "+",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 3,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 68,
+          "y": 4,
+          "glyph": {
+            "glyph": 3931,
+            "symbol": "-",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 2,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 69,
+          "y": 4,
+          "glyph": {
+            "glyph": 3931,
+            "symbol": "-",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 2,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 70,
+          "y": 4,
+          "glyph": {
+            "glyph": 3931,
+            "symbol": "-",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 2,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 71,
+          "y": 4,
+          "glyph": {
+            "glyph": 3933,
+            "symbol": "+",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 4,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 67,
+          "y": 5,
+          "glyph": {
+            "glyph": 3930,
+            "symbol": "|",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 1,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 68,
+          "y": 5,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 69,
+          "y": 5,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 70,
+          "y": 5,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 71,
+          "y": 5,
+          "glyph": {
+            "glyph": 3930,
+            "symbol": "|",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 1,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 67,
+          "y": 6,
+          "glyph": {
+            "glyph": 3988,
+            "symbol": "+",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 3,
+            "symbolIndex": 15,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 68,
+          "y": 6,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 69,
+          "y": 6,
+          "glyph": {
+            "glyph": 782,
+            "symbol": "d",
+            "frameColor": 8,
+            "flags": 4112,
+            "color": 15,
+            "symbolIndex": 127,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 70,
+          "y": 6,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 71,
+          "y": 6,
+          "glyph": {
+            "glyph": 3930,
+            "symbol": "|",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 1,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 67,
+          "y": 7,
+          "glyph": {
+            "glyph": 3930,
+            "symbol": "|",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 1,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 68,
+          "y": 7,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 69,
+          "y": 7,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 70,
+          "y": 7,
+          "glyph": {
+            "glyph": 341,
+            "symbol": "@",
+            "frameColor": 8,
+            "flags": 4097,
+            "color": 15,
+            "symbolIndex": 176,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 71,
+          "y": 7,
+          "glyph": {
+            "glyph": 3930,
+            "symbol": "|",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 1,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 67,
+          "y": 8,
+          "glyph": {
+            "glyph": 3934,
+            "symbol": "+",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 5,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 68,
+          "y": 8,
+          "glyph": {
+            "glyph": 3931,
+            "symbol": "-",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 2,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 69,
+          "y": 8,
+          "glyph": {
+            "glyph": 3931,
+            "symbol": "-",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 2,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 70,
+          "y": 8,
+          "glyph": {
+            "glyph": 3985,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 12,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 71,
+          "y": 8,
+          "glyph": {
+            "glyph": 3935,
+            "symbol": "+",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 6,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        { "type": "moveCursor", "window": 2, "x": 70, "y": 7 },
+        { "type": "displayWindow", "window": 2 },
+        { "type": "createWindow", "window": 5, "kind": "menu" },
+        {
+          "type": "putString",
+          "window": 5,
+          "attributes": { "style": "none", "urgent": false, "noHistory": false },
+          "text": "It is written in the Book of The Lady:"
+        },
+        {
+          "type": "putString",
+          "window": 5,
+          "attributes": { "style": "none", "urgent": false, "noHistory": false },
+          "text": ""
+        },
+        {
+          "type": "putString",
+          "window": 5,
+          "attributes": { "style": "none", "urgent": false, "noHistory": false },
+          "text": "    After the Creation, the cruel god Moloch rebelled"
+        },
+        {
+          "type": "putString",
+          "window": 5,
+          "attributes": { "style": "none", "urgent": false, "noHistory": false },
+          "text": "    against the authority of Marduk the Creator."
+        },
+        {
+          "type": "putString",
+          "window": 5,
+          "attributes": { "style": "none", "urgent": false, "noHistory": false },
+          "text": "    Moloch stole from Marduk the most powerful of all"
+        },
+        {
+          "type": "putString",
+          "window": 5,
+          "attributes": { "style": "none", "urgent": false, "noHistory": false },
+          "text": "    the artifacts of the gods, the Amulet of Yendor,"
+        },
+        {
+          "type": "putString",
+          "window": 5,
+          "attributes": { "style": "none", "urgent": false, "noHistory": false },
+          "text": "    and he hid it in the dark cavities of Gehennom, the"
+        },
+        {
+          "type": "putString",
+          "window": 5,
+          "attributes": { "style": "none", "urgent": false, "noHistory": false },
+          "text": "    Under World, where he now lurks, and bides his time."
+        },
+        {
+          "type": "putString",
+          "window": 5,
+          "attributes": { "style": "none", "urgent": false, "noHistory": false },
+          "text": ""
+        },
+        {
+          "type": "putString",
+          "window": 5,
+          "attributes": { "style": "none", "urgent": false, "noHistory": false },
+          "text": "Your goddess The Lady seeks to possess the Amulet, and with it"
+        },
+        {
+          "type": "putString",
+          "window": 5,
+          "attributes": { "style": "none", "urgent": false, "noHistory": false },
+          "text": "to gain deserved ascendance over the other gods."
+        },
+        {
+          "type": "putString",
+          "window": 5,
+          "attributes": { "style": "none", "urgent": false, "noHistory": false },
+          "text": ""
+        },
+        {
+          "type": "putString",
+          "window": 5,
+          "attributes": { "style": "none", "urgent": false, "noHistory": false },
+          "text": "You, a newly trained Rambler, have been heralded"
+        },
+        {
+          "type": "putString",
+          "window": 5,
+          "attributes": { "style": "none", "urgent": false, "noHistory": false },
+          "text": "from birth as the instrument of The Lady.  You are destined"
+        },
+        {
+          "type": "putString",
+          "window": 5,
+          "attributes": { "style": "none", "urgent": false, "noHistory": false },
+          "text": "to recover the Amulet for your deity, or die in the"
+        },
+        {
+          "type": "putString",
+          "window": 5,
+          "attributes": { "style": "none", "urgent": false, "noHistory": false },
+          "text": "attempt.  Your hour of destiny has come.  For the sake"
+        },
+        {
+          "type": "putString",
+          "window": 5,
+          "attributes": { "style": "none", "urgent": false, "noHistory": false },
+          "text": "of us all:  Go bravely with The Lady!"
+        }
+      ]
+    },
+    { "kind": "request", "request": { "type": "displayWindowBlocking", "window": 5 } },
+    { "kind": "reply", "reply": { "dismissed": true } },
+    {
+      "kind": "events",
+      "events": [
+        { "type": "destroyWindow", "window": 5 },
+        {
+          "type": "putMessageHistory",
+          "text": "[The Lady has chosen you to recover the Amulet of Yendor for Her.]",
+          "restoring": false
+        },
+        {
+          "type": "rawPrint",
+          "text": "Aloha wizard, welcome to NetHack!  You are a neutral male human Tourist.",
+          "bold": false
+        },
+        { "type": "rawPrint", "text": "Be careful!  New moon tonight.", "bold": false },
+        { "type": "createWindow", "window": 6, "kind": "menu" },
+        { "type": "startMenu", "window": 6, "permanentInventory": false },
+        {
+          "type": "addMenuEntry",
+          "window": 6,
+          "entry": {
+            "identifier": 121,
+            "accelerator": "y",
+            "groupAccelerator": "\u0000",
+            "attributes": { "style": "none", "urgent": false, "noHistory": false },
+            "color": 8,
+            "text": "Yes, do a tutorial",
+            "glyph": null,
+            "preselected": false
+          }
+        },
+        {
+          "type": "addMenuEntry",
+          "window": 6,
+          "entry": {
+            "identifier": 110,
+            "accelerator": "n",
+            "groupAccelerator": "\u0000",
+            "attributes": { "style": "none", "urgent": false, "noHistory": false },
+            "color": 8,
+            "text": "No, just start play",
+            "glyph": null,
+            "preselected": false
+          }
+        },
+        {
+          "type": "addMenuEntry",
+          "window": 6,
+          "entry": {
+            "identifier": null,
+            "accelerator": "\u0000",
+            "groupAccelerator": "\u0000",
+            "attributes": { "style": "none", "urgent": false, "noHistory": false },
+            "color": 8,
+            "text": "",
+            "glyph": null,
+            "preselected": false
+          }
+        },
+        {
+          "type": "addMenuEntry",
+          "window": 6,
+          "entry": {
+            "identifier": null,
+            "accelerator": "\u0000",
+            "groupAccelerator": "\u0000",
+            "attributes": { "style": "none", "urgent": false, "noHistory": false },
+            "color": 8,
+            "text": "Put \"OPTIONS=!tutorial\" in .nethackrc to skip this query.",
+            "glyph": null,
+            "preselected": false
+          }
+        },
+        { "type": "endMenu", "window": 6, "prompt": "Do you want a tutorial?" }
+      ]
+    },
+    { "kind": "request", "request": { "type": "selectMenu", "window": 6, "mode": "one" } },
+    { "kind": "reply", "reply": { "selections": [{ "identifier": 110, "count": null }] } },
+    {
+      "kind": "events",
+      "events": [
+        { "type": "destroyWindow", "window": 6 },
+        {
+          "type": "statusUpdate",
+          "field": "GOLD",
+          "text": ":638",
+          "glyph": 3886,
+          "change": 0,
+          "percent": 0,
+          "highlight": { "color": 8, "attribute": 0 }
+        },
+        {
+          "type": "statusUpdate",
+          "field": "ENE",
+          "text": "2",
+          "glyph": null,
+          "change": 0,
+          "percent": 0,
+          "highlight": { "color": 8, "attribute": 0 }
+        },
+        {
+          "type": "statusUpdate",
+          "field": "ENEMAX",
+          "text": "2",
+          "glyph": null,
+          "change": 0,
+          "percent": 0,
+          "highlight": { "color": 8, "attribute": 0 }
+        },
+        {
+          "type": "statusUpdate",
+          "field": "XP",
+          "text": "1",
+          "glyph": null,
+          "change": 0,
+          "percent": 0,
+          "highlight": { "color": 8, "attribute": 0 }
+        },
+        {
+          "type": "statusUpdate",
+          "field": "AC",
+          "text": "10",
+          "glyph": null,
+          "change": 0,
+          "percent": 0,
+          "highlight": { "color": 8, "attribute": 0 }
+        },
+        {
+          "type": "statusUpdate",
+          "field": "TIME",
+          "text": "1",
+          "glyph": null,
+          "change": 0,
+          "percent": 0,
+          "highlight": { "color": 8, "attribute": 0 }
+        },
+        {
+          "type": "statusUpdate",
+          "field": "HUNGER",
+          "text": "",
+          "glyph": null,
+          "change": 0,
+          "percent": 0,
+          "highlight": { "color": 8, "attribute": 0 }
+        },
+        {
+          "type": "statusUpdate",
+          "field": "HP",
+          "text": "10",
+          "glyph": null,
+          "change": 0,
+          "percent": 0,
+          "highlight": { "color": 8, "attribute": 0 }
+        },
+        {
+          "type": "statusUpdate",
+          "field": "HPMAX",
+          "text": "10",
+          "glyph": null,
+          "change": 0,
+          "percent": 0,
+          "highlight": { "color": 8, "attribute": 0 }
+        },
+        {
+          "type": "statusUpdate",
+          "field": "LEVELDESC",
+          "text": "Dlvl:1  ",
+          "glyph": null,
+          "change": 0,
+          "percent": 0,
+          "highlight": { "color": 8, "attribute": 0 }
+        },
+        {
+          "type": "statusUpdate",
+          "field": "EXP",
+          "text": "0",
+          "glyph": null,
+          "change": 0,
+          "percent": 0,
+          "highlight": { "color": 8, "attribute": 0 }
+        },
+        {
+          "type": "statusConditions",
+          "conditions": 0,
+          "colorMasks": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        },
+        { "type": "statusReset" },
+        { "type": "moveCursor", "window": 2, "x": 70, "y": 7 },
+        { "type": "displayWindow", "window": 2 },
+        { "type": "moveCursor", "window": 2, "x": 70, "y": 7 },
+        { "type": "displayWindow", "window": 2 }
+      ]
+    },
+    { "kind": "request", "request": { "type": "getKeyOrPosition" } },
+    { "kind": "reply", "reply": { "key": 108 } },
+    {
+      "kind": "events",
+      "events": [
+        { "type": "clearWindow", "window": 1 },
+        { "type": "clipAround", "x": 70, "y": 7 },
+        { "type": "moveCursor", "window": 2, "x": 70, "y": 7 },
+        { "type": "displayWindow", "window": 2 },
+        { "type": "moveCursor", "window": 2, "x": 70, "y": 7 },
+        { "type": "displayWindow", "window": 2 }
+      ]
+    },
+    { "kind": "request", "request": { "type": "getKeyOrPosition" } },
+    { "kind": "reply", "reply": { "key": 106 } },
+    {
+      "kind": "events",
+      "events": [
+        { "type": "clearWindow", "window": 1 },
+        { "type": "clipAround", "x": 70, "y": 8 },
+        { "type": "clipAround", "x": 70, "y": 8 },
+        { "type": "rawPrint", "text": "You hear someone counting gold coins.", "bold": false },
+        {
+          "type": "statusUpdate",
+          "field": "TIME",
+          "text": "2",
+          "glyph": null,
+          "change": 1,
+          "percent": 0,
+          "highlight": { "color": 8, "attribute": 0 }
+        },
+        { "type": "statusFlush" },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 70,
+          "y": 7,
+          "glyph": {
+            "glyph": 4002,
+            "symbol": "<",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 11,
+            "symbolIndex": 29,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 70,
+          "y": 8,
+          "glyph": {
+            "glyph": 341,
+            "symbol": "@",
+            "frameColor": 8,
+            "flags": 4097,
+            "color": 15,
+            "symbolIndex": 176,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 69,
+          "y": 9,
+          "glyph": {
+            "glyph": 3929,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 8,
+            "symbolIndex": 0,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 70,
+          "y": 9,
+          "glyph": {
+            "glyph": 3995,
+            "symbol": "#",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 22,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 71,
+          "y": 9,
+          "glyph": {
+            "glyph": 3929,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 8,
+            "symbolIndex": 0,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        { "type": "moveCursor", "window": 2, "x": 70, "y": 8 },
+        { "type": "displayWindow", "window": 2 },
+        { "type": "moveCursor", "window": 2, "x": 70, "y": 8 },
+        { "type": "displayWindow", "window": 2 }
+      ]
+    },
+    { "kind": "request", "request": { "type": "getKeyOrPosition" } },
+    { "kind": "reply", "reply": { "key": 22 } },
+    { "kind": "events", "events": [{ "type": "clearWindow", "window": 1 }] },
+    {
+      "kind": "request",
+      "request": { "type": "getLine", "question": "To what level do you want to teleport?" }
+    },
+    { "kind": "reply", "reply": { "text": "2" } },
+    {
+      "kind": "events",
+      "events": [
+        { "type": "clipAround", "x": 58, "y": 6 },
+        { "type": "displayWindow", "window": 1 },
+        { "type": "clearWindow", "window": 2 },
+        {
+          "type": "statusUpdate",
+          "field": "LEVELDESC",
+          "text": "Dlvl:2  ",
+          "glyph": null,
+          "change": -1,
+          "percent": 0,
+          "highlight": { "color": 8, "attribute": 0 }
+        },
+        { "type": "statusReset" },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 52,
+          "y": 1,
+          "glyph": {
+            "glyph": 3932,
+            "symbol": "+",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 3,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 53,
+          "y": 1,
+          "glyph": {
+            "glyph": 3931,
+            "symbol": "-",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 2,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 54,
+          "y": 1,
+          "glyph": {
+            "glyph": 3931,
+            "symbol": "-",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 2,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 55,
+          "y": 1,
+          "glyph": {
+            "glyph": 3931,
+            "symbol": "-",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 2,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 56,
+          "y": 1,
+          "glyph": {
+            "glyph": 3931,
+            "symbol": "-",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 2,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 57,
+          "y": 1,
+          "glyph": {
+            "glyph": 3931,
+            "symbol": "-",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 2,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 58,
+          "y": 1,
+          "glyph": {
+            "glyph": 3931,
+            "symbol": "-",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 2,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 59,
+          "y": 1,
+          "glyph": {
+            "glyph": 3931,
+            "symbol": "-",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 2,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 60,
+          "y": 1,
+          "glyph": {
+            "glyph": 3931,
+            "symbol": "-",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 2,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 61,
+          "y": 1,
+          "glyph": {
+            "glyph": 3933,
+            "symbol": "+",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 4,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 52,
+          "y": 2,
+          "glyph": {
+            "glyph": 3930,
+            "symbol": "|",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 1,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 53,
+          "y": 2,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 54,
+          "y": 2,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 55,
+          "y": 2,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 56,
+          "y": 2,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 57,
+          "y": 2,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 58,
+          "y": 2,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 59,
+          "y": 2,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 60,
+          "y": 2,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 61,
+          "y": 2,
+          "glyph": {
+            "glyph": 3930,
+            "symbol": "|",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 1,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 52,
+          "y": 3,
+          "glyph": {
+            "glyph": 3988,
+            "symbol": "+",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 3,
+            "symbolIndex": 15,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 53,
+          "y": 3,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 54,
+          "y": 3,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 55,
+          "y": 3,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 56,
+          "y": 3,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 57,
+          "y": 3,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 58,
+          "y": 3,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 59,
+          "y": 3,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 60,
+          "y": 3,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 61,
+          "y": 3,
+          "glyph": {
+            "glyph": 3930,
+            "symbol": "|",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 1,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 52,
+          "y": 4,
+          "glyph": {
+            "glyph": 3930,
+            "symbol": "|",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 1,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 53,
+          "y": 4,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 54,
+          "y": 4,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 55,
+          "y": 4,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 56,
+          "y": 4,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 57,
+          "y": 4,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 58,
+          "y": 4,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 59,
+          "y": 4,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 60,
+          "y": 4,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 61,
+          "y": 4,
+          "glyph": {
+            "glyph": 3930,
+            "symbol": "|",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 1,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 52,
+          "y": 5,
+          "glyph": {
+            "glyph": 3930,
+            "symbol": "|",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 1,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 53,
+          "y": 5,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 54,
+          "y": 5,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 55,
+          "y": 5,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 56,
+          "y": 5,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 57,
+          "y": 5,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 58,
+          "y": 5,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 59,
+          "y": 5,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 60,
+          "y": 5,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 61,
+          "y": 5,
+          "glyph": {
+            "glyph": 3930,
+            "symbol": "|",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 1,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 52,
+          "y": 6,
+          "glyph": {
+            "glyph": 3985,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 12,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 53,
+          "y": 6,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 54,
+          "y": 6,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 55,
+          "y": 6,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 56,
+          "y": 6,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 57,
+          "y": 6,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 58,
+          "y": 6,
+          "glyph": {
+            "glyph": 341,
+            "symbol": "@",
+            "frameColor": 8,
+            "flags": 4097,
+            "color": 15,
+            "symbolIndex": 176,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 59,
+          "y": 6,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 60,
+          "y": 6,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 61,
+          "y": 6,
+          "glyph": {
+            "glyph": 3930,
+            "symbol": "|",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 1,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 52,
+          "y": 7,
+          "glyph": {
+            "glyph": 3930,
+            "symbol": "|",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 1,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 53,
+          "y": 7,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 54,
+          "y": 7,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 55,
+          "y": 7,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 56,
+          "y": 7,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 57,
+          "y": 7,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 58,
+          "y": 7,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 59,
+          "y": 7,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 60,
+          "y": 7,
+          "glyph": {
+            "glyph": 3992,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 19,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 61,
+          "y": 7,
+          "glyph": {
+            "glyph": 3930,
+            "symbol": "|",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 1,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 52,
+          "y": 8,
+          "glyph": {
+            "glyph": 3934,
+            "symbol": "+",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 5,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 53,
+          "y": 8,
+          "glyph": {
+            "glyph": 3931,
+            "symbol": "-",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 2,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 54,
+          "y": 8,
+          "glyph": {
+            "glyph": 3931,
+            "symbol": "-",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 2,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 55,
+          "y": 8,
+          "glyph": {
+            "glyph": 3931,
+            "symbol": "-",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 2,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 56,
+          "y": 8,
+          "glyph": {
+            "glyph": 3931,
+            "symbol": "-",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 2,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 57,
+          "y": 8,
+          "glyph": {
+            "glyph": 3931,
+            "symbol": "-",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 2,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 58,
+          "y": 8,
+          "glyph": {
+            "glyph": 3985,
+            "symbol": ".",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 12,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 59,
+          "y": 8,
+          "glyph": {
+            "glyph": 3931,
+            "symbol": "-",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 2,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 60,
+          "y": 8,
+          "glyph": {
+            "glyph": 3931,
+            "symbol": "-",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 2,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        {
+          "type": "printGlyph",
+          "window": 2,
+          "x": 61,
+          "y": 8,
+          "glyph": {
+            "glyph": 3935,
+            "symbol": "+",
+            "frameColor": 8,
+            "flags": 0,
+            "color": 7,
+            "symbolIndex": 6,
+            "tileIndex": 0
+          },
+          "background": {
+            "glyph": 9622,
+            "symbol": " ",
+            "frameColor": 8,
+            "flags": 2048,
+            "color": 8,
+            "symbolIndex": 191,
+            "tileIndex": 0
+          }
+        },
+        { "type": "moveCursor", "window": 2, "x": 58, "y": 6 },
+        { "type": "displayWindow", "window": 2 },
+        { "type": "rawPrint", "text": "You materialize on a different level!", "bold": false },
+        { "type": "clipAround", "x": 58, "y": 6 },
+        {
+          "type": "statusUpdate",
+          "field": "EXP",
+          "text": "2",
+          "glyph": null,
+          "change": 1,
+          "percent": 0,
+          "highlight": { "color": 8, "attribute": 0 }
+        },
+        { "type": "statusFlush" },
+        { "type": "moveCursor", "window": 2, "x": 58, "y": 6 },
+        { "type": "displayWindow", "window": 2 },
+        { "type": "moveCursor", "window": 2, "x": 58, "y": 6 },
+        { "type": "displayWindow", "window": 2 }
+      ]
+    },
+    { "kind": "request", "request": { "type": "getKeyOrPosition" } },
+    { "kind": "reply", "reply": { "key": 83 } },
+    {
+      "kind": "events",
+      "events": [{ "type": "clearWindow", "window": 1 }, { "type": "clearWindow", "window": 1 }]
+    },
+    {
+      "kind": "request",
+      "request": {
+        "type": "yesNo",
+        "question": "Really save?",
+        "choices": "yn",
+        "defaultChoice": "n"
+      }
+    },
+    { "kind": "reply", "reply": { "answer": "y" } },
+    {
+      "kind": "events",
+      "events": [
+        { "type": "clearWindow", "window": 1 },
+        { "type": "rawPrint", "text": "Saving...", "bold": false }
+      ]
+    },
+    { "kind": "request", "request": { "type": "displayWindowBlocking", "window": 1 } }
+  ]
+}

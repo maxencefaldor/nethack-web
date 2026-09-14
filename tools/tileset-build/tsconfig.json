@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist-types",
+    "lib": ["ES2023"],
+    "types": ["node"],
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "composite": false,
+    "declaration": false,
+    "declarationMap": false
+  },
+  "include": ["src"],
+  "references": [{ "path": "../../packages/protocol" }, { "path": "../../packages/codex" }]
+}

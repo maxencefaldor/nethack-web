@@ -1,0 +1,27 @@
+{
+  "id": "etching",
+  "name": "Etching",
+  "cellSize": 48,
+  "generator": { "kind": "openai-images", "model": "gpt-image-1", "size": "1024x1024" },
+  "prompt": {
+    "prefix": "A single game sprite in the style of a copperplate etching, black ink on parchment, fine hatching, centered, square, plain background",
+    "suffix": "no text, no border, no frame",
+    "perKind": {
+      "monster": "the whole creature visible, three-quarter view",
+      "object": "the item alone, slightly from above",
+      "terrain": "a repeating dungeon surface, flat and even"
+    }
+  },
+  "palette": [
+    "#0f1113",
+    "#2a3035",
+    "#8f9aa3",
+    "#dfe5ea",
+    "#c2924f",
+    "#e0665c",
+    "#62b072",
+    "#6a95f0"
+  ],
+  "seed": 20260914,
+  "include": ["monster", "object"]
+}

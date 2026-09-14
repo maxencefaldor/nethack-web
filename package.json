@@ -1,0 +1,27 @@
+{
+  "name": "nethack-web",
+  "private": true,
+  "version": "0.0.0",
+  "description": "A browser client for the official NetHack engine.",
+  "type": "module",
+  "engines": {
+    "node": ">=22",
+    "pnpm": ">=10"
+  },
+  "packageManager": "pnpm@12.4.1",
+  "scripts": {
+    "build": "pnpm -r --filter './packages/**' --filter './tools/**' build",
+    "dev": "pnpm --filter @nethack-web/app dev",
+    "test": "vitest run",
+    "typecheck": "tsc -b",
+    "lint": "biome check .",
+    "format": "biome format --write .",
+    "test:e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "catalog:",
+    "@playwright/test": "^1.63.0",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

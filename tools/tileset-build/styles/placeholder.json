@@ -1,0 +1,18 @@
+{
+  "id": "placeholder",
+  "name": "Characters (pipeline check)",
+  "cellSize": 32,
+  "generator": { "kind": "placeholder" },
+  "prompt": {
+    "prefix": "Pixel-art game sprite, 32 by 32, transparent background, top-down dungeon crawler",
+    "suffix": "consistent lighting from the upper left, muted palette, crisp silhouette",
+    "perKind": {
+      "monster": "a creature facing slightly right",
+      "object": "an item lying on stone",
+      "terrain": "a tile of dungeon terrain, seamless edges"
+    }
+  },
+  "palette": [],
+  "seed": 20260914,
+  "include": ["monster", "object", "terrain"]
+}

@@ -1,0 +1,17 @@
+{
+  "name": "@nethack-web/codex-extract",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Build-time extraction of entity tables and encyclopedia prose from the engine tree.",
+  "type": "module",
+  "scripts": {
+    "extract": "bash scripts/extract.sh",
+    "build": "tsc -b",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

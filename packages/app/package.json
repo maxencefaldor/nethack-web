@@ -1,0 +1,33 @@
+{
+  "name": "@nethack-web/app",
+  "version": "0.0.0",
+  "private": true,
+  "description": "The nethack-web application: composition root, persistence, shell.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@fontsource-variable/fraunces": "catalog:",
+    "@fontsource/ibm-plex-mono": "catalog:",
+    "@fontsource/ibm-plex-sans": "catalog:",
+    "@nethack-web/codex": "workspace:*",
+    "@nethack-web/engine": "workspace:*",
+    "@nethack-web/protocol": "workspace:*",
+    "@nethack-web/renderer": "workspace:*",
+    "@nethack-web/state": "workspace:*",
+    "@nethack-web/ui": "workspace:*",
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  },
+  "devDependencies": {
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vite-plugin-pwa": "catalog:"
+  }
+}

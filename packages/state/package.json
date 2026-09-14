@@ -1,0 +1,23 @@
+{
+  "name": "@nethack-web/state",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Immutable game snapshot and the reducer that applies engine events to it.",
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@nethack-web/protocol": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

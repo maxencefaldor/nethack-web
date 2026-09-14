@@ -1,0 +1,24 @@
+{
+  "name": "@nethack-web/renderer",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Map drawing behind the MapRenderer and Tileset interfaces.",
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@nethack-web/protocol": "workspace:*",
+    "@nethack-web/state": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "@nethack-web/tileset-build",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Style specification in, tileset package out: catalog, prompts, generation, normalisation, review, packaging.",
+  "type": "module",
+  "bin": {
+    "tileset-build": "./src/cli.ts"
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "test": "vitest run",
+    "tileset": "tsx src/cli.ts",
+    "import-official": "tsx src/cli.ts import-official ../../packages/app/public/tilesets/official"
+  },
+  "dependencies": {
+    "@napi-rs/canvas": "catalog:",
+    "@nethack-web/codex": "workspace:*",
+    "@nethack-web/protocol": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

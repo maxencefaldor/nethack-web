@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.toolchains/
+packages/engine/build/
+*.log
+.DS_Store
+coverage/
+.vite/
+tools/tileset-build/build/
+dist-types/
+*.tsbuildinfo
+test-results/
+playwright-report/

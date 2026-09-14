@@ -1,0 +1,20 @@
+{
+  "name": "@nethack-web/protocol",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Typed model of the NetHack windowport interface and the engine/host message contract.",
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": { "rootDir": ".", "outDir": "dist-types", "lib": ["ES2023"] },
+  "include": ["src", "data/*.json"],
+  "references": [{ "path": "../protocol" }]
+}

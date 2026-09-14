@@ -1,0 +1,28 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist-types"
+  },
+  "include": ["src"],
+  "references": [
+    {
+      "path": "../protocol"
+    },
+    {
+      "path": "../engine"
+    },
+    {
+      "path": "../state"
+    },
+    {
+      "path": "../renderer"
+    },
+    {
+      "path": "../codex"
+    },
+    {
+      "path": "../ui"
+    }
+  ]
+}
