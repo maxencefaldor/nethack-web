@@ -10,6 +10,7 @@ import {
   type Point,
   panBy,
   zoomAt,
+  zoomLimits,
 } from "./camera.js";
 
 /** Wheel notches per doubling; a trackpad pinch reports finer deltas and zooms smoothly. */
@@ -102,11 +103,12 @@ export function useMapViewport(
     (factor: number, anchor?: Point) => {
       const size = hostSize();
       setFraming("custom");
+      const limits = zoomLimits(fitScale(), tileset.cellSize.height);
       setCamera((current) =>
-        zoomAt(current, factor, anchor ?? { x: size.width / 2, y: size.height / 2 }, fitScale()),
+        zoomAt(current, factor, anchor ?? { x: size.width / 2, y: size.height / 2 }, limits),
       );
     },
-    [hostSize, fitScale],
+    [hostSize, fitScale, tileset.cellSize.height],
   );
 
   useEffect(() => {

@@ -15,7 +15,7 @@ interface ChoiceProps<T extends string> {
 function Choice<T extends string>({ label, value, options, onChange }: ChoiceProps<T>) {
   const id = useId();
   return (
-    <div className="settings-option">
+    <div className="settings-option settings-choice">
       <label htmlFor={id}>{label}</label>
       <Select.Root value={value} onValueChange={(next) => onChange(next as T)}>
         <Select.Trigger id={id} className="select-trigger" aria-label={label}>
@@ -73,7 +73,16 @@ export function SettingsDialog({ onClose }: { onClose: () => void }) {
     void tilesetChoices().then(setTilesets);
   }, [tilesetChoices]);
   return (
-    <Modal title="Settings" className="settings" onDismiss={onClose}>
+    <Modal
+      title="Settings"
+      className="settings"
+      onDismiss={onClose}
+      actions={
+        <button type="button" className="primary" onClick={onClose}>
+          Done
+        </button>
+      }
+    >
       <fieldset className="settings-group">
         <legend>Experience</legend>
         <Choice
@@ -131,11 +140,6 @@ export function SettingsDialog({ onClose }: { onClose: () => void }) {
           onChange={(offerTutorial) => store.update({ offerTutorial })}
         />
       </fieldset>
-      <footer className="dialog-actions">
-        <button type="button" className="primary" onClick={onClose}>
-          Done
-        </button>
-      </footer>
     </Modal>
   );
 }

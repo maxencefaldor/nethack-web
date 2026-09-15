@@ -9,13 +9,18 @@ export function FileDialog({ request }: { request: FileRequest }) {
   const session = useSession();
   const dismiss = () => session.answer("displayFile", { dismissed: true });
   return (
-    <Modal title={request.name} hideTitle className="text-dialog" onDismiss={dismiss}>
-      <pre className="text-lines">{request.text ?? `Cannot find file ${request.name}.`}</pre>
-      <footer className="dialog-actions">
+    <Modal
+      title={request.name}
+      hideTitle
+      className="text-dialog"
+      onDismiss={dismiss}
+      actions={
         <button type="button" className="primary" onClick={dismiss}>
           Continue
         </button>
-      </footer>
+      }
+    >
+      <pre className="text-lines">{request.text ?? `Cannot find file ${request.name}.`}</pre>
     </Modal>
   );
 }

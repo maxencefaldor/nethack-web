@@ -3,13 +3,7 @@ import { useSession } from "../context.js";
 import type { SavedGame } from "../session.js";
 
 /** Start a new game or continue a saved one. */
-export function TitleScreen({
-  onSettings,
-  onCodex,
-}: {
-  onSettings: () => void;
-  onCodex: () => void;
-}) {
+export function TitleScreen() {
   const session = useSession();
   const [saved, setSaved] = useState<readonly SavedGame[]>([]);
   const [name, setName] = useState("");
@@ -35,12 +29,15 @@ export function TitleScreen({
           start(name.trim() || null);
         }}
       >
-        <label htmlFor="player-name">Name</label>
+        <label htmlFor="player-name" className="visually-hidden">
+          Name
+        </label>
         <input
           id="player-name"
           value={name}
           maxLength={31}
-          placeholder="Adventurer"
+          placeholder="Name"
+          autoComplete="nickname"
           onChange={(event) => setName(event.target.value)}
         />
         <button type="submit" className="primary" disabled={starting}>
@@ -61,14 +58,6 @@ export function TitleScreen({
           </ul>
         </section>
       ) : null}
-      <nav className="title-links">
-        <button type="button" className="link" onClick={onCodex}>
-          Codex
-        </button>
-        <button type="button" className="link" onClick={onSettings}>
-          Settings
-        </button>
-      </nav>
     </main>
   );
 }

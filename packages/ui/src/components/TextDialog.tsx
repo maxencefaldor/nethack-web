@@ -8,7 +8,17 @@ export function TextDialog({ window }: { window: WindowSnapshot }) {
   const session = useSession();
   const dismiss = () => session.answer("displayWindowBlocking", { dismissed: true });
   return (
-    <Modal title="Text" hideTitle className="text-dialog" onDismiss={dismiss}>
+    <Modal
+      title="Text"
+      hideTitle
+      className="text-dialog"
+      onDismiss={dismiss}
+      actions={
+        <button type="button" className="primary" onClick={dismiss}>
+          Continue
+        </button>
+      }
+    >
       {window.menu !== null && window.menu.entries.length > 0 ? (
         <MenuEntries menu={window.menu} />
       ) : (
@@ -24,11 +34,6 @@ export function TextDialog({ window }: { window: WindowSnapshot }) {
           ))}
         </pre>
       )}
-      <footer className="dialog-actions">
-        <button type="button" className="primary" onClick={dismiss}>
-          Continue
-        </button>
-      </footer>
     </Modal>
   );
 }

@@ -1,14 +1,6 @@
 import { OFFICIAL_DATA } from "@nethack-web/codex";
 import { CanvasMapRenderer, type Tileset } from "@nethack-web/renderer";
-import {
-  CodexPanel,
-  GameScreen,
-  SettingsDialog,
-  TitleScreen,
-  useGame,
-  usePreferences,
-  useVocabulary,
-} from "@nethack-web/ui";
+import { GameScreen, TitleScreen, useGame, usePreferences, useVocabulary } from "@nethack-web/ui";
 import { useEffect, useMemo, useState } from "react";
 import type { TilesetRegistry } from "./tilesets.js";
 
@@ -17,8 +9,6 @@ export function App({ tilesets }: { tilesets: TilesetRegistry }) {
   const game = useGame();
   const preferences = usePreferences();
   const vocabulary = useVocabulary();
-  const [settings, setSettings] = useState(false);
-  const [codex, setCodex] = useState(false);
   const [tileset, setTileset] = useState<Tileset | null>(null);
   const renderer = useMemo(() => new CanvasMapRenderer(), []);
 
@@ -34,13 +24,7 @@ export function App({ tilesets }: { tilesets: TilesetRegistry }) {
   }, [tilesets, preferences.tilesetId, vocabulary]);
 
   if (game.phase === "booting" || tileset === null) {
-    return (
-      <>
-        <TitleScreen onSettings={() => setSettings(true)} onCodex={() => setCodex(true)} />
-        {settings ? <SettingsDialog onClose={() => setSettings(false)} /> : null}
-        {codex ? <CodexPanel onClose={() => setCodex(false)} /> : null}
-      </>
-    );
+    return <TitleScreen />;
   }
   return <GameScreen renderer={renderer} tileset={tileset} />;
 }

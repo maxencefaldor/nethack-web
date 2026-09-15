@@ -1,8 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { centerOn, fitCamera, panBy, zoomAt } from "./camera.js";
+import { centerOn, fitCamera, MAX_CELL_HEIGHT, panBy, zoomAt, zoomLimits } from "./camera.js";
 
 const host = { width: 1000, height: 600 };
 const natural = { width: 880, height: 462 };
+const cell = { width: 11, height: 22 };
 
 describe("camera", () => {
   it("fits the whole map centred with a margin", () => {
@@ -16,18 +17,25 @@ describe("camera", () => {
     const camera = fitCamera(host, natural);
     const anchor = { x: 300, y: 200 };
     const mapPointBefore = (anchor.x - camera.offsetX) / camera.scale;
-    const zoomed = zoomAt(camera, 2, anchor, camera.scale);
+    const zoomed = zoomAt(camera, 2, anchor, zoomLimits(camera.scale, cell.height));
     const mapPointAfter = (anchor.x - zoomed.offsetX) / zoomed.scale;
     expect(zoomed.scale).toBeCloseTo(camera.scale * 2);
     expect(mapPointAfter).toBeCloseTo(mapPointBefore);
   });
 
-  it("clamps zoom to the limits relative to the fitted scale", () => {
+  it("zooms out to half the whole-map scale and in until a cell is MAX_CELL_HEIGHT tall", () => {
     const camera = fitCamera(host, natural);
-    expect(zoomAt(camera, 100, { x: 0, y: 0 }, camera.scale).scale).toBeCloseTo(camera.scale * 12);
-    expect(zoomAt(camera, 0.01, { x: 0, y: 0 }, camera.scale).scale).toBeCloseTo(
-      camera.scale * 0.5,
+    const limits = zoomLimits(camera.scale, cell.height);
+    expect(zoomAt(camera, 100, { x: 0, y: 0 }, limits).scale * cell.height).toBeCloseTo(
+      MAX_CELL_HEIGHT,
     );
+    expect(zoomAt(camera, 0.01, { x: 0, y: 0 }, limits).scale).toBeCloseTo(camera.scale * 0.5);
+  });
+
+  it("never caps zoom below the whole-map scale on a very large screen", () => {
+    const camera = fitCamera({ width: 8000, height: 5000 }, natural);
+    expect(camera.scale * cell.height).toBeGreaterThan(MAX_CELL_HEIGHT);
+    expect(zoomLimits(camera.scale, cell.height).max).toBe(camera.scale);
   });
 
   it("pans and centres on a cell without changing the scale", () => {

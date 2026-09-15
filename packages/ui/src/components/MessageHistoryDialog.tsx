@@ -14,7 +14,16 @@ export function MessageHistoryDialog() {
   }, []);
 
   return (
-    <Modal title="Messages" className="history" onDismiss={dismiss}>
+    <Modal
+      title="Messages"
+      className="history"
+      onDismiss={dismiss}
+      actions={
+        <button type="button" className="primary" onClick={dismiss}>
+          Close
+        </button>
+      }
+    >
       <ol className="history-list">
         {game.messages.map((message, index) => (
           <li
@@ -27,11 +36,6 @@ export function MessageHistoryDialog() {
           </li>
         ))}
       </ol>
-      <footer className="dialog-actions">
-        <button type="button" className="primary" onClick={dismiss}>
-          Close
-        </button>
-      </footer>
     </Modal>
   );
 }

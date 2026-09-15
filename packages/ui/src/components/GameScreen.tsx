@@ -16,6 +16,7 @@ import { MapCanvas } from "./MapCanvas.js";
 import { MenuDialog } from "./MenuDialog.js";
 import { MessageHistoryDialog } from "./MessageHistoryDialog.js";
 import { MessageLog } from "./MessageLog.js";
+import { Modal } from "./Modal.js";
 import { PromptBar } from "./PromptBar.js";
 import { SettingsDialog } from "./SettingsDialog.js";
 import { SightingsStrip } from "./SightingsStrip.js";
@@ -29,14 +30,21 @@ export interface GameScreenProps {
   readonly tileset: Tileset;
 }
 
-/** The playing screen: messages above, map centre, status below, inventory beside. */
+/** Below this width the inventory becomes a sheet and the toolbar moves to the bottom. */
+const NARROW_SCREEN = "(max-width: 800px)";
+
+/**
+ * The playing screen: a full-bleed map with the HUD in reserved bands, messages
+ * and prompts above, touch controls and status below, inventory beside.
+ */
 export function GameScreen({ renderer, tileset }: GameScreenProps) {
   const game = useGame();
   const session = useSession();
   const preferences = usePreferences();
   const [palette, setPalette] = useState(false);
   const [settings, setSettings] = useState(false);
-  const [inventory, setInventory] = useState(() => window.innerWidth > 800);
+  const narrow = useMediaQuery(NARROW_SCREEN);
+  const [inventory, setInventory] = useState(() => !window.matchMedia(NARROW_SCREEN).matches);
   const screenRef = useRef<HTMLDivElement>(null);
   const topRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -73,7 +81,7 @@ export function GameScreen({ renderer, tileset }: GameScreenProps) {
 
   return (
     <Tooltip.Provider delayDuration={400}>
-      <div className="screen" ref={screenRef}>
+      <div className="screen" ref={screenRef} data-touch={touch ? "true" : undefined}>
         <MapCanvas renderer={renderer} tileset={tileset} insets={insets} onInspect={inspect} />
         <div className="hud-scrim hud-scrim-top" aria-hidden="true" />
         <div className="hud-scrim hud-scrim-bottom" aria-hidden="true" />
@@ -107,18 +115,29 @@ export function GameScreen({ renderer, tileset }: GameScreenProps) {
           />
           <IconButton icon={SlidersHorizontal} label="Settings" onClick={() => setSettings(true)} />
         </nav>
-        {inventory ? (
+        {inventory && !narrow ? (
           <div className="hud hud-right" ref={rightRef}>
             <InventoryPanel onInspect={inspect} />
           </div>
         ) : null}
         <div className="hud hud-bottom-left" ref={bottomRef}>
+          {touch ? <TouchControls /> : null}
           <StatusBar />
         </div>
-        {touch ? (
-          <div className="hud hud-bottom">
-            <TouchControls />
-          </div>
+        {inventory && narrow ? (
+          <Modal
+            title="Inventory"
+            hideTitle
+            className="sheet"
+            onDismiss={() => setInventory(false)}
+            actions={
+              <button type="button" className="primary" onClick={() => setInventory(false)}>
+                Close
+              </button>
+            }
+          >
+            <InventoryPanel onInspect={inspect} />
+          </Modal>
         ) : null}
         {menuWindow?.menu && request?.type === "selectMenu" ? (
           <MenuDialog key={request.window} menu={menuWindow.menu} mode={request.mode} />

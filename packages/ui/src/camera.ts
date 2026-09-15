@@ -10,8 +10,24 @@ export interface Point {
   readonly y: number;
 }
 
-/** How far the camera may zoom relative to the scale that fits the whole map. */
-export const ZOOM_LIMITS = { min: 0.5, max: 12 } as const;
+/** The camera may zoom out to half the scale that shows the whole map. */
+const MIN_ZOOM_OF_FIT = 0.5;
+/** And zoom in until a cell is this tall on screen, in CSS pixels, whatever the tileset. */
+export const MAX_CELL_HEIGHT = 64;
+
+export interface ZoomLimits {
+  readonly min: number;
+  readonly max: number;
+}
+
+/**
+ * The scales the camera may take: from half the whole-map scale to the scale
+ * at which a cell reaches MAX_CELL_HEIGHT. A screen so large that the whole
+ * map already exceeds that height keeps the whole-map scale as its ceiling.
+ */
+export function zoomLimits(fit: number, cellHeight: number): ZoomLimits {
+  return { min: fit * MIN_ZOOM_OF_FIT, max: Math.max(fit, MAX_CELL_HEIGHT / cellHeight) };
+}
 
 /** Space the HUD occupies along each edge of the host; the map is framed inside it. */
 export interface Insets {
@@ -59,11 +75,13 @@ export function panBy(camera: MapView, dx: number, dy: number): MapView {
 }
 
 /** Scales around a point in host coordinates so the map under the pointer stays put. */
-export function zoomAt(camera: MapView, factor: number, anchor: Point, fit: number): MapView {
-  const scale = Math.min(
-    fit * ZOOM_LIMITS.max,
-    Math.max(fit * ZOOM_LIMITS.min, camera.scale * factor),
-  );
+export function zoomAt(
+  camera: MapView,
+  factor: number,
+  anchor: Point,
+  limits: ZoomLimits,
+): MapView {
+  const scale = Math.min(limits.max, Math.max(limits.min, camera.scale * factor));
   const ratio = scale / camera.scale;
   return {
     scale,

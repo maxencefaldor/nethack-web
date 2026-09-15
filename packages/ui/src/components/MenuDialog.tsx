@@ -93,33 +93,41 @@ export function MenuDialog({ menu, mode }: MenuDialogProps) {
     return () => document.removeEventListener("keydown", listener);
   });
 
+  const actions = (
+    <>
+      {count !== null ? <span className="menu-count">Count: {count}</span> : null}
+      {mode === "none" ? (
+        <button type="button" onClick={() => finish([])}>
+          Close
+        </button>
+      ) : (
+        <>
+          <button type="button" onClick={cancel}>
+            Cancel
+          </button>
+          {mode === "any" ? (
+            <button type="button" className="primary" onClick={confirm}>
+              Done
+            </button>
+          ) : null}
+        </>
+      )}
+    </>
+  );
+
   return (
-    <Modal title={menu.prompt ?? "Menu"} hideTitle={menu.prompt === null} className="menu-dialog">
+    <Modal
+      title={menu.prompt ?? "Menu"}
+      hideTitle={menu.prompt === null}
+      className="menu-dialog"
+      actions={actions}
+    >
       <MenuEntries
         menu={menu}
         selected={selected}
         counts={counts}
         onPick={mode === "none" ? undefined : pick}
       />
-      <footer className="dialog-actions">
-        {count !== null ? <span className="menu-count">Count: {count}</span> : null}
-        {mode === "none" ? (
-          <button type="button" onClick={() => finish([])}>
-            Close
-          </button>
-        ) : (
-          <>
-            <button type="button" onClick={cancel}>
-              Cancel
-            </button>
-            {mode === "any" ? (
-              <button type="button" className="primary" onClick={confirm}>
-                Done
-              </button>
-            ) : null}
-          </>
-        )}
-      </footer>
     </Modal>
   );
 }

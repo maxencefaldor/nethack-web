@@ -60,7 +60,8 @@ test("saving and continuing restores the same character", async ({ page }) => {
 test("the codex serves the engine's own encyclopedia text", async ({ page }) => {
   const game = new GamePage(page);
   await game.open(CLASSIC_NO_TUTORIAL);
-  await page.click("text=Codex");
+  await game.startNewGame("Tester");
+  await page.getByRole("button", { name: "Codex" }).click();
   await page.getByRole("searchbox", { name: "Search the codex" }).fill("floating eye");
   await page.getByRole("button", { name: /floating eye/ }).click();
   await expect(page.locator(".codex-title")).toHaveText("floating eye");

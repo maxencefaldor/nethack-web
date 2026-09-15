@@ -20,6 +20,8 @@
      so the map's framing depends only on the window, the tileset and the panels. */
   --hud-top-height: 140px;
   --hud-bottom-height: 56px;
+  /* Space under the bottom band, for the toolbar row on narrow screens. */
+  --hud-bottom-offset: 12px;
   --hud-side-width: min(320px, 80vw);
   color-scheme: dark;
 }
@@ -67,12 +69,6 @@ button.primary {
   color: #0f1113;
   border-color: var(--accent);
   font-weight: 600;
-}
-button.link {
-  background: none;
-  border: none;
-  color: var(--ink-muted);
-  text-decoration: underline;
 }
 button:focus-visible,
 input:focus-visible,
@@ -144,7 +140,7 @@ kbd {
 }
 .hud-scrim-bottom {
   bottom: 0;
-  height: calc(var(--hud-bottom-height) + 24px);
+  height: calc(var(--hud-bottom-offset) + var(--hud-bottom-height) + 12px);
   background: linear-gradient(rgba(15, 17, 19, 0), rgba(15, 17, 19, 0.92));
 }
 
@@ -185,17 +181,16 @@ kbd {
 .hud-bottom-left {
   left: 16px;
   right: 16px;
-  bottom: 12px;
+  bottom: var(--hud-bottom-offset);
   height: var(--hud-bottom-height);
   display: flex;
-  align-items: flex-end;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 8px;
 }
-.hud-bottom {
-  left: 0;
-  right: 0;
-  bottom: 12px;
-  display: flex;
-  justify-content: center;
+/* With touch controls shown, the band grows by their height; still a fixed size. */
+.screen[data-touch] {
+  --hud-bottom-height: 216px;
 }
 .hud-bottom-right {
   right: 16px;
@@ -300,6 +295,11 @@ kbd {
   flex: 1 1 200px;
   font-family: var(--font-game);
   background: var(--control-glass);
+}
+.prompt-key {
+  flex: 0 0 auto;
+  width: 3ch;
+  text-align: center;
 }
 .choice {
   font-family: var(--font-game);
@@ -412,6 +412,8 @@ kbd {
   display: flex;
   gap: 6px;
   flex-wrap: wrap;
+  align-items: flex-start;
+  align-content: flex-start;
 }
 .sighting {
   font-size: 13px;
@@ -434,8 +436,8 @@ kbd {
   display: flex;
   gap: 16px;
   align-items: center;
-  flex-wrap: wrap;
   justify-content: center;
+  align-self: center;
   pointer-events: auto;
   border: none;
   margin: 0;
@@ -489,8 +491,10 @@ kbd {
   transform: translate(-50%, -50%);
   z-index: 11;
   width: min(720px, calc(100vw - 32px));
-  max-height: calc(100vh - 32px);
-  overflow: auto;
+  max-height: calc(100dvh - 32px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   background: var(--panel);
   color: var(--ink);
   border: 1px solid var(--line);
@@ -503,6 +507,37 @@ kbd {
   margin: 0 0 10px;
   font-size: 1.05rem;
   font-weight: 600;
+}
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: none;
+  color: var(--ink-muted);
+}
+.modal-close:hover {
+  color: var(--ink);
+  background: var(--accent-soft);
+}
+.modal-body {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  scrollbar-width: thin;
+}
+.modal .inventory {
+  background: none;
+  backdrop-filter: none;
+  padding: 0;
 }
 .tooltip {
   z-index: 20;
@@ -519,6 +554,7 @@ kbd {
   gap: 8px;
   margin-top: 12px;
   align-items: center;
+  flex-shrink: 0;
 }
 .menu-count {
   margin-right: auto;
@@ -544,8 +580,6 @@ kbd {
   font-size: 13px;
   line-height: 1.4;
   white-space: pre;
-  overflow: auto;
-  max-height: 70vh;
 }
 
 /* Menus */
@@ -628,7 +662,7 @@ kbd {
   width: min(560px, calc(100vw - 32px));
 }
 .palette-search {
-  width: 100%;
+  width: calc(100% - 36px);
   margin-bottom: 8px;
 }
 .palette-note {
@@ -675,6 +709,13 @@ kbd {
   align-items: center;
   justify-content: space-between;
 }
+.settings-option > span,
+.settings-option > label {
+  flex: 1 1 auto;
+}
+.settings-choice {
+  flex-wrap: wrap;
+}
 
 /* Message history */
 .history {
@@ -686,8 +727,6 @@ kbd {
   padding: 0;
   font-family: var(--font-game);
   font-size: 13px;
-  max-height: 60vh;
-  overflow: auto;
 }
 .history-turn {
   color: var(--ink-muted);
@@ -697,9 +736,7 @@ kbd {
 /* Codex */
 .codex {
   width: min(1160px, calc(100vw - 32px));
-  height: min(760px, calc(100vh - 32px));
-  display: flex;
-  flex-direction: column;
+  height: min(760px, calc(100dvh - 32px));
 }
 .codex-tabs {
   display: flex;
@@ -713,12 +750,15 @@ kbd {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 12px;
+  padding-right: 36px;
   flex-wrap: wrap;
 }
 .tabs-list {
   display: flex;
   gap: 2px;
   border-bottom: 1px solid var(--line);
+  overflow-x: auto;
+  scrollbar-width: none;
 }
 .tabs-trigger {
   background: none;
@@ -730,6 +770,8 @@ kbd {
   display: inline-flex;
   gap: 8px;
   align-items: baseline;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 .tabs-trigger[data-state="active"] {
   color: var(--ink);
@@ -906,53 +948,75 @@ kbd {
   flex-wrap: wrap;
   justify-content: center;
 }
-.title-links {
-  display: flex;
-  gap: 16px;
-}
 
 @media (max-width: 800px) {
   :root {
-    --hud-top-height: 112px;
-    --hud-bottom-height: 48px;
+    --hud-bottom-height: 84px;
+    --hud-bottom-offset: 62px;
+  }
+  .screen[data-touch] {
+    --hud-bottom-height: 220px;
   }
   .hud-top-left {
     right: 16px;
     max-width: none;
   }
+  /* The toolbar and the map view controls share the bottom row. */
   .hud-top-right {
     top: auto;
     bottom: 12px;
-    left: 12px;
+    left: 16px;
     right: auto;
-  }
-  .hud-right {
-    top: 90px;
-    bottom: 120px;
-  }
-  .hud-bottom-left {
-    bottom: 56px;
-  }
-  .hud-bottom {
-    bottom: 100px;
   }
   .messages {
     font-size: 12px;
-    min-height: 2.6em;
   }
   .status {
     font-size: 12px;
+    line-height: 1.35;
+    max-height: 84px;
+    overflow: hidden;
   }
-  .hud-bottom-right {
-    bottom: 56px;
+  .touch {
+    gap: 12px;
+  }
+  .touch-pad {
+    grid-template-columns: repeat(3, 40px);
+    grid-auto-rows: 40px;
+  }
+  .touch-actions {
+    grid-template-columns: repeat(3, minmax(64px, 1fr));
+  }
+  .touch-actions button {
+    height: 36px;
+    font-size: 13px;
+  }
+  /* Dialogs become full-screen sheets. */
+  .modal {
+    inset: 0;
+    transform: none;
+    width: auto;
+    height: 100dvh;
+    max-height: none;
+    border: none;
+    border-radius: 0;
+    padding: 16px 16px calc(16px + env(safe-area-inset-bottom));
   }
   .codex-columns {
     grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(0, 1fr);
   }
   .codex-nav {
-    max-height: 40%;
+    max-height: 40dvh;
   }
   .codex-search {
     width: 100%;
+  }
+  .settings-option .select-trigger {
+    flex: 1 1 200px;
+  }
+  .text-lines,
+  .end-report {
+    font-size: 12px;
   }
 }
