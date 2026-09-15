@@ -3,7 +3,7 @@ packages:
   - tools/*
 
 allowBuilds:
-  esbuild: set this to true or false
+  esbuild: true
 
 catalog:
   typescript: ^7.0.2
