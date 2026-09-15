@@ -5,7 +5,7 @@ import { ENGINE_VERSION } from "../dist/version.js";
 import { Bridge, type NetHackGlobal } from "./bridge.js";
 import { DataLibrary } from "./data-library.js";
 import { Memory } from "./memory.js";
-import { SYSCONF } from "./sysconf.js";
+import { DUMPLOG_DIRECTORY, SYSCONF } from "./sysconf.js";
 
 /**
  * Worker entry point: boots the WebAssembly engine and wires the shim
@@ -18,6 +18,15 @@ const SAVE_DIRECTORY = "/save";
 
 const scope = self as unknown as DedicatedWorkerGlobalScope;
 let bridge: Bridge | null = null;
+
+// Shim callbacks run inside promises the engine awaits; a failure there would
+// otherwise vanish while the engine waits forever.
+scope.addEventListener("unhandledrejection", (event: PromiseRejectionEvent) => {
+  scope.postMessage({ kind: "error", message: `Windowport failure: ${String(event.reason)}` });
+});
+scope.addEventListener("error", (event: ErrorEvent) => {
+  scope.postMessage({ kind: "error", message: event.message });
+});
 
 scope.onmessage = (event: MessageEvent<HostToEngineMessage>) => {
   const message = event.data;
@@ -49,7 +58,9 @@ async function boot(options: EngineStartOptions): Promise<void> {
     // Runs after the embedded data files exist and before main(): the right
     // moment to overlay our configuration and restore saves.
     onRuntimeInitialized(this: NetHackModule) {
+      module = this;
       this.FS.writeFile("/sysconf", SYSCONF);
+      this.FS.mkdir(DUMPLOG_DIRECTORY);
       restoreSaves(this, options.saves);
       const memory = new Memory(this);
       const library = this.FS.analyzePath("/nhdat").exists
@@ -74,13 +85,23 @@ async function boot(options: EngineStartOptions): Promise<void> {
       this.ccall("shim_graphics_set_callback", null, ["string"], [CALLBACK_NAME]);
       scope.postMessage({ kind: "loaded" });
     },
-    onExit: (code: number) => finish(config as unknown as NetHackModule, code),
+    // exit() from the engine ends here; the engine is built with EXIT_RUNTIME
+    // so this fires even though no windowport call announced the end.
+    onExit: (code: number) => {
+      try {
+        if (module !== null) finish(module, code);
+      } catch (error) {
+        scope.postMessage({ kind: "error", message: `Exit handling failed: ${String(error)}` });
+      }
+    },
     onAbort: (reason: unknown) => {
       scope.postMessage({ kind: "error", message: String(reason) });
     },
   };
-  await createNetHack(config);
+  module = await createNetHack(config);
 }
+
+let module: NetHackModule | null = null;
 
 let finished = false;
 
@@ -89,7 +110,19 @@ function finish(module: NetHackModule, code: number): void {
   finished = true;
   bridge?.flush();
   scope.postMessage({ kind: "saves", saves: collectSaves(module) });
-  scope.postMessage({ kind: "exited", code });
+  scope.postMessage({ kind: "exited", code, report: readReport(module) });
+}
+
+/** The engine's end-of-game dump log, if it wrote one. */
+function readReport(module: NetHackModule): string | null {
+  if (!module.FS.analyzePath(DUMPLOG_DIRECTORY).exists) return null;
+  const name = module.FS.readdir(DUMPLOG_DIRECTORY).find(
+    (entry) => entry !== "." && entry !== "..",
+  );
+  if (name === undefined) return null;
+  return new TextDecoder().decode(
+    module.FS.readFile(`${DUMPLOG_DIRECTORY}/${name}`, { encoding: "binary" }),
+  );
 }
 
 /** Files in the engine's data root that outlive one run: scores, logs and bones levels. */

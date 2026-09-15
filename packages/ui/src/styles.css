@@ -106,16 +106,12 @@ kbd {
 .map {
   position: absolute;
   inset: 0;
-  display: flex;
-  /* "safe" keeps an oversized canvas reachable by scrolling instead of centring it out of view. */
-  align-items: safe center;
-  justify-content: safe center;
   background: var(--ground);
-  overflow: auto;
-  scrollbar-width: thin;
+  overflow: hidden;
+  touch-action: none;
 }
-.map canvas {
-  flex: none;
+.map-dragging {
+  cursor: grabbing;
 }
 .map-tooltip {
   position: fixed;
@@ -172,14 +168,28 @@ kbd {
   display: flex;
   justify-content: center;
 }
+.hud-bottom-right {
+  right: 16px;
+  bottom: 12px;
+}
 
 .toolbar {
   display: flex;
   gap: 6px;
 }
-.toolbar button {
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  color: var(--ink);
   background: var(--control-glass);
   backdrop-filter: blur(6px);
+}
+.icon {
+  flex: none;
 }
 
 .inventory {
@@ -380,22 +390,10 @@ kbd {
 }
 .map-view {
   display: flex;
-  align-items: center;
-  gap: 4px;
+  gap: 6px;
   border: none;
   margin: 0;
   padding: 0;
-}
-.map-view button[aria-pressed="true"] {
-  border-color: var(--accent);
-  color: var(--accent);
-}
-.map-zoom {
-  font-family: var(--font-game);
-  font-size: 13px;
-  min-width: 3em;
-  text-align: center;
-  color: var(--ink-muted);
 }
 
 /* Touch controls */
@@ -436,42 +434,51 @@ kbd {
   height: 40px;
 }
 
-/* Dialogs */
-.dialog-backdrop {
+/* Dialogs (Radix) */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+.modal-backdrop {
   position: fixed;
   inset: 0;
   background: rgba(4, 6, 8, 0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
   z-index: 10;
 }
-.backdrop-dismiss {
-  position: absolute;
-  inset: 0;
-  background: none;
-  border: none;
-  border-radius: 0;
-  cursor: default;
-}
-.dialog {
-  position: relative;
-  max-width: min(720px, 100%);
-  max-height: 90vh;
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 11;
+  width: min(720px, calc(100vw - 32px));
+  max-height: calc(100vh - 32px);
   overflow: auto;
   background: var(--panel);
   color: var(--ink);
   border: 1px solid var(--line);
   border-radius: 8px;
   padding: 16px 18px;
-  margin: 0;
   box-shadow: 0 18px 48px rgba(0, 0, 0, 0.5);
+  outline: none;
 }
-.dialog-title {
+.modal-title {
   margin: 0 0 10px;
   font-size: 1.05rem;
   font-weight: 600;
+}
+.tooltip {
+  z-index: 20;
+  background: var(--panel-raised);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-size: 13px;
 }
 .dialog-actions {
   display: flex;
@@ -493,6 +500,19 @@ kbd {
 }
 .text-bold {
   font-weight: 600;
+}
+
+.end-screen {
+  width: min(760px, 100%);
+}
+.end-report {
+  margin: 0;
+  font-family: var(--font-game);
+  font-size: 13px;
+  line-height: 1.4;
+  white-space: pre;
+  overflow: auto;
+  max-height: 70vh;
 }
 
 /* Menus */
@@ -534,9 +554,45 @@ kbd {
   color: var(--accent);
 }
 
+/* Select (Radix) */
+.select-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-width: 220px;
+  background: var(--ground);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 0.35rem 0.6rem;
+  cursor: pointer;
+}
+.select-content {
+  z-index: 30;
+  min-width: var(--radix-select-trigger-width);
+  background: var(--panel-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 4px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+.select-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  outline: none;
+}
+.select-item[data-highlighted] {
+  background: var(--accent-soft);
+}
+
 /* Command palette and settings */
 .palette {
-  width: 560px;
+  width: min(560px, calc(100vw - 32px));
 }
 .palette-search {
   width: 100%;
@@ -545,6 +601,25 @@ kbd {
 .palette-note {
   color: var(--gold);
   margin: 0 0 8px;
+}
+.palette-list {
+  max-height: 50vh;
+  overflow: auto;
+}
+.palette-list [cmdk-item] {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.palette-list [cmdk-item][data-selected="true"] {
+  background: var(--accent-soft);
+}
+.palette-list [cmdk-item][data-disabled="true"] {
+  opacity: 0.5;
+  cursor: default;
 }
 .palette-key {
   margin-left: auto;
@@ -565,6 +640,7 @@ kbd {
   display: flex;
   gap: 8px;
   align-items: center;
+  justify-content: space-between;
 }
 
 /* Message history */
@@ -587,35 +663,84 @@ kbd {
 
 /* Codex */
 .codex {
-  width: min(1000px, 100%);
-  height: min(720px, 90vh);
+  width: min(1160px, calc(100vw - 32px));
+  height: min(760px, calc(100vh - 32px));
   display: flex;
   flex-direction: column;
 }
+.codex-tabs {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  flex: 1;
+}
+.codex-toolbar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+.tabs-list {
+  display: flex;
+  gap: 2px;
+  border-bottom: 1px solid var(--line);
+}
+.tabs-trigger {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  padding: 6px 12px;
+  color: var(--ink-muted);
+  display: inline-flex;
+  gap: 8px;
+  align-items: baseline;
+}
+.tabs-trigger[data-state="active"] {
+  color: var(--ink);
+  border-bottom-color: var(--accent);
+}
+.tabs-count {
+  font-size: 12px;
+  color: var(--ink-muted);
+}
+.codex-search {
+  width: 240px;
+}
 .codex-columns {
   display: grid;
-  grid-template-columns: 300px minmax(0, 1fr);
+  grid-template-columns: 320px minmax(0, 1fr);
   gap: 16px;
   min-height: 0;
   flex: 1;
 }
 .codex-nav {
-  display: flex;
-  flex-direction: column;
+  overflow: auto;
   min-height: 0;
-  gap: 8px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 6px;
+  scrollbar-width: thin;
 }
-.codex-search {
-  width: 100%;
+.codex-nav[data-state="inactive"] {
+  display: none;
+}
+.codex-group-title {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  margin: 10px 8px 4px;
+  font: 600 11px / 1.4 var(--font-ui);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
 }
 .codex-list {
   list-style: none;
   margin: 0;
   padding: 0;
-  overflow: auto;
-  min-height: 0;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
 }
 .codex-list button {
   width: 100%;
@@ -624,9 +749,9 @@ kbd {
   align-items: baseline;
   text-align: left;
   border: none;
-  border-radius: 0;
+  border-radius: 4px;
   background: none;
-  padding: 5px 10px;
+  padding: 4px 10px;
 }
 .codex-list button:hover,
 .codex-list button.selected {
@@ -642,23 +767,21 @@ kbd {
   width: 1.4em;
 }
 .codex-kind {
-  margin-left: auto;
+  margin: 0;
   color: var(--ink-muted);
   font-size: 12px;
 }
 .codex-page {
   overflow: auto;
   min-height: 0;
-  padding-right: 8px;
+  padding: 0 8px 8px 4px;
+  scrollbar-width: thin;
 }
 .codex-header {
   display: flex;
   gap: 14px;
   align-items: center;
   margin-bottom: 10px;
-}
-.codex-header .codex-kind {
-  margin: 0;
 }
 .codex-title {
   margin: 0;
@@ -669,7 +792,7 @@ kbd {
 }
 .codex-facts {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 6px 16px;
   margin: 0 0 14px;
 }
@@ -693,13 +816,15 @@ kbd {
   color: var(--ink-muted);
   margin: 0 0 6px;
 }
+/* The encyclopedia text keeps the engine's own line breaks and never rewraps. */
 .codex-prose {
   margin: 0;
   font-family: var(--font-game);
-  font-size: 13.5px;
+  font-size: 13px;
   line-height: 1.5;
-  white-space: pre-wrap;
-  tab-size: 4;
+  white-space: pre;
+  tab-size: 8;
+  overflow-x: auto;
 }
 
 /* Title */
@@ -761,7 +886,8 @@ kbd {
   .hud-top-right {
     top: auto;
     bottom: 12px;
-    right: 12px;
+    left: 12px;
+    right: auto;
   }
   .hud-right {
     top: 90px;
@@ -780,14 +906,16 @@ kbd {
   .status {
     font-size: 12px;
   }
-  .toolbar button {
-    padding: 0.25rem 0.5rem;
-    font-size: 13px;
+  .hud-bottom-right {
+    bottom: 56px;
   }
   .codex-columns {
     grid-template-columns: 1fr;
   }
   .codex-nav {
     max-height: 40%;
+  }
+  .codex-search {
+    width: 100%;
   }
 }

@@ -7,47 +7,48 @@ export type UiMode = "newcomer" | "veteran";
 
 export interface Preferences {
   readonly uiMode: UiMode;
-  readonly showCommandPalette: boolean;
-  readonly showInventoryPanel: boolean;
   readonly showMapTooltips: boolean;
   readonly showSightings: boolean;
   readonly offerTutorial: boolean;
   /** On-screen controls: shown on coarse-pointer devices, or forced either way. */
   readonly touchControls: "auto" | "always" | "never";
-  /** "whole" is the terminal's framing: the entire grid, always. "follow" scrolls with the hero. */
-  readonly mapView: "whole" | "follow";
-  /** Tile scale in follow mode; 1 is natural size. */
-  readonly mapZoom: number;
   readonly tilesetId: string;
   readonly rendererId: string;
+  /** With sprite tilesets, draw the engine's terrain glyph beneath creatures and items. */
+  readonly terrainBeneath: boolean;
 }
+
+const KEYS: readonly (keyof Preferences)[] = [
+  "uiMode",
+  "showMapTooltips",
+  "showSightings",
+  "offerTutorial",
+  "touchControls",
+  "tilesetId",
+  "rendererId",
+  "terrainBeneath",
+];
 
 export const PRESETS: Readonly<Record<UiMode, Preferences>> = {
   newcomer: {
     uiMode: "newcomer",
-    showCommandPalette: true,
-    showInventoryPanel: true,
     showMapTooltips: true,
     showSightings: true,
     offerTutorial: true,
     touchControls: "auto",
-    mapView: "whole",
-    mapZoom: 1,
     tilesetId: "official",
     rendererId: "canvas",
+    terrainBeneath: true,
   },
   veteran: {
     uiMode: "veteran",
-    showCommandPalette: false,
-    showInventoryPanel: false,
     showMapTooltips: false,
     showSightings: false,
     offerTutorial: false,
     touchControls: "auto",
-    mapView: "whole",
-    mapZoom: 1,
     tilesetId: "typographic",
     rendererId: "canvas",
+    terrainBeneath: false,
   },
 };
 
@@ -98,7 +99,13 @@ export class PreferencesStore {
   private load(): Preferences {
     try {
       const raw = this.storage?.getItem(STORAGE_KEY);
-      if (raw) return { ...PRESETS.newcomer, ...(JSON.parse(raw) as Partial<Preferences>) };
+      if (raw) {
+        const stored = JSON.parse(raw) as Record<string, unknown>;
+        const known = Object.fromEntries(
+          KEYS.filter((key) => key in stored).map((key) => [key, stored[key]]),
+        );
+        return { ...PRESETS.newcomer, ...(known as Partial<Preferences>) };
+      }
     } catch {
       // Fall through to the default preset.
     }

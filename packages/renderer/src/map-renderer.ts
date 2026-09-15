@@ -7,18 +7,18 @@ export interface Cell {
 }
 
 /**
- * How the map is framed. "whole" shows the entire grid scaled into the host,
- * which is what the terminal shows; "follow" draws tiles at `zoom` times their
- * natural size and scrolls to keep `focus` in view.
+ * The camera: where the map's origin sits in the host, in CSS pixels, and
+ * how much larger than natural size the tiles are drawn.
  */
-export type MapViewMode = "whole" | "follow";
-
 export interface MapView {
-  readonly mode: MapViewMode;
-  /** Scale applied to natural tile size in follow mode; 1 is one tile pixel per CSS pixel. */
-  readonly zoom: number;
-  /** Cell to keep in view in follow mode, if known. */
-  readonly focus: Cell | null;
+  readonly scale: number;
+  readonly offsetX: number;
+  readonly offsetY: number;
+}
+
+export interface RenderOptions {
+  /** Draw the engine's background glyph under sprites; text tilesets never layer. */
+  readonly terrainBeneath: boolean;
 }
 
 /**
@@ -31,7 +31,7 @@ export interface MapView {
 export interface MapRenderer {
   readonly id: string;
   mount(host: HTMLElement): void;
-  render(map: MapSnapshot, tileset: Tileset, view: MapView): void;
+  render(map: MapSnapshot, tileset: Tileset, view: MapView, options: RenderOptions): void;
   /** The cell under a point in host-element coordinates, or null when outside the map. */
   pick(point: { readonly x: number; readonly y: number }): Cell | null;
   dispose(): void;

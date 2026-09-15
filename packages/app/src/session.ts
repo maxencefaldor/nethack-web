@@ -12,6 +12,21 @@ import type { SaveStore } from "./persistence/save-store.js";
 
 const SAVE_PREFIX = "save/";
 
+/**
+ * Status highlighting for Guided play, expressed as the engine's own options
+ * so the colours come from the engine like everything else on the status line.
+ */
+const GUIDED_STATUS_HIGHLIGHTS = [
+  "statushilites:5",
+  "hilite_status:hitpoints/<=30%/red&bold/<=60%/yellow",
+  "hilite_status:power/<=30%/red",
+  "hilite_status:hunger/weak/red&bold/hungry/yellow/satiated/yellow",
+  "hilite_status:encumbrance/burdened/yellow/stressed/red/strained/red&bold",
+  "hilite_status:condition/major/red&bold/minor/yellow",
+  "hilite_status:armor-class/down/red/up/green",
+  "hilite_status:experience-level/up/green",
+];
+
 /** The engine's save file names carry the user id first; the browser user is always 0. */
 function playerNameFromSavePath(path: string): string | null {
   if (!path.startsWith(SAVE_PREFIX)) return null;
@@ -53,7 +68,8 @@ export class LocalGameSession implements GameSession, EngineHost {
       "time",
       "showexp",
       preferences.offerTutorial ? "tutorial" : "!tutorial",
-      preferences.showInventoryPanel ? "perm_invent" : "!perm_invent",
+      "perm_invent",
+      ...(preferences.uiMode === "newcomer" ? GUIDED_STATUS_HIGHLIGHTS : []),
     ].join(",");
     this.engine = new Engine(this);
     this.engine.start({
@@ -111,8 +127,8 @@ export class LocalGameSession implements GameSession, EngineHost {
     void this.saves.replaceAll(saves);
   }
 
-  onExit(code: number): void {
-    this.store.update((snapshot) => withExit(snapshot, code));
+  onExit(code: number, report: string | null): void {
+    this.store.update((snapshot) => withExit(snapshot, code, report));
     this.engine?.terminate();
     this.engine = null;
   }

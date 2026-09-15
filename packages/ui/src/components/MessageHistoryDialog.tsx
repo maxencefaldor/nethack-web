@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useGame, useSession } from "../context.js";
-import { Overlay } from "./Overlay.js";
+import { Modal } from "./Modal.js";
 
 /** Every message of the game so far, shown while the engine waits on its previous-message command. */
 export function MessageHistoryDialog() {
@@ -11,17 +11,10 @@ export function MessageHistoryDialog() {
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ block: "end" });
-    const listener = (event: KeyboardEvent) => {
-      event.preventDefault();
-      dismiss();
-    };
-    document.addEventListener("keydown", listener);
-    return () => document.removeEventListener("keydown", listener);
-  });
+  }, []);
 
   return (
-    <Overlay label="Message history" className="history" onDismiss={dismiss}>
-      <h2 className="dialog-title">Messages</h2>
+    <Modal title="Messages" className="history" onDismiss={dismiss}>
       <ol className="history-list">
         {game.messages.map((message, index) => (
           <li
@@ -39,6 +32,6 @@ export function MessageHistoryDialog() {
           Close
         </button>
       </footer>
-    </Overlay>
+    </Modal>
   );
 }

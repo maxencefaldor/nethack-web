@@ -61,6 +61,10 @@ export interface GlyphLayout {
   readonly S_vbeam: number;
   readonly S_expl_tl: number;
   readonly S_sw_tl: number;
+  readonly S_room: number;
+  readonly S_darkroom: number;
+  readonly S_corr: number;
+  readonly S_litcorr: number;
 }
 
 export type MonsterVariant = "normal" | "pet" | "detected" | "ridden" | "statue";

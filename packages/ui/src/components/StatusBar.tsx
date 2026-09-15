@@ -1,6 +1,8 @@
 import type { StatusField } from "@nethack-web/protocol";
 import type { StatusSnapshot } from "@nethack-web/state";
+import type { CSSProperties } from "react";
 import { useGame, useVocabulary } from "../context.js";
+import { conditionStyle, highlightStyle } from "../status-highlight.js";
 
 /** Condition labels as the terminal status line abbreviates them, keyed by BL_MASK_* name. */
 const CONDITION_LABELS: Readonly<Record<string, string>> = {
@@ -40,17 +42,27 @@ function text(status: StatusSnapshot, field: StatusField): string {
   return status.fields[field]?.text.trim() ?? "";
 }
 
-function Field({ label, value, className }: { label?: string; value: string; className?: string }) {
+interface FieldProps {
+  readonly label?: string | undefined;
+  readonly value: string;
+  readonly className?: string | undefined;
+  readonly style?: CSSProperties | undefined;
+}
+
+function Field({ label, value, className, style }: FieldProps) {
   if (value === "") return null;
   return (
-    <span className={`status-field${className ? ` ${className}` : ""}`}>
+    <span className={`status-field${className ? ` ${className}` : ""}`} style={style}>
       {label ? <span className="status-label">{label}:</span> : null}
       {value}
     </span>
   );
 }
 
-/** The bottom line, laid out as the terminal does but with a hit-point bar. */
+/**
+ * The bottom line, laid out as the terminal does, plus a hit-point bar.
+ * Colours and attributes are the engine's own status highlights.
+ */
 export function StatusBar() {
   const { status } = useGame();
   const vocabulary = useVocabulary();
@@ -62,30 +74,38 @@ export function StatusBar() {
     vocabulary === null
       ? []
       : Object.entries(vocabulary.scope("BL_MASK"))
-          .filter(([, bit]) => typeof bit === "number" && (status.conditions & bit) !== 0)
-          .map(([name]) => CONDITION_LABELS[name] ?? name.replace("BL_MASK_", ""));
+          .filter((entry): entry is [string, number] => typeof entry[1] === "number")
+          .filter(([, bit]) => (status.conditions & bit) !== 0)
+          .map(([name, bit]) => ({
+            label: CONDITION_LABELS[name] ?? name.replace("BL_MASK_", ""),
+            style: conditionStyle(vocabulary, status.conditionColorMasks, bit),
+          }));
   const experience = text(status, "EXP")
     ? `${text(status, "XP")}/${text(status, "EXP")}`
     : text(status, "XP");
+  const styleOf = (field: StatusField) => highlightStyle(status.fields[field]?.highlight);
+  const stat = (label: string, field: StatusField) => (
+    <Field label={label} value={text(status, field)} style={styleOf(field)} />
+  );
 
   return (
     <footer className="status">
       <div className="status-row">
-        <Field value={text(status, "TITLE")} className="status-title" />
-        <Field label="St" value={text(status, "STR")} />
-        <Field label="Dx" value={text(status, "DX")} />
-        <Field label="Co" value={text(status, "CO")} />
-        <Field label="In" value={text(status, "IN")} />
-        <Field label="Wi" value={text(status, "WI")} />
-        <Field label="Ch" value={text(status, "CH")} />
-        <Field value={text(status, "ALIGN")} />
-        <Field label="S" value={text(status, "SCORE")} />
+        <Field value={text(status, "TITLE")} className="status-title" style={styleOf("TITLE")} />
+        {stat("St", "STR")}
+        {stat("Dx", "DX")}
+        {stat("Co", "CO")}
+        {stat("In", "IN")}
+        {stat("Wi", "WI")}
+        {stat("Ch", "CH")}
+        <Field value={text(status, "ALIGN")} style={styleOf("ALIGN")} />
+        {stat("S", "SCORE")}
       </div>
       <div className="status-row">
-        <Field value={text(status, "LEVELDESC")} />
-        <Field label="$" value={text(status, "GOLD").replace(/^:/, "")} />
-        <span className="status-field status-hp">
-          <span className="status-label">HP</span>
+        <Field value={text(status, "LEVELDESC")} style={styleOf("LEVELDESC")} />
+        <Field label="$" value={text(status, "GOLD").replace(/^:/, "")} style={styleOf("GOLD")} />
+        <span className="status-field status-hp" style={styleOf("HP")}>
+          <span className="status-label">HP:</span>
           {text(status, "HP")}({text(status, "HPMAX")})
           {hpPercent === null ? null : (
             <span className="hp-bar" aria-hidden="true">
@@ -96,15 +116,28 @@ export function StatusBar() {
             </span>
           )}
         </span>
-        <Field label="Pw" value={`${text(status, "ENE")}(${text(status, "ENEMAX")})`} />
-        <Field label="AC" value={text(status, "AC")} />
-        <Field label="HD" value={text(status, "HD")} />
-        <Field label="Xp" value={experience} />
-        <Field label="T" value={text(status, "TIME")} />
-        <Field value={text(status, "HUNGER")} className="status-warning" />
-        <Field value={text(status, "CAP")} className="status-warning" />
+        <Field
+          label="Pw"
+          value={`${text(status, "ENE")}(${text(status, "ENEMAX")})`}
+          style={styleOf("ENE")}
+        />
+        {stat("AC", "AC")}
+        {stat("HD", "HD")}
+        <Field label="Xp" value={experience} style={styleOf("XP")} />
+        {stat("T", "TIME")}
+        <Field
+          value={text(status, "HUNGER")}
+          className="status-warning"
+          style={styleOf("HUNGER")}
+        />
+        <Field value={text(status, "CAP")} className="status-warning" style={styleOf("CAP")} />
         {conditions.map((condition) => (
-          <Field key={condition} value={condition} className="status-condition" />
+          <Field
+            key={condition.label}
+            value={condition.label}
+            className="status-condition"
+            style={condition.style}
+          />
         ))}
       </div>
     </footer>

@@ -68,6 +68,7 @@ export class Bridge {
   private nextRequestId = 1;
   private vocabulary: Vocabulary | null = null;
   private noGlyph = -1;
+  private unexploredGlyph = -1;
 
   constructor(
     private readonly memory: Memory,
@@ -79,6 +80,10 @@ export class Bridge {
 
   /** Entry point registered on `globalThis` for the shim to call. */
   handle(name: string, args: unknown[]): Promise<unknown> {
+    console.debug(
+      `shim ${name}`,
+      name === "shim_putstr" || name === "shim_raw_print" ? args[args.length - 1] : "",
+    );
     const handler = this.handlers[name];
     if (handler === undefined) {
       console.warn(`Unhandled windowport call ${name}`, args);
@@ -127,6 +132,7 @@ export class Bridge {
     const global = this.global();
     this.vocabulary = new Vocabulary(global.constants);
     this.noGlyph = this.vocabulary.number("GLYPH", "NO_GLYPH");
+    this.unexploredGlyph = this.vocabulary.number("GLYPH", "GLYPH_UNEXPLORED");
     const catalog: EngineCatalog = {
       version: this.engineVersion,
       constants: global.constants,
@@ -193,6 +199,11 @@ export class Bridge {
   }
 
   private readonly handlers: Record<string, (...args: never[]) => unknown> = {
+    // The patched shim reports initialisation under this name; see packages/engine/patches.
+    shim_init_nhwindows_callback: () => {
+      this.publishCatalog();
+      this.emit({ type: "initWindows" });
+    },
     shim_init_nhwindows: () => {
       this.publishCatalog();
       this.emit({ type: "initWindows" });
@@ -341,13 +352,16 @@ export class Bridge {
     ) => {
       const glyph = this.readGlyph(glyphPointer);
       if (glyph === null) return;
+      const background = this.readGlyph(backgroundPointer);
       this.emit({
         type: "printGlyph",
         window,
         x,
         y,
         glyph,
-        background: this.readGlyph(backgroundPointer),
+        // "Unexplored" is the engine's way of saying there is nothing beneath.
+        background:
+          background !== null && background.glyph === this.unexploredGlyph ? null : background,
       });
     },
     shim_raw_print: (text: string) => this.emit({ type: "rawPrint", text, bold: false }),

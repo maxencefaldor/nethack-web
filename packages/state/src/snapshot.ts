@@ -46,6 +46,8 @@ export interface WindowSnapshot {
 export interface MapSnapshot {
   /** Row-major cells, `MAP_COLUMNS * MAP_ROWS` long. */
   readonly cells: readonly (GlyphInfo | null)[];
+  /** Terrain the engine reports beneath each cell's glyph, when it knows and there is any. */
+  readonly backgrounds: readonly (GlyphInfo | null)[];
   readonly cursor: { readonly x: number; readonly y: number };
   /** Where the engine last asked the view to centre. */
   readonly focus: { readonly x: number; readonly y: number } | null;
@@ -80,6 +82,8 @@ export type GamePhase = "booting" | "playing" | "exited";
 export interface GameSnapshot {
   readonly phase: GamePhase;
   readonly exitCode: number | null;
+  /** The engine's own end-of-game report, once the game has ended. */
+  readonly exitReport: string | null;
   readonly catalog: EngineCatalog | null;
   readonly windows: Readonly<Record<WindowId, WindowSnapshot>>;
   readonly map: MapSnapshot;
@@ -93,10 +97,12 @@ export interface GameSnapshot {
 export const EMPTY_SNAPSHOT: GameSnapshot = {
   phase: "booting",
   exitCode: null,
+  exitReport: null,
   catalog: null,
   windows: {},
   map: {
     cells: Array<GlyphInfo | null>(MAP_COLUMNS * MAP_ROWS).fill(null),
+    backgrounds: Array<GlyphInfo | null>(MAP_COLUMNS * MAP_ROWS).fill(null),
     cursor: { x: 0, y: 0 },
     focus: null,
   },

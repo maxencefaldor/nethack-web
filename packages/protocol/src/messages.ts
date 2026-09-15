@@ -46,7 +46,12 @@ export type EngineToHostMessage =
   | { readonly kind: "events"; readonly events: readonly EngineEvent[] }
   | { readonly kind: "request"; readonly id: number; readonly request: EngineRequest }
   | { readonly kind: "saves"; readonly saves: readonly SaveFile[] }
-  | { readonly kind: "exited"; readonly code: number }
+  | {
+      readonly kind: "exited";
+      readonly code: number;
+      /** The engine's end-of-game dump log, when the build writes one. */
+      readonly report: string | null;
+    }
   | { readonly kind: "error"; readonly message: string };
 
 /** Messages the host sends to the engine worker. */

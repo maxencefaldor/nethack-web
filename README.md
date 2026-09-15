@@ -45,6 +45,7 @@ pnpm dev
 | `pnpm lint` | Lints and checks formatting with Biome |
 | `pnpm test` | Runs unit tests (Vitest), including replays of recorded engine sessions |
 | `pnpm test:e2e` | Plays real games in Chromium (Playwright) |
+| `DEBUG=1 pnpm --filter @nethack-web/engine build:wasm` | Engine build with runtime assertions and stack checks, for diagnosing faults |
 | `pnpm --filter @nethack-web/codex-extract extract` | Regenerates `packages/codex/data` from the engine tree |
 | `pnpm --filter @nethack-web/tileset-build import-official` | Packages NetHack's own tiles from the engine tree into `packages/app/public/tilesets/official` |
 | `pnpm --filter @nethack-web/tileset-build tileset build styles/<style>.json <out>` | Builds a tileset package from a style specification |
@@ -63,5 +64,7 @@ prose extracted verbatim from the engine, glyph classification, and search.
 
 The engine in `packages/engine/nethack` and the build in `packages/engine/dist`
 are distributed under the NetHack General Public License; see
-`packages/engine/nethack/dat/license`. The engine is compiled from unmodified
-sources at the tag recorded in `packages/engine/dist/ENGINE_VERSION`.
+`packages/engine/nethack/dat/license`. The engine is compiled from the sources
+at the pinned release tag with the patches in `packages/engine/patches`
+applied; each patch is a candidate for upstream and is licensed with the
+engine. See `LICENSE.md`.

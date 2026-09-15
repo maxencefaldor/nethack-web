@@ -7,10 +7,10 @@ This repository contains two separately licensed parts.
 `packages/engine/nethack` (a git submodule) and the WebAssembly build it
 produces in `packages/engine/dist` are NetHack, distributed under the NetHack
 General Public License. See `packages/engine/nethack/dat/license`. The engine
-is built from unmodified sources at the tag recorded in the build; the only
-additions at link time are two no-op JavaScript stubs in
-`packages/engine/scripts/link-library.js`, which are offered under the same
-licence.
+is built from the sources at the tag recorded in the build, with the patches
+in `packages/engine/patches` applied; those patches and the two no-op
+JavaScript stubs linked in from `packages/engine/scripts/link-library.js` are
+offered under the same licence.
 
 ## Everything else
 

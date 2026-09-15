@@ -61,9 +61,9 @@ export class RecordingHost implements EngineHost {
     this.inner.onSaves(saves);
   }
 
-  onExit(code: number): void {
+  onExit(code: number, report: string | null): void {
     this.entries.push({ kind: "exit", code });
-    this.inner.onExit(code);
+    this.inner.onExit(code, report);
   }
 
   onError(message: string): void {

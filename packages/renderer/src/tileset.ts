@@ -46,4 +46,11 @@ export interface Tileset {
   /** Pixel art is upscaled without smoothing so its pixels stay square. */
   readonly pixelArt: boolean;
   resolve(glyph: GlyphInfo): Drawable;
+  /**
+   * What to draw under a glyph when the engine reports no background. The
+   * engine leaves plain lit floor implicit, so a sprite tileset answers with
+   * its floor tile for creatures and items and null for terrain; a text
+   * tileset never layers and answers null.
+   */
+  beneath(glyph: GlyphInfo): Drawable | null;
 }

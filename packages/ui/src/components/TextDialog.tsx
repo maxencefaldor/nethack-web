@@ -1,14 +1,14 @@
 import type { WindowSnapshot } from "@nethack-web/state";
 import { useSession } from "../context.js";
 import { MenuEntries } from "./MenuEntries.js";
-import { Overlay } from "./Overlay.js";
+import { Modal } from "./Modal.js";
 
 /** A text or menu window the engine wants shown until the player dismisses it. */
 export function TextDialog({ window }: { window: WindowSnapshot }) {
   const session = useSession();
   const dismiss = () => session.answer("displayWindowBlocking", { dismissed: true });
   return (
-    <Overlay label="Text" className="text-dialog" onDismiss={dismiss}>
+    <Modal title="Text" hideTitle className="text-dialog" onDismiss={dismiss}>
       {window.menu !== null && window.menu.entries.length > 0 ? (
         <MenuEntries menu={window.menu} />
       ) : (
@@ -29,6 +29,6 @@ export function TextDialog({ window }: { window: WindowSnapshot }) {
           Continue
         </button>
       </footer>
-    </Overlay>
+    </Modal>
   );
 }

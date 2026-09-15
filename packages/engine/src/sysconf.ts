@@ -14,4 +14,9 @@ MAXPLAYERS=10
 HIDEUSAGE=1
 PANICTRACE_GDB=0
 PANICTRACE_LIBC=0
+# The end-of-game report, read back by the client when the game ends.
+DUMPLOGFILE=/dumplog/%n.txt
 `;
+
+/** Directory the dump log is written to; created before the engine starts. */
+export const DUMPLOG_DIRECTORY = "/dumplog";

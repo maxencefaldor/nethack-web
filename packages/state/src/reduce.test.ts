@@ -120,4 +120,19 @@ describe("reduce", () => {
     snapshot = reduce(snapshot, { type: "putMessageHistory", text: "ignored", restoring: false });
     expect(snapshot.messages.map((message) => message.text)).toEqual(["You see here a rock."]);
   });
+
+  it("keeps the terrain the engine reports beneath a glyph", () => {
+    let snapshot = reduceAll(EMPTY_SNAPSHOT, boot);
+    snapshot = reduce(snapshot, {
+      type: "printGlyph",
+      window: 3,
+      x: 2,
+      y: 2,
+      glyph: glyph("d"),
+      background: glyph("."),
+    });
+    expect(snapshot.map.backgrounds[cellIndex(2, 2)]?.symbol).toBe(".");
+    snapshot = reduce(snapshot, { type: "clearWindow", window: 3 });
+    expect(snapshot.map.backgrounds[cellIndex(2, 2)]).toBeNull();
+  });
 });

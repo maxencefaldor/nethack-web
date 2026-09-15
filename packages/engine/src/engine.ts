@@ -29,7 +29,7 @@ export interface EngineHost {
   onEvents(events: readonly EngineEvent[]): void;
   onRequest(pending: PendingRequest): void;
   onSaves(saves: readonly SaveFile[]): void;
-  onExit(code: number): void;
+  onExit(code: number, report: string | null): void;
   onError(message: string): void;
 }
 
@@ -73,7 +73,7 @@ export class Engine {
         this.host.onSaves(message.saves);
         return;
       case "exited":
-        this.host.onExit(message.code);
+        this.host.onExit(message.code, message.report);
         return;
       case "error":
         this.host.onError(message.message);

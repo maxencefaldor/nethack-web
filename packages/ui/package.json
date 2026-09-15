@@ -19,6 +19,9 @@
     "@nethack-web/protocol": "workspace:*",
     "@nethack-web/renderer": "workspace:*",
     "@nethack-web/state": "workspace:*",
+    "cmdk": "catalog:",
+    "lucide-react": "catalog:",
+    "radix-ui": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:"
   },

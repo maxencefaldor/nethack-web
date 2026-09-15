@@ -76,7 +76,11 @@ export function reduce(snapshot: GameSnapshot, event: EngineEvent): GameSnapshot
       if (window?.kind === "map") {
         return {
           ...snapshot,
-          map: { ...snapshot.map, cells: Array(MAP_COLUMNS * MAP_ROWS).fill(null) },
+          map: {
+            ...snapshot.map,
+            cells: Array(MAP_COLUMNS * MAP_ROWS).fill(null),
+            backgrounds: Array(MAP_COLUMNS * MAP_ROWS).fill(null),
+          },
         };
       }
       return withWindow(snapshot, event.window, (existing) => ({
@@ -143,9 +147,12 @@ export function reduce(snapshot: GameSnapshot, event: EngineEvent): GameSnapshot
       if (event.x < 0 || event.x >= MAP_COLUMNS || event.y < 0 || event.y >= MAP_ROWS) {
         return snapshot;
       }
+      const index = cellIndex(event.x, event.y);
       const cells = snapshot.map.cells.slice();
-      cells[cellIndex(event.x, event.y)] = event.glyph;
-      return { ...snapshot, map: { ...snapshot.map, cells } };
+      const backgrounds = snapshot.map.backgrounds.slice();
+      cells[index] = event.glyph;
+      backgrounds[index] = event.background;
+      return { ...snapshot, map: { ...snapshot.map, cells, backgrounds } };
     }
 
     case "clipAround":
@@ -234,6 +241,10 @@ export function withRequest(snapshot: GameSnapshot, request: EngineRequest | nul
   return snapshot.request === request ? snapshot : { ...snapshot, request };
 }
 
-export function withExit(snapshot: GameSnapshot, code: number): GameSnapshot {
-  return { ...snapshot, phase: "exited", exitCode: code, request: null };
+export function withExit(
+  snapshot: GameSnapshot,
+  code: number,
+  report: string | null,
+): GameSnapshot {
+  return { ...snapshot, phase: "exited", exitCode: code, exitReport: report, request: null };
 }

@@ -1,6 +1,6 @@
 import type { GlyphInfo } from "@nethack-web/protocol";
 import { MAP_COLUMNS, MAP_ROWS, type MapSnapshot } from "@nethack-web/state";
-import type { Cell, MapRenderer, MapView } from "./map-renderer.js";
+import type { Cell, MapRenderer, MapView, RenderOptions } from "./map-renderer.js";
 import type { Drawable, Tileset } from "./tileset.js";
 
 export interface CanvasMapRendererStyle {
@@ -28,44 +28,46 @@ export const DEFAULT_CANVAS_STYLE: CanvasMapRendererStyle = {
  */
 export class CanvasMapRenderer implements MapRenderer {
   readonly id = "canvas";
-  private host: HTMLElement | null = null;
   private canvas: HTMLCanvasElement | null = null;
   private context: CanvasRenderingContext2D | null = null;
   /** Natural cell size of the current tileset, in CSS pixels at scale 1. */
   private cellWidth = 0;
   private cellHeight = 0;
-  /** Scale from natural cell size to displayed size. */
-  private scale = 1;
+  private view: MapView = { scale: 1, offsetX: 0, offsetY: 0 };
 
   constructor(private readonly style: CanvasMapRendererStyle = DEFAULT_CANVAS_STYLE) {}
 
   mount(host: HTMLElement): void {
     const canvas = document.createElement("canvas");
     canvas.style.display = "block";
+    canvas.style.position = "absolute";
+    canvas.style.left = "0";
+    canvas.style.top = "0";
+    canvas.style.transformOrigin = "0 0";
     host.querySelector("canvas")?.remove();
     host.prepend(canvas);
-    this.host = host;
     this.canvas = canvas;
     this.context = canvas.getContext("2d");
   }
 
-  render(map: MapSnapshot, tileset: Tileset, view: MapView): void {
-    const { canvas, context, host } = this;
-    if (canvas === null || context === null || host === null) return;
+  render(map: MapSnapshot, tileset: Tileset, view: MapView, options: RenderOptions): void {
+    const { canvas, context } = this;
+    if (canvas === null || context === null) return;
     this.cellWidth = tileset.cellSize.width;
     this.cellHeight = tileset.cellSize.height;
-    this.scale = this.scaleFor(view, host);
+    this.view = view;
     const ratio = window.devicePixelRatio || 1;
-    const displayWidth = MAP_COLUMNS * this.cellWidth * this.scale;
-    const displayHeight = MAP_ROWS * this.cellHeight * this.scale;
+    const displayWidth = MAP_COLUMNS * this.cellWidth * view.scale;
+    const displayHeight = MAP_ROWS * this.cellHeight * view.scale;
     canvas.style.width = `${displayWidth}px`;
     canvas.style.height = `${displayHeight}px`;
+    canvas.style.transform = `translate(${view.offsetX}px, ${view.offsetY}px)`;
     canvas.width = Math.round(displayWidth * ratio);
     canvas.height = Math.round(displayHeight * ratio);
 
-    context.setTransform(ratio * this.scale, 0, 0, ratio * this.scale, 0, 0);
+    context.setTransform(ratio * view.scale, 0, 0, ratio * view.scale, 0, 0);
     // Pixel art keeps hard pixels when enlarged; anything shrunk is filtered.
-    context.imageSmoothingEnabled = !(tileset.pixelArt && this.scale >= 1);
+    context.imageSmoothingEnabled = !(tileset.pixelArt && view.scale >= 1);
     context.imageSmoothingQuality = "high";
     context.fillStyle = this.style.background;
     context.fillRect(0, 0, MAP_COLUMNS * this.cellWidth, MAP_ROWS * this.cellHeight);
@@ -75,28 +77,14 @@ export class CanvasMapRenderer implements MapRenderer {
       for (let x = 0; x < MAP_COLUMNS; x += 1) {
         const glyph = map.cells[y * MAP_COLUMNS + x];
         if (glyph === null || glyph === undefined) continue;
+        if (options.terrainBeneath) {
+          const background = map.backgrounds[y * MAP_COLUMNS + x];
+          const beneath = background ? tileset.resolve(background) : tileset.beneath(glyph);
+          if (beneath?.kind === "sprite") this.drawSprite(context, x, y, beneath);
+        }
         this.drawCell(context, x, y, glyph, tileset.resolve(glyph));
       }
     }
-    if (view.mode === "follow" && view.focus !== null) this.scrollTo(host, view.focus);
-  }
-
-  /** Whole: the largest scale at which the full grid fits the host. Follow: the chosen zoom. */
-  private scaleFor(view: MapView, host: HTMLElement): number {
-    if (view.mode === "follow") return view.zoom;
-    const padding = 12;
-    const availableWidth = Math.max(1, host.clientWidth - padding);
-    const availableHeight = Math.max(1, host.clientHeight - padding);
-    return Math.min(
-      availableWidth / (MAP_COLUMNS * this.cellWidth),
-      availableHeight / (MAP_ROWS * this.cellHeight),
-    );
-  }
-
-  private scrollTo(host: HTMLElement, focus: Cell): void {
-    const targetX = (focus.x + 0.5) * this.cellWidth * this.scale - host.clientWidth / 2;
-    const targetY = (focus.y + 0.5) * this.cellHeight * this.scale - host.clientHeight / 2;
-    host.scrollTo({ left: Math.max(0, targetX), top: Math.max(0, targetY) });
   }
 
   private drawCell(
@@ -128,17 +116,7 @@ export class CanvasMapRenderer implements MapRenderer {
       context.fillRect(left + this.cellWidth - size - 1, top + 1, size, size);
     }
     if (drawable.kind === "sprite") {
-      context.drawImage(
-        drawable.image,
-        drawable.sourceX,
-        drawable.sourceY,
-        drawable.sourceWidth,
-        drawable.sourceHeight,
-        left,
-        top,
-        this.cellWidth,
-        this.cellHeight,
-      );
+      this.drawSprite(context, x, y, drawable);
       return;
     }
     context.font = drawable.font;
@@ -146,10 +124,30 @@ export class CanvasMapRenderer implements MapRenderer {
     context.fillText(drawable.text, centerX, centerY + 1);
   }
 
+  private drawSprite(
+    context: CanvasRenderingContext2D,
+    x: number,
+    y: number,
+    drawable: Extract<Drawable, { kind: "sprite" }>,
+  ): void {
+    context.drawImage(
+      drawable.image,
+      drawable.sourceX,
+      drawable.sourceY,
+      drawable.sourceWidth,
+      drawable.sourceHeight,
+      x * this.cellWidth,
+      y * this.cellHeight,
+      this.cellWidth,
+      this.cellHeight,
+    );
+  }
+
   pick(point: { readonly x: number; readonly y: number }): Cell | null {
     if (this.canvas === null || this.cellWidth === 0) return null;
-    const x = Math.floor(point.x / (this.cellWidth * this.scale));
-    const y = Math.floor(point.y / (this.cellHeight * this.scale));
+    const { scale, offsetX, offsetY } = this.view;
+    const x = Math.floor((point.x - offsetX) / (this.cellWidth * scale));
+    const y = Math.floor((point.y - offsetY) / (this.cellHeight * scale));
     if (x < 0 || y < 0 || x >= MAP_COLUMNS || y >= MAP_ROWS) return null;
     return { x, y };
   }
@@ -158,6 +156,5 @@ export class CanvasMapRenderer implements MapRenderer {
     this.canvas?.remove();
     this.canvas = null;
     this.context = null;
-    this.host = null;
   }
 }

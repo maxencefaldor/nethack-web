@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useSession } from "../context.js";
 import { engineKeyCode, KEY_ENTER, KEY_ESCAPE, KEY_SPACE } from "../keys.js";
 import { MenuEntries } from "./MenuEntries.js";
-import { Overlay } from "./Overlay.js";
+import { Modal } from "./Modal.js";
 
 export interface MenuDialogProps {
   readonly menu: MenuSnapshot;
@@ -94,8 +94,7 @@ export function MenuDialog({ menu, mode }: MenuDialogProps) {
   });
 
   return (
-    <Overlay label={menu.prompt ?? "Menu"} className="menu-dialog">
-      {menu.prompt ? <h2 className="dialog-title">{menu.prompt}</h2> : null}
+    <Modal title={menu.prompt ?? "Menu"} hideTitle={menu.prompt === null} className="menu-dialog">
       <MenuEntries
         menu={menu}
         selected={selected}
@@ -121,6 +120,6 @@ export function MenuDialog({ menu, mode }: MenuDialogProps) {
           </>
         )}
       </footer>
-    </Overlay>
+    </Modal>
   );
 }

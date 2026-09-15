@@ -1,4 +1,4 @@
-import { officialCodex } from "@nethack-web/codex";
+import { OFFICIAL_DATA } from "@nethack-web/codex";
 import { CanvasMapRenderer, type Tileset } from "@nethack-web/renderer";
 import {
   CodexPanel,
@@ -21,18 +21,17 @@ export function App({ tilesets }: { tilesets: TilesetRegistry }) {
   const [codex, setCodex] = useState(false);
   const [tileset, setTileset] = useState<Tileset | null>(null);
   const renderer = useMemo(() => new CanvasMapRenderer(), []);
-  const classifier = useMemo(() => officialCodex().glyphs, []);
 
   useEffect(() => {
     if (vocabulary === null) return;
     let current = true;
-    void tilesets.load(preferences.tilesetId, vocabulary, classifier).then((loaded) => {
+    void tilesets.load(preferences.tilesetId, vocabulary, OFFICIAL_DATA.layout).then((loaded) => {
       if (current) setTileset(loaded);
     });
     return () => {
       current = false;
     };
-  }, [tilesets, preferences.tilesetId, vocabulary, classifier]);
+  }, [tilesets, preferences.tilesetId, vocabulary]);
 
   if (game.phase === "booting" || tileset === null) {
     return (

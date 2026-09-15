@@ -1,0 +1,30 @@
+Subject: shim windowport: request background glyphs
+
+The core computes the terrain beneath a monster or object only when a
+windowport sets iflags.use_background_glyph. No port sets it, so tile
+ports never receive it. The shim is the port used by graphical hosts, so
+it asks for it. Text hosts are unaffected: they ignore the background.
+
+Change to the NetHack 5.0.0 sources; distributed under the NetHack General
+Public License together with the engine build.
+
+--- a/win/shim/winshim.c	2026-09-15 01:31:00
++++ b/win/shim/winshim.c	2026-09-15 01:31:00
+@@ -114,7 +114,16 @@
+ }
+ #endif /* __EMSCRIPTEN__ */
+ 
+-VDECLCB(shim_init_nhwindows,(int *argcp, char **argv), "vpp", P2V argcp, P2V argv)
++VDECLCB(shim_init_nhwindows_callback,(int *argcp, char **argv), "vpp", P2V argcp, P2V argv)
++void shim_init_nhwindows(int *argcp, char **argv);
++void
++shim_init_nhwindows(int *argcp, char **argv)
++{
++    /* ask the core for the terrain beneath monsters and objects, so a
++       graphical host can draw it; text hosts simply ignore it */
++    iflags.use_background_glyph = TRUE;
++    shim_init_nhwindows_callback(argcp, argv);
++}
+ DECLCB(boolean, shim_player_selection_or_tty,(void), "b")
+ VDECLCB(shim_askname,(void), "v")
+ VDECLCB(shim_get_nh_event,(void), "v")

@@ -1,5 +1,5 @@
-import type { GlyphClassifier, GlyphInfo } from "@nethack-web/protocol";
-import { glyphKeyFallbackIds, glyphKeyId } from "@nethack-web/protocol";
+import type { GlyphInfo, GlyphLayout } from "@nethack-web/protocol";
+import { GlyphClassifier, glyphKeyFallbackIds, glyphKeyId } from "@nethack-web/protocol";
 import type { EmphasisReader } from "./emphasis.js";
 import type { CellSize, Drawable, Tileset } from "./tileset.js";
 
@@ -23,37 +23,58 @@ export class AtlasTileset implements Tileset {
   readonly id: string;
   readonly cellSize: CellSize;
   readonly pixelArt: boolean;
+  private readonly classifier: GlyphClassifier;
+  private readonly floorId: string;
 
   constructor(
     private readonly manifest: TilesetManifest,
     private readonly image: CanvasImageSource,
-    private readonly classifier: GlyphClassifier,
+    layout: GlyphLayout,
     private readonly emphasis: EmphasisReader,
     private readonly fallback: Tileset,
   ) {
     this.id = manifest.id;
     this.cellSize = manifest.cellSize;
     this.pixelArt = manifest.pixelArt;
+    this.classifier = new GlyphClassifier(layout);
+    this.floorId = `terrain/${layout.S_room}`;
   }
 
   resolve(glyph: GlyphInfo): Drawable {
     const key = this.classifier.classify(glyph.glyph);
     if (key !== null) {
       for (const id of [glyphKeyId(key), ...glyphKeyFallbackIds(key)]) {
-        const tile = this.manifest.tiles[id];
-        if (tile !== undefined) {
-          return {
-            kind: "sprite",
-            image: this.image,
-            sourceX: tile.x,
-            sourceY: tile.y,
-            sourceWidth: this.cellSize.width,
-            sourceHeight: this.cellSize.height,
-            emphasis: this.emphasis.read(glyph),
-          };
-        }
+        const sprite = this.sprite(id, glyph);
+        if (sprite !== null) return sprite;
       }
     }
     return this.fallback.resolve(glyph);
+  }
+
+  beneath(glyph: GlyphInfo): Drawable | null {
+    const key = this.classifier.classify(glyph.glyph);
+    if (key === null) return null;
+    switch (key.kind) {
+      case "monster":
+      case "corpse":
+      case "object":
+        return this.sprite(this.floorId, glyph);
+      default:
+        return null;
+    }
+  }
+
+  private sprite(id: string, glyph: GlyphInfo): Drawable | null {
+    const tile = this.manifest.tiles[id];
+    if (tile === undefined) return null;
+    return {
+      kind: "sprite",
+      image: this.image,
+      sourceX: tile.x,
+      sourceY: tile.y,
+      sourceWidth: this.cellSize.width,
+      sourceHeight: this.cellSize.height,
+      emphasis: this.emphasis.read(glyph),
+    };
   }
 }

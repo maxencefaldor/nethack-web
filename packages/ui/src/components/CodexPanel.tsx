@@ -1,9 +1,10 @@
 import type { Artifact, CodexPage, EntityRef, Monster, ObjectKind } from "@nethack-web/codex";
-import { monsterName, sameEntity } from "@nethack-web/codex";
+import { browse, type CategoryId, monsterName, sameEntity } from "@nethack-web/codex";
 import { DUSK_PALETTE } from "@nethack-web/renderer";
-import { useEffect, useMemo, useState } from "react";
+import { Tabs } from "radix-ui";
+import { useMemo, useState } from "react";
 import { useCodex, useServices } from "../context.js";
-import { Overlay } from "./Overlay.js";
+import { Modal } from "./Modal.js";
 
 export interface CodexPanelProps {
   readonly initial?: EntityRef | undefined;
@@ -17,61 +18,93 @@ const KIND_LABELS: Readonly<Record<EntityRef["kind"], string>> = {
   terrain: "Dungeon feature",
 };
 
-/** The encyclopedia: search on the left, one page on the right. */
+/**
+ * The encyclopedia. Categories and their groups follow the engine's own
+ * taxonomy: creatures by monster class, items by object class, artifacts,
+ * dungeon features. Search narrows every group at once.
+ */
 export function CodexPanel({ initial, onClose }: CodexPanelProps) {
   const codex = useCodex();
   const [query, setQuery] = useState("");
+  const [category, setCategory] = useState<CategoryId>(initial?.kind ?? "monster");
   const [selected, setSelected] = useState<EntityRef | null>(initial ?? null);
-  const results = useMemo(() => codex.search(query, 80), [codex, query]);
+  const categories = useMemo(() => browse(codex, query), [codex, query]);
   const page = selected === null ? null : codex.page(selected);
 
-  useEffect(() => {
-    const first = results[0];
-    if (first === undefined) return;
-    if (selected === null || !results.some((entry) => sameEntity(entry.ref, selected))) {
-      setSelected(first.ref);
-    }
-  }, [results, selected]);
-
   return (
-    <Overlay label="Codex" className="codex" onDismiss={onClose}>
-      <div className="codex-columns">
-        <nav className="codex-nav" aria-label="Codex entries">
+    <Modal title="Codex" hideTitle className="codex" onDismiss={onClose}>
+      <Tabs.Root
+        className="codex-tabs"
+        value={category}
+        onValueChange={(value) => setCategory(value as CategoryId)}
+      >
+        <div className="codex-toolbar">
+          <Tabs.List className="tabs-list" aria-label="Categories">
+            {categories.map((item) => (
+              <Tabs.Trigger key={item.id} value={item.id} className="tabs-trigger">
+                {item.title}
+                <span className="tabs-count">
+                  {item.groups.reduce((total, group) => total + group.pages.length, 0)}
+                </span>
+              </Tabs.Trigger>
+            ))}
+          </Tabs.List>
           <input
             className="codex-search"
-            placeholder="Search creatures, items, features"
+            type="search"
+            placeholder="Search"
+            aria-label="Search the codex"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            onKeyDown={(event) => event.key === "Escape" && onClose()}
           />
-          <ul className="codex-list">
-            {results.map((entry) => (
-              <li key={`${entry.ref.kind}-${entry.ref.index}`}>
-                <button
-                  type="button"
-                  className={selected && sameEntity(selected, entry.ref) ? "selected" : ""}
-                  onClick={() => setSelected(entry.ref)}
-                >
-                  <span className="codex-glyph" style={{ color: DUSK_PALETTE[entry.color] }}>
-                    {entry.symbol}
-                  </span>
-                  <span>{entry.title}</span>
-                  <span className="codex-kind">{KIND_LABELS[entry.ref.kind]}</span>
-                </button>
-              </li>
-            ))}
-          </ul>
-        </nav>
-        <article className="codex-page">
-          {page === null ? <p className="panel-empty">Pick an entry.</p> : <Page page={page} />}
-        </article>
-      </div>
-      <footer className="dialog-actions">
-        <button type="button" className="primary" onClick={onClose}>
-          Close
-        </button>
-      </footer>
-    </Overlay>
+        </div>
+        <div className="codex-columns">
+          {categories.map((item) => (
+            <Tabs.Content key={item.id} value={item.id} className="codex-nav">
+              {item.groups.length === 0 ? (
+                <p className="panel-empty">Nothing matches.</p>
+              ) : (
+                item.groups.map((group) => (
+                  <section key={group.id} className="codex-group">
+                    <h3 className="codex-group-title">
+                      <span className="codex-glyph">{group.symbol}</span>
+                      {group.title}
+                    </h3>
+                    <ul className="codex-list">
+                      {group.pages.map((entry) => (
+                        <li key={`${entry.ref.kind}-${entry.ref.index}`}>
+                          <button
+                            type="button"
+                            className={
+                              selected && sameEntity(selected, entry.ref) ? "selected" : ""
+                            }
+                            aria-current={
+                              selected && sameEntity(selected, entry.ref) ? "true" : undefined
+                            }
+                            onClick={() => setSelected(entry.ref)}
+                          >
+                            <span
+                              className="codex-glyph"
+                              style={{ color: DUSK_PALETTE[entry.color] }}
+                            >
+                              {entry.symbol}
+                            </span>
+                            <span>{entry.title}</span>
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+                ))
+              )}
+            </Tabs.Content>
+          ))}
+          <article className="codex-page">
+            {page === null ? <p className="panel-empty">Pick an entry.</p> : <Page page={page} />}
+          </article>
+        </div>
+      </Tabs.Root>
+    </Modal>
   );
 }
 

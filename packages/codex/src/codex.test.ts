@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { browse } from "./browse.js";
 import { patternMatches } from "./descriptions.js";
 import { monsterName } from "./entities.js";
 import { OFFICIAL_DATA, officialCodex } from "./official.js";
@@ -56,5 +57,23 @@ describe("official codex", () => {
     expect(page?.symbol).toBe(")");
     expect(page?.description?.source).toBe("official");
     expect(page?.description?.text.startsWith("\tAt first only its tip was visible")).toBe(true);
+  });
+});
+
+describe("browsing by the engine's classes", () => {
+  it("groups creatures by monster class with the engine's class description", () => {
+    const [creatures] = browse(codex);
+    expect(creatures?.title).toBe("Creatures");
+    const ants = creatures?.groups.find((group) => group.symbol === "a");
+    expect(ants?.title).toBe("ant or other insect");
+    expect(ants?.pages.map((page) => page.title)).toContain("giant ant");
+  });
+
+  it("groups items by object class and narrows every group with a filter", () => {
+    const categories = browse(codex, "sword");
+    const items = categories.find((category) => category.id === "object");
+    expect(items?.groups.map((group) => group.title)).toEqual(["weapons"]);
+    expect(items?.groups[0]?.pages.map((page) => page.title)).toContain("long sword");
+    expect(categories.find((category) => category.id === "terrain")?.groups).toEqual([]);
   });
 });

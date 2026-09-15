@@ -1,4 +1,4 @@
-import type { GlyphClassifier, Vocabulary } from "@nethack-web/protocol";
+import type { GlyphLayout, Vocabulary } from "@nethack-web/protocol";
 import {
   AtlasTileset,
   DEFAULT_TYPOGRAPHIC_STYLE,
@@ -37,7 +37,7 @@ export class TilesetRegistry {
     return choices;
   }
 
-  async load(id: string, vocabulary: Vocabulary, classifier: GlyphClassifier): Promise<Tileset> {
+  async load(id: string, vocabulary: Vocabulary, layout: GlyphLayout): Promise<Tileset> {
     const emphasis = new EmphasisReader(vocabulary);
     const typographic = new TypographicTileset(
       DEFAULT_TYPOGRAPHIC_STYLE,
@@ -50,7 +50,7 @@ export class TilesetRegistry {
     const image = await loadImage(`${this.base}${id}/${manifest.atlas}`);
     return image === null
       ? typographic
-      : new AtlasTileset(manifest, image, classifier, emphasis, typographic);
+      : new AtlasTileset(manifest, image, layout, emphasis, typographic);
   }
 
   private async manifest(id: string): Promise<TilesetManifest | null> {

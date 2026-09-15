@@ -43,6 +43,10 @@ export class TypographicTileset implements Tileset {
     };
   }
 
+  beneath(): null {
+    return null;
+  }
+
   resolve(glyph: GlyphInfo): Drawable {
     return {
       kind: "text",
