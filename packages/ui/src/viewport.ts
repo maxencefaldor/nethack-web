@@ -5,6 +5,7 @@ import {
   centerOn,
   distance,
   fitCamera,
+  freeArea,
   type Insets,
   midpoint,
   type Point,
@@ -99,16 +100,19 @@ export function useMapViewport(
     return () => observer.disconnect();
   }, [hostRef, natural.width, natural.height, hostSize, insets, framing]);
 
+  // Zooming scales around the pointer, except while following the hero,
+  // when it scales around the middle of the free area so the hero stays put.
   const zoomBy = useCallback(
     (factor: number, anchor?: Point) => {
-      const size = hostSize();
+      const area = freeArea(hostSize(), insets);
+      const middle = { x: area.x + area.width / 2, y: area.y + area.height / 2 };
       setFraming("custom");
       const limits = zoomLimits(fitScale(), tileset.cellSize.height);
       setCamera((current) =>
-        zoomAt(current, factor, anchor ?? { x: size.width / 2, y: size.height / 2 }, limits),
+        zoomAt(current, factor, following ? middle : (anchor ?? middle), limits),
       );
     },
-    [hostSize, fitScale, tileset.cellSize.height],
+    [hostSize, insets, fitScale, tileset.cellSize.height, following],
   );
 
   useEffect(() => {

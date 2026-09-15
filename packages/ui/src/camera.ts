@@ -13,7 +13,7 @@ export interface Point {
 /** The camera may zoom out to half the scale that shows the whole map. */
 const MIN_ZOOM_OF_FIT = 0.5;
 /** And zoom in until a cell is this tall on screen, in CSS pixels, whatever the tileset. */
-export const MAX_CELL_HEIGHT = 64;
+export const MAX_CELL_HEIGHT = 128;
 
 export interface ZoomLimits {
   readonly min: number;
