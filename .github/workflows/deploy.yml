@@ -1,0 +1,88 @@
+# Builds the site and publishes it to GitHub Pages on every push to main.
+#
+# The engine build (NetHack to WebAssembly) takes several minutes, so its
+# output is cached under a key derived from everything that goes into it: the
+# submodule commit, the patches, the build scripts and the Emscripten version.
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Engine build inputs
+        id: engine
+        run: |
+          echo "commit=$(git rev-parse HEAD:packages/engine/nethack)" >> "$GITHUB_OUTPUT"
+          echo "emsdk=$(cat packages/engine/emsdk.version)" >> "$GITHUB_OUTPUT"
+
+      - name: Restore engine build
+        id: engine-cache
+        uses: actions/cache@v4
+        with:
+          path: packages/engine/dist
+          key: engine-${{ steps.engine.outputs.commit }}-${{ steps.engine.outputs.emsdk }}-${{ hashFiles('packages/engine/patches/**', 'packages/engine/scripts/**') }}
+
+      - name: Install Emscripten
+        if: steps.engine-cache.outputs.cache-hit != 'true'
+        uses: mymindstorm/setup-emsdk@v14
+        with:
+          version: ${{ steps.engine.outputs.emsdk }}
+          actions-cache-folder: emsdk-cache
+
+      - name: Build engine
+        if: steps.engine-cache.outputs.cache-hit != 'true'
+        run: bash packages/engine/scripts/build.sh
+        env:
+          EMSDK_DIR: ${{ env.EMSDK }}
+
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm lint
+      - run: pnpm typecheck
+      - run: pnpm test
+
+      - name: Configure Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Build site
+        run: pnpm --filter @nethack-web/app build
+        env:
+          SITE_BASE: ${{ steps.pages.outputs.base_path }}/
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: packages/app/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

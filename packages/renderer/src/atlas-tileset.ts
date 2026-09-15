@@ -11,6 +11,8 @@ export interface TilesetManifest {
   /** Atlas image path, relative to the manifest. */
   readonly atlas: string;
   readonly pixelArt: boolean;
+  /** Ground colour the tiles were drawn on. */
+  readonly background: string;
   readonly tiles: Readonly<Record<string, { readonly x: number; readonly y: number }>>;
 }
 
@@ -23,6 +25,7 @@ export class AtlasTileset implements Tileset {
   readonly id: string;
   readonly cellSize: CellSize;
   readonly pixelArt: boolean;
+  readonly background: string;
   private readonly classifier: GlyphClassifier;
   private readonly floorId: string;
 
@@ -36,6 +39,7 @@ export class AtlasTileset implements Tileset {
     this.id = manifest.id;
     this.cellSize = manifest.cellSize;
     this.pixelArt = manifest.pixelArt;
+    this.background = manifest.background;
     this.classifier = new GlyphClassifier(layout);
     this.floorId = `terrain/${layout.S_room}`;
   }

@@ -43,6 +43,8 @@ export interface CellSize {
 export interface Tileset {
   readonly id: string;
   readonly cellSize: CellSize;
+  /** Ground colour the tiles were made for; the map area is painted with it. */
+  readonly background: string;
   /** Pixel art is upscaled without smoothing so its pixels stay square. */
   readonly pixelArt: boolean;
   resolve(glyph: GlyphInfo): Drawable;

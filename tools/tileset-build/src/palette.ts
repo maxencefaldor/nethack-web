@@ -17,3 +17,8 @@ export const DUSK_PALETTE: readonly string[] = [
   "#8ce8f3",
   "#ffffff",
 ];
+
+/** The colour for an engine colour index, defaulting to the neutral foreground. */
+export function paletteColor(index: number): string {
+  return DUSK_PALETTE[index] ?? DUSK_PALETTE[8] ?? "#dfe5ea";
+}

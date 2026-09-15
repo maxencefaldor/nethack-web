@@ -37,4 +37,17 @@ describe("camera", () => {
     expect(centred.offsetX + 40.5 * 11 * camera.scale).toBeCloseTo(500);
     expect(centred.offsetY + 10.5 * 22 * camera.scale).toBeCloseTo(300);
   });
+
+  it("frames the whole map inside the area the HUD leaves free", () => {
+    const insets = { top: 80, right: 300, bottom: 60, left: 0 };
+    const camera = fitCamera(host, natural, insets);
+    const right = camera.offsetX + natural.width * camera.scale;
+    const bottom = camera.offsetY + natural.height * camera.scale;
+    expect(camera.offsetY).toBeGreaterThanOrEqual(80);
+    expect(bottom).toBeLessThanOrEqual(600 - 60);
+    expect(right).toBeLessThanOrEqual(1000 - 300);
+    const centred = centerOn(camera, { x: 0, y: 0 }, { width: 11, height: 22 }, host, insets);
+    expect(centred.offsetX + 5.5 * camera.scale).toBeCloseTo(350);
+    expect(centred.offsetY + 11 * camera.scale).toBeCloseTo(80 + (600 - 140) / 2);
+  });
 });

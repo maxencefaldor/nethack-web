@@ -2,8 +2,9 @@ import type { EntityRef } from "@nethack-web/codex";
 import type { MapRenderer, Tileset } from "@nethack-web/renderer";
 import { Backpack, BookOpen, Map as MapIcon, SlidersHorizontal, Terminal } from "lucide-react";
 import { Tooltip } from "radix-ui";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useGame, usePreferences, useSession } from "../context.js";
+import { useHudInsets } from "../hud-insets.js";
 import { useEngineKeyboard } from "../keyboard.js";
 import { CodexPanel } from "./CodexPanel.js";
 import { CommandPalette } from "./CommandPalette.js";
@@ -36,6 +37,11 @@ export function GameScreen({ renderer, tileset }: GameScreenProps) {
   const [palette, setPalette] = useState(false);
   const [settings, setSettings] = useState(false);
   const [inventory, setInventory] = useState(() => window.innerWidth > 800);
+  const screenRef = useRef<HTMLDivElement>(null);
+  const topRef = useRef<HTMLDivElement>(null);
+  const bottomRef = useRef<HTMLDivElement>(null);
+  const rightRef = useRef<HTMLDivElement>(null);
+  const insets = useHudInsets(screenRef, { top: topRef, bottom: bottomRef, right: rightRef });
   const [codex, setCodex] = useState<{ open: boolean; at: EntityRef | undefined }>({
     open: false,
     at: undefined,
@@ -67,9 +73,11 @@ export function GameScreen({ renderer, tileset }: GameScreenProps) {
 
   return (
     <Tooltip.Provider delayDuration={400}>
-      <div className="screen">
-        <MapCanvas renderer={renderer} tileset={tileset} onInspect={inspect} />
-        <div className="hud hud-top-left">
+      <div className="screen" ref={screenRef}>
+        <MapCanvas renderer={renderer} tileset={tileset} insets={insets} onInspect={inspect} />
+        <div className="hud-scrim hud-scrim-top" aria-hidden="true" />
+        <div className="hud-scrim hud-scrim-bottom" aria-hidden="true" />
+        <div className="hud hud-top-left" ref={topRef}>
           <MessageLog />
           {request?.type === "yesNo" ? <YesNoBar request={request} /> : null}
           {request?.type === "getLine" ||
@@ -100,11 +108,11 @@ export function GameScreen({ renderer, tileset }: GameScreenProps) {
           <IconButton icon={SlidersHorizontal} label="Settings" onClick={() => setSettings(true)} />
         </nav>
         {inventory ? (
-          <div className="hud hud-right">
+          <div className="hud hud-right" ref={rightRef}>
             <InventoryPanel onInspect={inspect} />
           </div>
         ) : null}
-        <div className="hud hud-bottom-left">
+        <div className="hud hud-bottom-left" ref={bottomRef}>
           <StatusBar />
         </div>
         {touch ? (

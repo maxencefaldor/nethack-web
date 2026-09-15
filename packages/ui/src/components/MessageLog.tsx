@@ -1,6 +1,6 @@
 import { useGame } from "../context.js";
 
-const VISIBLE = 4;
+const VISIBLE = 3;
 
 /** The most recent messages, newest last, with the engine's --More-- pause when it asks for one. */
 export function MessageLog() {

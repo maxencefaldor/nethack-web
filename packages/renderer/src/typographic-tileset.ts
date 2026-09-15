@@ -4,6 +4,7 @@ import { colorFromPalette, DUSK_PALETTE, type Palette } from "./palette.js";
 import type { CellSize, Drawable, Tileset } from "./tileset.js";
 
 export interface TypographicStyle {
+  readonly background: string;
   readonly fontFamily: string;
   readonly fontSize: number;
   /** Line height as a multiple of the font size. */
@@ -12,6 +13,7 @@ export interface TypographicStyle {
 }
 
 export const DEFAULT_TYPOGRAPHIC_STYLE: TypographicStyle = {
+  background: "#0f1113",
   fontFamily: '"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace',
   fontSize: 18,
   lineHeight: 1.25,
@@ -28,6 +30,7 @@ export const DEFAULT_TYPOGRAPHIC_STYLE: TypographicStyle = {
 export class TypographicTileset implements Tileset {
   readonly id = "typographic";
   readonly pixelArt = false;
+  readonly background: string;
   readonly cellSize: CellSize;
   readonly font: string;
 
@@ -37,6 +40,7 @@ export class TypographicTileset implements Tileset {
     measure: (font: string) => number,
   ) {
     this.font = `${style.fontSize}px ${style.fontFamily}`;
+    this.background = style.background;
     this.cellSize = {
       width: Math.ceil(measure(this.font)),
       height: Math.round(style.fontSize * style.lineHeight),

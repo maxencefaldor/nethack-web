@@ -18,7 +18,7 @@ const saves = (await OpfsSaveStore.open()) ?? new MemorySaveStore();
 const preferences = new PreferencesStore();
 const session = new LocalGameSession(saves, preferences);
 const codex = officialCodex();
-const tilesets = new TilesetRegistry();
+const tilesets = new TilesetRegistry(`${import.meta.env.BASE_URL}tilesets/`);
 
 if (import.meta.env.DEV) {
   Object.assign(globalThis, {

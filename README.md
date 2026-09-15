@@ -50,6 +50,14 @@ pnpm dev
 | `pnpm --filter @nethack-web/tileset-build import-official` | Packages NetHack's own tiles from the engine tree into `packages/app/public/tilesets/official` |
 | `pnpm --filter @nethack-web/tileset-build tileset build styles/<style>.json <out>` | Builds a tileset package from a style specification |
 
+## Deployment
+
+Every push to `main` runs `.github/workflows/deploy.yml`, which builds the
+engine (cached by submodule commit, patches, scripts and Emscripten version),
+runs lint, typecheck and unit tests, builds the site and publishes it to
+GitHub Pages. The site's URL prefix comes from the Pages configuration and
+reaches Vite as `SITE_BASE`; a local build without it serves from `/`.
+
 ## How it fits together
 
 The engine runs in a Web Worker. Its windowport calls are decoded by

@@ -2,6 +2,7 @@ import type { EntityRef } from "@nethack-web/codex";
 import type { MapRenderer, Tileset } from "@nethack-web/renderer";
 import { cellIndex, MAP_COLUMNS } from "@nethack-web/state";
 import { useEffect, useMemo, useRef, useState } from "react";
+import type { Insets } from "../camera.js";
 import { useCodex, useGame, usePreferences, useSession, useVocabulary } from "../context.js";
 import { type MapViewport, useMapViewport } from "../viewport.js";
 import { MapViewControls } from "./MapViewControls.js";
@@ -12,6 +13,8 @@ const CLICK_PRIMARY = 1;
 export interface MapCanvasProps {
   readonly renderer: MapRenderer;
   readonly tileset: Tileset;
+  /** Space the HUD takes along the edges; the map is framed inside it. */
+  readonly insets: Insets;
   /** Opens the codex at an entity; used for taps that are not answering the engine. */
   readonly onInspect: (ref: EntityRef) => void;
 }
@@ -27,7 +30,7 @@ interface Hover {
  * answer the engine when it wants a position; otherwise they open the codex
  * for whatever is in the cell.
  */
-export function MapCanvas({ renderer, tileset, onInspect }: MapCanvasProps) {
+export function MapCanvas({ renderer, tileset, insets, onInspect }: MapCanvasProps) {
   const hostRef = useRef<HTMLDivElement>(null);
   const game = useGame();
   const session = useSession();
@@ -43,7 +46,7 @@ export function MapCanvas({ renderer, tileset, onInspect }: MapCanvasProps) {
 
   // A left click opens the codex for the cell. A right click hands the position
   // to the game, which is how travel prompts and click-to-move are answered.
-  const viewport: MapViewport = useMapViewport(hostRef, tileset, (point, event) => {
+  const viewport: MapViewport = useMapViewport(hostRef, tileset, insets, (point, event) => {
     const cell = renderer.pick(point);
     if (cell === null) return;
     if (event.button === 2) {
@@ -96,6 +99,7 @@ export function MapCanvas({ renderer, tileset, onInspect }: MapCanvasProps) {
       <div
         ref={hostRef}
         className={`map${viewport.dragging ? " map-dragging" : ""}`}
+        style={{ background: tileset.background }}
         onPointerDown={viewport.handlers.onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={viewport.handlers.onPointerUp}

@@ -2,7 +2,12 @@ import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
 
+// The path the site is served under. The deploy workflow sets it from the
+// GitHub Pages configuration; locally the app lives at the origin root.
+const base = process.env.SITE_BASE ?? "/";
+
 export default defineConfig({
+  base,
   plugins: [
     react(),
     VitePWA({

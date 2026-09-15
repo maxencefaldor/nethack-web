@@ -16,6 +16,11 @@
   --font-game: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
   --radius: 6px;
   --hud-shadow: 0 1px 2px rgba(0, 0, 0, 0.9), 0 0 12px rgba(15, 17, 19, 0.9);
+  /* Reserved HUD zones. Content lives inside them and never changes their size,
+     so the map's framing depends only on the window, the tileset and the panels. */
+  --hud-top-height: 140px;
+  --hud-bottom-height: 56px;
+  --hud-side-width: min(320px, 80vw);
   color-scheme: dark;
 }
 
@@ -106,7 +111,6 @@ kbd {
 .map {
   position: absolute;
   inset: 0;
-  background: var(--ground);
   overflow: hidden;
   touch-action: none;
 }
@@ -125,6 +129,25 @@ kbd {
   color: var(--ink);
 }
 
+/* Soft bands behind the top and bottom HUD text, for when the map scrolls beneath them. */
+.hud-scrim {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+.hud-scrim-top {
+  top: 0;
+  height: calc(var(--hud-top-height) + 24px);
+  background: linear-gradient(rgba(15, 17, 19, 0.92), rgba(15, 17, 19, 0));
+}
+.hud-scrim-bottom {
+  bottom: 0;
+  height: calc(var(--hud-bottom-height) + 24px);
+  background: linear-gradient(rgba(15, 17, 19, 0), rgba(15, 17, 19, 0.92));
+}
+
 /* HUD layers let clicks fall through to the map except on their controls. */
 .hud {
   position: absolute;
@@ -140,8 +163,11 @@ kbd {
 .hud-top-left {
   top: 12px;
   left: 16px;
-  right: 380px;
+  right: calc(var(--hud-side-width) + 60px);
+  height: var(--hud-top-height);
   display: grid;
+  grid-template-rows: auto 1fr;
+  align-content: start;
   gap: 8px;
   max-width: 72ch;
 }
@@ -152,14 +178,17 @@ kbd {
 .hud-right {
   top: 60px;
   right: 16px;
-  bottom: 70px;
-  width: min(320px, 80vw);
+  bottom: calc(var(--hud-bottom-height) + 24px);
+  width: var(--hud-side-width);
   display: flex;
 }
 .hud-bottom-left {
   left: 16px;
   right: 16px;
   bottom: 12px;
+  height: var(--hud-bottom-height);
+  display: flex;
+  align-items: flex-end;
 }
 .hud-bottom {
   left: 0;
@@ -217,9 +246,13 @@ kbd {
   margin: 0;
 }
 
-/* Messages */
+/* Messages: a fixed three-line window, newest at the bottom. */
 .messages {
-  min-height: 3.6em;
+  height: 3.6em;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
   font-family: var(--font-game);
   font-size: 14px;
   text-shadow: var(--hud-shadow);
@@ -879,6 +912,10 @@ kbd {
 }
 
 @media (max-width: 800px) {
+  :root {
+    --hud-top-height: 112px;
+    --hud-bottom-height: 48px;
+  }
   .hud-top-left {
     right: 16px;
     max-width: none;

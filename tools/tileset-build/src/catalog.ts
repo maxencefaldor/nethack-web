@@ -1,5 +1,5 @@
 import { monsterName, OFFICIAL_DATA } from "@nethack-web/codex";
-import { DUSK_PALETTE } from "./palette.ts";
+import { paletteColor } from "./palette.ts";
 import type { TileKind } from "./style.ts";
 
 /** One tile to produce: its stable id, what it depicts, and how the engine draws it. */
@@ -26,7 +26,7 @@ export function catalog(include: readonly TileKind[]): CatalogEntry[] {
         name,
         description: classDescription,
         symbol: monster.symbol,
-        color: DUSK_PALETTE[monster.color] ?? DUSK_PALETTE[8],
+        color: paletteColor(monster.color),
       });
     }
   }
@@ -44,7 +44,7 @@ export function catalog(include: readonly TileKind[]): CatalogEntry[] {
         name: object.name,
         description: object.description ?? object.className,
         symbol: object.classSymbol,
-        color: DUSK_PALETTE[object.color] ?? DUSK_PALETTE[8],
+        color: paletteColor(object.color),
       });
     }
   }
@@ -57,7 +57,7 @@ export function catalog(include: readonly TileKind[]): CatalogEntry[] {
         name: terrain.description,
         description: "dungeon feature",
         symbol: terrain.symbol,
-        color: DUSK_PALETTE[terrain.color] ?? DUSK_PALETTE[8],
+        color: paletteColor(terrain.color),
       });
     }
   }

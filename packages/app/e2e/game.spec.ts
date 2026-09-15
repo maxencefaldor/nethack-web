@@ -110,6 +110,31 @@ test("the map defaults to the whole grid, zooms with the wheel, and resets", asy
     });
   const initial = await geometry();
   expect(initial.fits).toBe(true);
+  const clear = await page.evaluate(() => {
+    const canvas = document.querySelector(".map canvas") as HTMLCanvasElement;
+    const map = canvas.getBoundingClientRect();
+    const top = document.querySelector(".hud-top-left") as HTMLElement;
+    const bottom = document.querySelector(".hud-bottom-left") as HTMLElement;
+    return (
+      map.top >= top.getBoundingClientRect().bottom &&
+      map.bottom <= bottom.getBoundingClientRect().top
+    );
+  });
+  expect(clear).toBe(true);
+  // A prompt appearing in the HUD must not move the map.
+  const bounds = () =>
+    page.evaluate(() => {
+      const box = (
+        document.querySelector(".map canvas") as HTMLCanvasElement
+      ).getBoundingClientRect();
+      return { top: box.top, left: box.left, width: box.width };
+    });
+  const before = await bounds();
+  await game.press("S");
+  await game.waitFor("yesNo");
+  expect(await bounds()).toEqual(before);
+  await game.press("n");
+  await game.waitFor("getKeyOrPosition");
   await page.locator(".map").hover();
   await page.mouse.wheel(0, -600);
   await expect.poll(async () => (await geometry()).width).toBeGreaterThan(initial.width * 1.5);
@@ -132,9 +157,21 @@ test("a left click on a tile opens the codex at that tile", async ({ page }) => 
   // Follow centres the hero in the map, clear of the floating panels.
   await page.getByRole("button", { name: "Follow the hero" }).click();
   await page.waitForTimeout(300);
-  const host = await page.locator(".map").boundingBox();
-  if (host === null) throw new Error("map not found");
-  await page.mouse.click(host.x + host.width / 2, host.y + host.height / 2);
+  const hero = await page.evaluate(() => {
+    const canvas = document.querySelector(".map canvas") as HTMLCanvasElement;
+    const bounds = canvas.getBoundingClientRect();
+    const cells = (
+      globalThis as unknown as {
+        __nethackDebug: { snapshot(): { map: { cells: ({ flags: number } | null)[] } } };
+      }
+    ).__nethackDebug.snapshot().map.cells;
+    const index = cells.findIndex((cell) => cell !== null && (cell.flags & 1) !== 0);
+    return {
+      x: bounds.left + ((index % 80) + 0.5) * (bounds.width / 80),
+      y: bounds.top + (Math.floor(index / 80) + 0.5) * (bounds.height / 21),
+    };
+  });
+  await page.mouse.click(hero.x, hero.y);
   await expect(page.locator(".codex-page .codex-kind")).toHaveText("Creature");
 });
 

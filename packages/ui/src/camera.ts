@@ -13,20 +13,44 @@ export interface Point {
 /** How far the camera may zoom relative to the scale that fits the whole map. */
 export const ZOOM_LIMITS = { min: 0.5, max: 12 } as const;
 
-/** Space kept clear around the whole-map view so the HUD does not sit on its edge. */
+/** Space the HUD occupies along each edge of the host; the map is framed inside it. */
+export interface Insets {
+  readonly top: number;
+  readonly right: number;
+  readonly bottom: number;
+  readonly left: number;
+}
+
+export const NO_INSETS: Insets = { top: 0, right: 0, bottom: 0, left: 0 };
+
+/** Breathing room between the map and whatever bounds it. */
 const FIT_PADDING = 12;
 
-/** The camera showing the whole map centred: the terminal's own framing. */
-export function fitCamera(host: Size, natural: Size): MapView {
+/** The part of the host not covered by the HUD. */
+export function freeArea(
+  host: Size,
+  insets: Insets,
+): { x: number; y: number; width: number; height: number } {
+  return {
+    x: insets.left,
+    y: insets.top,
+    width: Math.max(1, host.width - insets.left - insets.right),
+    height: Math.max(1, host.height - insets.top - insets.bottom),
+  };
+}
+
+/** The camera showing the whole map centred in the free area: the terminal's own framing. */
+export function fitCamera(host: Size, natural: Size, insets: Insets = NO_INSETS): MapView {
+  const area = freeArea(host, insets);
   const scale = Math.min(
-    (host.width - FIT_PADDING * 2) / natural.width,
-    (host.height - FIT_PADDING * 2) / natural.height,
+    (area.width - FIT_PADDING * 2) / natural.width,
+    (area.height - FIT_PADDING * 2) / natural.height,
   );
   const safe = Number.isFinite(scale) && scale > 0 ? scale : 1;
   return {
     scale: safe,
-    offsetX: (host.width - natural.width * safe) / 2,
-    offsetY: (host.height - natural.height * safe) / 2,
+    offsetX: area.x + (area.width - natural.width * safe) / 2,
+    offsetY: area.y + (area.height - natural.height * safe) / 2,
   };
 }
 
@@ -48,12 +72,19 @@ export function zoomAt(camera: MapView, factor: number, anchor: Point, fit: numb
   };
 }
 
-/** Moves the camera so a cell sits in the middle of the host, keeping the scale. */
-export function centerOn(camera: MapView, cell: Point, cellSize: Size, host: Size): MapView {
+/** Moves the camera so a cell sits in the middle of the free area, keeping the scale. */
+export function centerOn(
+  camera: MapView,
+  cell: Point,
+  cellSize: Size,
+  host: Size,
+  insets: Insets = NO_INSETS,
+): MapView {
+  const area = freeArea(host, insets);
   return {
     ...camera,
-    offsetX: host.width / 2 - (cell.x + 0.5) * cellSize.width * camera.scale,
-    offsetY: host.height / 2 - (cell.y + 0.5) * cellSize.height * camera.scale,
+    offsetX: area.x + area.width / 2 - (cell.x + 0.5) * cellSize.width * camera.scale,
+    offsetY: area.y + area.height / 2 - (cell.y + 0.5) * cellSize.height * camera.scale,
   };
 }
 

@@ -11,7 +11,8 @@
     "build": "tsc -b",
     "test": "vitest run",
     "tileset": "tsx src/cli.ts",
-    "import-official": "tsx src/cli.ts import-official ../../packages/app/public/tilesets/official"
+    "import-official": "tsx src/cli.ts import-official ../../packages/app/public/tilesets/official",
+    "typecheck": "tsc -b && tsc -p tools/codex-extract && tsc -p tools/tileset-build"
   },
   "dependencies": {
     "@napi-rs/canvas": "catalog:",

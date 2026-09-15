@@ -1,7 +1,16 @@
 import type { MapView, Tileset } from "@nethack-web/renderer";
 import { MAP_COLUMNS, MAP_ROWS } from "@nethack-web/state";
 import { type RefObject, useCallback, useEffect, useRef, useState } from "react";
-import { centerOn, distance, fitCamera, midpoint, type Point, panBy, zoomAt } from "./camera.js";
+import {
+  centerOn,
+  distance,
+  fitCamera,
+  type Insets,
+  midpoint,
+  type Point,
+  panBy,
+  zoomAt,
+} from "./camera.js";
 
 /** Wheel notches per doubling; a trackpad pinch reports finer deltas and zooms smoothly. */
 const WHEEL_ZOOM_RATE = 0.0025;
@@ -44,6 +53,7 @@ interface Pointer {
 export function useMapViewport(
   hostRef: RefObject<HTMLElement | null>,
   tileset: Tileset,
+  insets: Insets,
   onTap: (point: Point, event: { readonly button: number }) => void,
 ): MapViewport {
   const natural = {
@@ -53,7 +63,9 @@ export function useMapViewport(
   const [camera, setCamera] = useState<MapView>({ scale: 1, offsetX: 0, offsetY: 0 });
   const [following, setFollowing] = useState(false);
   const [dragging, setDragging] = useState(false);
-  const fitted = useRef(false);
+  // "whole" follows layout changes (HUD, window, tileset); "custom" is the
+  // player's own camera and stays put until Reset.
+  const [framing, setFraming] = useState<"whole" | "custom">("whole");
   const pointers = useRef(new Map<number, Pointer>());
   const pinch = useRef<number | null>(null);
 
@@ -62,33 +74,34 @@ export function useMapViewport(
     return { width: host?.clientWidth ?? 0, height: host?.clientHeight ?? 0 };
   }, [hostRef]);
   const fitScale = useCallback(
-    () => fitCamera(hostSize(), natural).scale,
-    [hostSize, natural.width, natural.height],
+    () => fitCamera(hostSize(), natural, insets).scale,
+    [hostSize, natural.width, natural.height, insets],
   );
 
   const reset = useCallback(() => {
     setFollowing(false);
-    setCamera(fitCamera(hostSize(), natural));
-  }, [hostSize, natural.width, natural.height]);
+    setFraming("whole");
+    setCamera(fitCamera(hostSize(), natural, insets));
+  }, [hostSize, natural.width, natural.height, insets]);
 
-  // First layout and every tileset change start from the whole-map view.
+  // While the framing is "whole", any change of host size, HUD insets or
+  // tileset refits the map. A custom camera is left alone.
   useEffect(() => {
-    fitted.current = false;
     const host = hostRef.current;
-    if (host === null) return;
-    const observer = new ResizeObserver(() => {
-      if (!fitted.current && host.clientWidth > 0) {
-        fitted.current = true;
-        setCamera(fitCamera(hostSize(), natural));
-      }
-    });
+    if (host === null || framing !== "whole") return;
+    const fit = () => {
+      if (host.clientWidth > 0) setCamera(fitCamera(hostSize(), natural, insets));
+    };
+    fit();
+    const observer = new ResizeObserver(fit);
     observer.observe(host);
     return () => observer.disconnect();
-  }, [hostRef, natural.width, natural.height, hostSize]);
+  }, [hostRef, natural.width, natural.height, hostSize, insets, framing]);
 
   const zoomBy = useCallback(
     (factor: number, anchor?: Point) => {
       const size = hostSize();
+      setFraming("custom");
       setCamera((current) =>
         zoomAt(current, factor, anchor ?? { x: size.width / 2, y: size.height / 2 }, fitScale()),
       );
@@ -162,6 +175,7 @@ export function useMapViewport(
       }
       if (!pointer.moved) return;
       setFollowing(false);
+      setFraming("custom");
       if (pointers.current.size === 2 && pinch.current !== null) {
         const [a, b] = [...pointers.current.values()];
         if (a && b) {
@@ -190,8 +204,11 @@ export function useMapViewport(
   };
 
   const centerOnCell = useCallback(
-    (cell: Point) => setCamera((current) => centerOn(current, cell, tileset.cellSize, hostSize())),
-    [hostSize, tileset.cellSize],
+    (cell: Point) => {
+      setFraming("custom");
+      setCamera((current) => centerOn(current, cell, tileset.cellSize, hostSize(), insets));
+    },
+    [hostSize, tileset.cellSize, insets],
   );
 
   return {

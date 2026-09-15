@@ -8,6 +8,7 @@ export interface PackedTileset {
     readonly cellSize: { readonly width: number; readonly height: number };
     readonly atlas: string;
     readonly pixelArt: boolean;
+    readonly background: string;
     readonly tiles: Record<string, { readonly x: number; readonly y: number }>;
   };
 }
@@ -17,6 +18,8 @@ export interface PackOptions {
   readonly name: string;
   readonly size: number;
   readonly pixelArt: boolean;
+  /** Ground colour the tiles are drawn on. */
+  readonly background: string;
 }
 
 /**
@@ -57,6 +60,7 @@ export async function pack(
       cellSize: { width: options.size, height: options.size },
       atlas: "atlas.png",
       pixelArt: options.pixelArt,
+      background: options.background,
       tiles: positions,
     },
   };

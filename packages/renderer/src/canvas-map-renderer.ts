@@ -4,14 +4,12 @@ import type { Cell, MapRenderer, MapView, RenderOptions } from "./map-renderer.j
 import type { Drawable, Tileset } from "./tileset.js";
 
 export interface CanvasMapRendererStyle {
-  readonly background: string;
   readonly heroGlow: string;
   readonly petTint: string;
   readonly pileMark: string;
 }
 
 export const DEFAULT_CANVAS_STYLE: CanvasMapRendererStyle = {
-  background: "#0f1113",
   heroGlow: "rgba(255, 244, 214, 0.16)",
   petTint: "rgba(111, 191, 149, 0.22)",
   pileMark: "rgba(245, 218, 106, 0.9)",
@@ -69,7 +67,7 @@ export class CanvasMapRenderer implements MapRenderer {
     // Pixel art keeps hard pixels when enlarged; anything shrunk is filtered.
     context.imageSmoothingEnabled = !(tileset.pixelArt && view.scale >= 1);
     context.imageSmoothingQuality = "high";
-    context.fillStyle = this.style.background;
+    context.fillStyle = tileset.background;
     context.fillRect(0, 0, MAP_COLUMNS * this.cellWidth, MAP_ROWS * this.cellHeight);
     context.textAlign = "center";
     context.textBaseline = "middle";

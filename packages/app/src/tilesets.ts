@@ -18,14 +18,15 @@ export interface TilesetChoice {
 export const TYPOGRAPHIC: TilesetChoice = { id: "typographic", name: "Characters" };
 
 /**
- * Finds installed tileset packages (`public/tilesets/<id>/manifest.json`) and
- * builds tilesets on demand. Sprite tilesets always fall back to characters
- * per glyph, so a partial package is still playable.
+ * Finds installed tileset packages (`<base><id>/manifest.json`) and builds
+ * tilesets on demand. Sprite tilesets always fall back to characters per
+ * glyph, so a partial package is still playable.
  */
 export class TilesetRegistry {
   private readonly manifests = new Map<string, TilesetManifest>();
 
-  constructor(private readonly base = "/tilesets/") {}
+  /** @param base URL prefix of the tileset packages, ending with a slash. */
+  constructor(private readonly base: string) {}
 
   async choices(): Promise<readonly TilesetChoice[]> {
     const index = await this.fetchJson<{ readonly tilesets: readonly string[] }>("index.json");

@@ -84,7 +84,13 @@ async function build(stylePath: string | undefined, outputPath: string | undefin
   }
 
   const packed = await pack(
-    { id: style.id, name: style.name, size: style.cellSize, pixelArt: false },
+    {
+      id: style.id,
+      name: style.name,
+      size: style.cellSize,
+      pixelArt: false,
+      background: "#0f1113",
+    },
     tiles,
   );
   writeFileSync(join(output, "atlas.png"), packed.atlas);
@@ -120,7 +126,14 @@ async function importOfficial(outputPath: string | undefined): Promise<void> {
   const output = resolve(outputPath);
   mkdirSync(output, { recursive: true });
   const packed = await pack(
-    { id: "official", name: "NetHack tiles", size: TILE_SIZE, pixelArt: true },
+    // The DevTeam's tiles use black for unexplored space and around every sprite.
+    {
+      id: "official",
+      name: "NetHack tiles",
+      size: TILE_SIZE,
+      pixelArt: true,
+      background: "#000000",
+    },
     tiles,
   );
   writeFileSync(join(output, "atlas.png"), packed.atlas);

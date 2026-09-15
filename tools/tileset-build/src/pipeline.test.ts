@@ -41,7 +41,10 @@ describe("tileset pipeline", () => {
       const raw = await generator.generate({ entry, prompt: "", seed: 1, size: 16 });
       tiles.push({ id: entry.id, png: await normalize(raw, 16, style.palette) });
     }
-    const packed = await pack({ id: "test", name: "Test", size: 16, pixelArt: false }, tiles);
+    const packed = await pack(
+      { id: "test", name: "Test", size: 16, pixelArt: false, background: "#000000" },
+      tiles,
+    );
     expect(packed.manifest.cellSize).toEqual({ width: 16, height: 16 });
     expect(Object.keys(packed.manifest.tiles)).toEqual(entries.map((entry) => entry.id));
     expect(packed.manifest.tiles["monster/1"]).toEqual({ x: 16, y: 0 });
