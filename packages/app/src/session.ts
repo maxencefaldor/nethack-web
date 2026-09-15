@@ -67,7 +67,9 @@ export class LocalGameSession implements GameSession, EngineHost {
       "!splash_screen",
       "time",
       "showexp",
-      preferences.offerTutorial ? "tutorial" : "!tutorial",
+      // The engine asks about the tutorial only while the option is unset;
+      // setting it either way is obeyed silently.
+      ...(preferences.offerTutorial ? [] : ["!tutorial"]),
       "perm_invent",
       ...(preferences.uiMode === "newcomer" ? GUIDED_STATUS_HIGHLIGHTS : []),
     ].join(",");

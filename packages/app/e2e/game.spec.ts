@@ -197,3 +197,21 @@ test("quitting shows the engine's own end-of-game report", async ({ page }) => {
   }
   await expect(page.locator(".end-report")).toContainText("Tester", { timeout: 15_000 });
 });
+
+test("offering the tutorial asks the engine's question and can be declined", async ({ page }) => {
+  const game = new GamePage(page);
+  await game.open({ ...CLASSIC_NO_TUTORIAL, offerTutorial: true });
+  await page.fill("#player-name", "Tester");
+  await page.click("text=New game");
+  await game.waitFor("yesNo");
+  await game.press("y");
+  await game.waitFor("selectMenu");
+  await game.press("y"); // confirm the character
+  await game.waitFor("displayWindowBlocking");
+  await game.press("Space"); // the introduction; the engine asks about the tutorial next
+  await expect(page.getByRole("dialog")).toContainText("Do you want a tutorial?");
+  await game.press("n");
+  await game.waitFor("getKeyOrPosition");
+  const snapshot = await game.snapshot();
+  expect(snapshot.status.fields.LEVELDESC?.text.trim()).toBe("Dlvl:1");
+});
